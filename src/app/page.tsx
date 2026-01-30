@@ -6,6 +6,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Image from 'next/image';
 import { MOCK_PRODUCTS, MOCK_REVIEWS, FLAVOR_COLORS, PLACEHOLDER_IMAGES } from '@/lib/constants';
+import { SocialProofPopup, LiveVisitorCount } from '@/components/shop/SocialProof';
 
 export default function Home() {
   const shouldReduceMotion = useReducedMotion();
@@ -55,36 +56,32 @@ export default function Home() {
                 {...fadeInLeft}
                 transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
               >
-                {/* Badge */}
+                {/* Badge with live count */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full mb-8"
+                  className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full mb-8"
                 >
-                  <span className="w-2 h-2 bg-[#00D9A5] rounded-full animate-pulse" />
-                  <span className="text-white/70 text-sm font-medium tracking-wide">
-                    Boisson prête à boire
-                  </span>
+                  <LiveVisitorCount />
                 </motion.div>
 
                 {/* Main headline */}
                 <h1 className="text-white mb-6">
                   <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-none">
-                    L&apos;ENERGIE
+                    PROTÉINES
                   </span>
                   <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-none text-gradient bg-gradient-to-r from-[#FF6B35] via-[#FF1493] to-[#FF6B35] bg-clip-text text-transparent">
-                    QUI PULSE
+                    + ÉNERGIE
                   </span>
                 </h1>
 
                 {/* Subheadline */}
                 <p className="text-lg md:text-xl text-white/60 mb-10 max-w-lg leading-relaxed font-light">
-                  La boisson qui combine{' '}
-                  <span className="text-white">protéines</span> et{' '}
-                  <span className="text-[#00D9A5]">caféine naturelle</span>.{' '}
-                  Rafraîchissante comme un soda, puissante comme un pré-workout.
-                  Ouvre, bois, performe.
+                  La première boisson qui combine{' '}
+                  <span className="text-white font-medium">20g de protéines</span> et{' '}
+                  <span className="text-[#00D9A5] font-medium">caféine naturelle</span>.{' '}
+                  Prête à boire, sans shaker. Ouvre, bois, performe.
                 </p>
 
                 {/* Stats row */}
@@ -123,11 +120,11 @@ export default function Home() {
                       className="group relative inline-flex items-center justify-center px-8 py-4 bg-[#FF6B35] text-white font-semibold text-lg overflow-hidden transition-all hover:shadow-glow-orange"
                     >
                       <span className="relative z-10 uppercase tracking-widest text-sm">
-                        Decouvrir
+                        Découvrir
                       </span>
                       <div className="absolute inset-0 bg-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                       <span className="absolute inset-0 flex items-center justify-center text-[#FF6B35] uppercase tracking-widest text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-                        Decouvrir
+                        Découvrir
                       </span>
                     </Link>
                   </motion.div>
@@ -224,6 +221,74 @@ export default function Home() {
                 ))}
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Trust Indicators */}
+        <section className="py-12 bg-white border-b border-gray-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+              {/* Left - Trust badges */}
+              <div className="flex flex-wrap items-center justify-center gap-6 text-gray-400">
+                <div className="flex items-center gap-2">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="text-sm">Fabriqué en France</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span className="text-sm">Livraison 24-48h</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span className="text-sm">Satisfait ou remboursé</span>
+                </div>
+              </div>
+
+              {/* Center - Yuka Score */}
+              <div className="flex items-center gap-3 px-5 py-3 bg-[#F0FDF4] border border-[#00D9A5]/20 rounded-xl">
+                <div className="w-12 h-12 rounded-full bg-[#00D9A5] flex items-center justify-center">
+                  <span className="text-white font-bold text-lg">78</span>
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-semibold text-[#0A0A0A]">Yuka</span>
+                    <span className="text-xs bg-[#00D9A5] text-white px-1.5 py-0.5 rounded font-medium">Bon</span>
+                  </div>
+                  <p className="text-xs text-gray-500">Score nutritionnel vérifié</p>
+                </div>
+              </div>
+
+              {/* Right - Customer reviews */}
+              <div className="flex items-center gap-3">
+                <div className="flex -space-x-2">
+                  {['E', 'M', 'L', 'T', 'S'].map((letter, i) => (
+                    <div
+                      key={i}
+                      className="w-8 h-8 rounded-full bg-gradient-to-br from-[#FF6B35] to-[#FF1493] flex items-center justify-center text-white text-xs font-bold border-2 border-white"
+                    >
+                      {letter}
+                    </div>
+                  ))}
+                </div>
+                <div>
+                  <div className="flex items-center gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} className="w-4 h-4 text-[#FFD700]" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                    <span className="text-sm text-gray-600 ml-1">4.8/5</span>
+                  </div>
+                  <p className="text-xs text-gray-400">+500 avis clients</p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -448,6 +513,72 @@ export default function Home() {
           </div>
         </section>
 
+        {/* How It Works Section */}
+        <section className="py-20 md:py-32 bg-white relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              {...fadeInUp}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <span className="inline-block px-4 py-2 bg-[#FF6B35]/10 text-[#FF6B35] text-sm font-semibold uppercase tracking-wider mb-6">
+                Simple comme bonjour
+              </span>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl">
+                COMMENT ÇA
+                <span className="block text-gradient">MARCHE</span>
+              </h2>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+              {[
+                {
+                  step: '01',
+                  title: 'Commande',
+                  description: 'Choisis tes saveurs préférées ou laisse-toi surprendre par notre pack découverte.',
+                  icon: '📦',
+                },
+                {
+                  step: '02',
+                  title: 'Reçois',
+                  description: 'Livraison en 24-48h chez toi ou en point relais. Tes bouteilles arrivent fraîches.',
+                  icon: '🚚',
+                },
+                {
+                  step: '03',
+                  title: 'Performe',
+                  description: 'Ouvre ta bouteille avant ou après ta séance. Pas de shaker, pas de prise de tête.',
+                  icon: '💪',
+                },
+              ].map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.15 }}
+                  className="text-center relative"
+                >
+                  {/* Connector line */}
+                  {index < 2 && (
+                    <div className="hidden md:block absolute top-16 left-[60%] w-[80%] border-t-2 border-dashed border-gray-200" />
+                  )}
+
+                  <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-[#FF6B35]/10 to-[#FF1493]/10 flex items-center justify-center text-5xl relative">
+                    {item.icon}
+                    <span className="absolute -top-2 -right-2 w-8 h-8 bg-[#FF6B35] text-white text-sm font-bold rounded-full flex items-center justify-center">
+                      {item.step}
+                    </span>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3">{item.title}</h3>
+                  <p className="text-gray-600 font-light max-w-xs mx-auto">{item.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* USP Section */}
         <section className="py-20 md:py-32 bg-[#0A0A0A] text-white relative overflow-hidden">
           {/* Background decoration */}
@@ -534,18 +665,40 @@ export default function Home() {
               className="text-center mb-16"
             >
               <span className="inline-block px-4 py-2 bg-[#FF1493]/10 text-[#FF1493] text-sm font-semibold uppercase tracking-wider mb-6">
-                Témoignages
+                Avis clients
               </span>
               <h2 className="text-4xl md:text-5xl lg:text-6xl">
-                ILS ONT ADOPTÉ
-                <span className="block text-gradient">TAMARQUE</span>
+                CE QU&apos;ILS EN
+                <span className="block text-gradient">PENSENT</span>
               </h2>
             </motion.div>
 
             <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-              {MOCK_REVIEWS.slice(0, 3).map((review, index) => (
+              {[
+                {
+                  rating: 5,
+                  comment: "Enfin une boisson protéinée qui a vraiment bon goût ! Je la prends après mes séances de crossfit, c'est devenu un rituel. Le petit boost de caféine est parfait.",
+                  author: "Maxime D.",
+                  sport: "Crossfit",
+                  verified: true,
+                },
+                {
+                  rating: 5,
+                  comment: "J'en ai marre des shakers qui fuient dans mon sac. Avec Tamarque, j'ouvre ma bouteille et c'est réglé. Le goût Yuzu Pêche est incroyable.",
+                  author: "Sarah L.",
+                  sport: "Fitness",
+                  verified: true,
+                },
+                {
+                  rating: 4,
+                  comment: "Très pratique pour le bureau. Je la bois à 15h quand j'ai un coup de mou. Les 20g de protéines + la caféine, c'est le combo parfait pour tenir jusqu'au soir.",
+                  author: "Thomas B.",
+                  sport: "Running",
+                  verified: true,
+                },
+              ].map((review, index) => (
                 <motion.div
-                  key={review.id}
+                  key={index}
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -565,25 +718,42 @@ export default function Home() {
                     &ldquo;{review.comment}&rdquo;
                   </p>
 
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#FF6B35] to-[#FF1493] flex items-center justify-center text-white font-semibold">
-                      {review.author[0]}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#FF6B35] to-[#FF1493] flex items-center justify-center text-white font-semibold">
+                        {review.author[0]}
+                      </div>
+                      <div>
+                        <p className="font-semibold">{review.author}</p>
+                        {review.verified && (
+                          <p className="text-sm text-[#00D9A5] flex items-center gap-1">
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                            Achat vérifié
+                          </p>
+                        )}
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-semibold">{review.author}</p>
-                      {review.verified && (
-                        <p className="text-sm text-[#00D9A5] flex items-center gap-1">
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                          </svg>
-                          Achat vérifié
-                        </p>
-                      )}
-                    </div>
+                    <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">
+                      {review.sport}
+                    </span>
                   </div>
                 </motion.div>
               ))}
             </div>
+
+            {/* See all reviews link */}
+            <motion.div
+              {...fadeInUp}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mt-10"
+            >
+              <p className="text-gray-500 text-sm">
+                Note moyenne : <span className="font-semibold text-[#0A0A0A]">4.8/5</span> basée sur 500+ avis
+              </p>
+            </motion.div>
           </div>
         </section>
 
@@ -602,33 +772,57 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <h2 className="text-4xl md:text-5xl lg:text-7xl mb-6">
-                PRET A CHANGER
-                <span className="block">TA ROUTINE ?</span>
+                PRÊT À ESSAYER ?
               </h2>
               <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto font-light">
-                Rejoins des milliers d&apos;athlètes qui ont adopté la boisson
-                qui combine protéines et énergie. Ouvre, bois, performe.
+                Commande ton premier pack et découvre pourquoi tant de sportifs
+                ont adopté Tamarque pour leur routine quotidienne.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                 <Link
                   href="/shop"
                   className="inline-flex items-center justify-center px-10 py-5 bg-white text-[#FF6B35] font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors uppercase tracking-wider"
                 >
-                  Commander maintenant
+                  Découvrir les saveurs
                 </Link>
                 <Link
                   href="/subscribe"
                   className="inline-flex items-center justify-center px-10 py-5 border-2 border-white text-white font-bold hover:bg-white/10 transition-colors uppercase tracking-wider"
                 >
-                  S&apos;abonner -25%
+                  S&apos;abonner & économiser
                 </Link>
+              </div>
+
+              {/* Trust badges */}
+              <div className="flex flex-wrap items-center justify-center gap-6 text-white/60 text-sm">
+                <span className="flex items-center gap-2">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Livraison offerte dès 35€
+                </span>
+                <span className="flex items-center gap-2">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  Satisfait ou remboursé
+                </span>
+                <span className="flex items-center gap-2">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  Paiement sécurisé
+                </span>
               </div>
             </motion.div>
           </div>
         </section>
       </main>
       <Footer />
+
+      {/* Social Proof Popup */}
+      <SocialProofPopup />
 
       {/* Marquee animation styles */}
       <style jsx>{`

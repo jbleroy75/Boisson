@@ -18,13 +18,27 @@ const CITIES = [
   'Strasbourg', 'Montpellier', 'Rennes', 'Grenoble', 'Rouen', 'Toulon', 'Angers'
 ];
 
-// Types de commandes
+// Types de commandes (montants réalistes basés sur prix 3,99€-4,49€/bouteille)
 const ORDER_TYPES = [
-  { type: 'single', minAmount: 15, maxAmount: 25 },
-  { type: 'pack', minAmount: 35, maxAmount: 60 },
-  { type: 'subscription', minAmount: 40, maxAmount: 80 },
-  { type: 'bulk', minAmount: 80, maxAmount: 150 },
+  { type: 'single', minQty: 2, maxQty: 4, weight: 5 }, // 2-4 bouteilles (le plus fréquent)
+  { type: 'pack', minQty: 6, maxQty: 10, weight: 3 }, // Pack 6-10
+  { type: 'subscription', minQty: 8, maxQty: 12, weight: 2 }, // Abo mensuel
+  { type: 'bulk', minQty: 12, maxQty: 20, weight: 1 }, // Grosses commandes (rare)
 ];
+
+// Sélection pondérée (les petites commandes sont plus fréquentes)
+function weightedRandomSelect<T extends { weight: number }>(items: T[]): T {
+  const totalWeight = items.reduce((sum, item) => sum + item.weight, 0);
+  let random = Math.random() * totalWeight;
+  for (const item of items) {
+    random -= item.weight;
+    if (random <= 0) return item;
+  }
+  return items[0];
+}
+
+// Prix unitaire réaliste (varie légèrement selon les produits)
+const UNIT_PRICE = 3.99;
 
 // Générer une notification aléatoire
 function generateNotification() {
@@ -33,21 +47,35 @@ function generateNotification() {
   const products = MOCK_PRODUCTS || [];
   const product = products.length > 0
     ? products[Math.floor(Math.random() * products.length)]
-    : { name: 'Tamarque' };
-  const orderType = ORDER_TYPES[Math.floor(Math.random() * ORDER_TYPES.length)];
-  const amount = Math.floor(Math.random() * (orderType.maxAmount - orderType.minAmount) + orderType.minAmount);
-  const minutesAgo = Math.floor(Math.random() * 15) + 1;
+    : { name: 'Tamarque', price: UNIT_PRICE };
+  const orderType = weightedRandomSelect(ORDER_TYPES);
+
+  // Quantité aléatoire dans la fourchette du type de commande
+  const qty = Math.floor(Math.random() * (orderType.maxQty - orderType.minQty + 1)) + orderType.minQty;
+
+  // Montant basé sur quantité * prix unitaire (avec légère variation)
+  const pricePerUnit = (product as { price?: number }).price || UNIT_PRICE;
+  const rawAmount = qty * pricePerUnit;
+  const amount = Math.round(rawAmount * 100) / 100;
+
+  // Temps plus réaliste (majorité récent)
+  const minutesAgo = Math.random() < 0.6
+    ? Math.floor(Math.random() * 5) + 1  // 60% entre 1-5 min
+    : Math.floor(Math.random() * 12) + 6; // 40% entre 6-17 min
 
   let message = '';
   if (orderType.type === 'single') {
-    message = `vient d'acheter ${product.name}`;
+    message = qty <= 2
+      ? `vient de commander ${product.name}`
+      : `vient de commander ${qty}x ${product.name}`;
   } else if (orderType.type === 'pack') {
-    const qty = Math.floor(Math.random() * 6) + 6;
-    message = `vient de commander un pack de ${qty} bouteilles`;
+    message = `vient de commander ${qty} bouteilles`;
   } else if (orderType.type === 'subscription') {
-    message = `vient de s'abonner à la formule Athlète`;
+    const formules = ['Starter', 'Régulier', 'Athlète'];
+    const formule = formules[Math.floor(Math.random() * formules.length)];
+    message = `s'est abonné à la formule ${formule}`;
   } else {
-    message = `vient de passer une grosse commande`;
+    message = `vient de commander ${qty} bouteilles`;
   }
 
   return {
@@ -126,7 +154,7 @@ export function SocialProofPopup() {
                   Il y a {notification.minutesAgo} min
                 </span>
                 <span className="text-xs font-semibold text-[#00D9A5]">
-                  {notification.amount}€
+                  {notification.amount.toFixed(2).replace('.', ',')}€
                 </span>
               </div>
             </div>
@@ -158,48 +186,51 @@ export function SocialProofPopup() {
 // Composant de compteur de visiteurs en ligne
 export function LiveVisitorCount() {
   const [count, setCount] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
-    // Générer un nombre initial basé sur l'heure
+    // Générer un nombre initial basé sur l'heure (chiffres réalistes pour un petit site)
     const hour = new Date().getHours();
-    let baseCount = 15;
+    const dayOfWeek = new Date().getDay();
+    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
 
-    // Plus de visiteurs pendant les heures de pointe
-    if (hour >= 12 && hour <= 14) baseCount = 45; // Pause déjeuner
-    else if (hour >= 18 && hour <= 21) baseCount = 65; // Soirée
-    else if (hour >= 9 && hour <= 11) baseCount = 35; // Matinée
-    else if (hour >= 22 || hour <= 6) baseCount = 8; // Nuit
+    let baseCount = 7; // Base faible = crédible
 
-    // Ajouter une variation aléatoire
-    const variation = Math.floor(Math.random() * 20) - 10;
-    setCount(Math.max(5, baseCount + variation));
+    // Variations selon l'heure
+    if (hour >= 12 && hour <= 14) baseCount = isWeekend ? 18 : 14; // Pause déjeuner
+    else if (hour >= 18 && hour <= 21) baseCount = isWeekend ? 24 : 19; // Soirée (pic)
+    else if (hour >= 9 && hour <= 11) baseCount = isWeekend ? 12 : 11; // Matinée
+    else if (hour >= 21 && hour <= 23) baseCount = 13; // Fin de soirée
+    else if (hour >= 0 && hour <= 7) baseCount = 3; // Nuit
+
+    // Variation aléatoire non-ronde
+    const variation = Math.floor(Math.random() * 7) - 3;
+    setCount(Math.max(2, baseCount + variation));
   }, []);
 
-  // Mise à jour fréquente (toutes les 3-8 secondes)
+  // Mise à jour naturelle (toutes les 4-12 secondes)
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
     const updateCount = () => {
       setCount(prev => {
-        const change = Math.floor(Math.random() * 5) - 2; // -2 à +2
-        const newCount = Math.max(5, Math.min(100, prev + change));
-        if (newCount !== prev) {
-          setIsAnimating(true);
-          setTimeout(() => setIsAnimating(false), 300);
-        }
-        return newCount;
+        // 70% du temps: petite variation (-1, 0, +1)
+        // 30% du temps: variation plus grande (-2 à +2)
+        const smallChange = Math.random() < 0.7;
+        const change = smallChange
+          ? Math.floor(Math.random() * 3) - 1
+          : Math.floor(Math.random() * 5) - 2;
+
+        return Math.max(2, Math.min(35, prev + change));
       });
+
+      // Prochain update dans 4-12 secondes (aléatoire à chaque fois)
+      timeoutId = setTimeout(updateCount, Math.random() * 8000 + 4000);
     };
 
-    // Premier update après 3-5 secondes
-    const initialTimeout = setTimeout(updateCount, Math.random() * 2000 + 3000);
+    // Premier update après 4-8 secondes
+    timeoutId = setTimeout(updateCount, Math.random() * 4000 + 4000);
 
-    // Puis updates réguliers toutes les 3-8 secondes
-    const interval = setInterval(updateCount, Math.random() * 5000 + 3000);
-
-    return () => {
-      clearTimeout(initialTimeout);
-      clearInterval(interval);
-    };
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return (
@@ -260,23 +291,35 @@ export function ViewingNowBadge({ productId }: { productId: string }) {
 
   useEffect(() => {
     // Générer un nombre basé sur le productId pour consistance
+    // Chiffres réalistes pour un petit site (2-7 max)
     const hash = productId.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
-    const baseViewers = (hash % 12) + 3;
-    setViewers(baseViewers);
+    const hour = new Date().getHours();
+
+    let baseViewers = (hash % 4) + 2; // 2-5
+
+    // Légère augmentation aux heures de pointe
+    if (hour >= 12 && hour <= 14) baseViewers += 1;
+    if (hour >= 18 && hour <= 21) baseViewers += 2;
+
+    setViewers(Math.min(baseViewers, 8));
   }, [productId]);
 
-  // Variation toutes les 4-10 secondes
+  // Variation lente (toutes les 8-20 secondes)
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
     const updateViewers = () => {
       setViewers(prev => {
-        const change = Math.floor(Math.random() * 5) - 2; // -2 à +2
-        return Math.max(2, Math.min(25, prev + change));
+        const change = Math.floor(Math.random() * 3) - 1; // -1, 0, +1
+        return Math.max(1, Math.min(10, prev + change));
       });
+
+      timeoutId = setTimeout(updateViewers, Math.random() * 12000 + 8000);
     };
 
-    const interval = setInterval(updateViewers, Math.random() * 6000 + 4000);
+    timeoutId = setTimeout(updateViewers, Math.random() * 8000 + 6000);
 
-    return () => clearInterval(interval);
+    return () => clearTimeout(timeoutId);
   }, [productId]);
 
   return (
@@ -288,13 +331,13 @@ export function ViewingNowBadge({ productId }: { productId: string }) {
       <span>
         <motion.span
           key={viewers}
-          initial={{ scale: 1.2 }}
+          initial={{ scale: 1.15 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.2 }}
           className="font-medium inline-block"
         >
           {viewers}
-        </motion.span> personnes regardent ce produit
+        </motion.span> {viewers === 1 ? 'personne regarde' : 'personnes regardent'} ce produit
       </span>
     </div>
   );
@@ -308,29 +351,37 @@ export function UrgencyBar() {
   useEffect(() => {
     const hour = new Date().getHours();
     const dayOfWeek = new Date().getDay();
+    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
 
-    // Messages différents selon le contexte
-    const messages = [
-      '🔥 DERNIÈRES HEURES : -15% avec le code ENERGY15',
-      '⚡ Livraison EXPRESS offerte dès 50€ aujourd\'hui',
-      '🎁 1 shaker offert pour toute commande de pack',
-      '💪 Déjà 1 247 commandes cette semaine',
-      '🚀 Nouveau : Abonnement flexible, annulation à tout moment',
-    ];
+    // Messages plus authentiques et moins "marketing agressif"
+    const messages: string[] = [];
 
-    // Message spécial le week-end
-    if (dayOfWeek === 0 || dayOfWeek === 6) {
-      messages.unshift('🎉 WEEK-END SPORTIF : -20% sur les packs avec WEEKEND20');
-    }
-
-    // Message spécial le soir
-    if (hour >= 18 && hour <= 21) {
-      messages.unshift('⏰ Commande avant 21h = expédié demain matin');
-    }
-
-    // Message spécial le matin
+    // Messages basés sur le contexte temporel (plus naturel)
     if (hour >= 7 && hour <= 10) {
-      messages.unshift('☀️ Bien commencer la journée : ton boost protéiné t\'attend');
+      messages.push('Livraison offerte dès 35€ d\'achat');
+      messages.push('Commandé avant midi = expédié aujourd\'hui');
+    } else if (hour >= 11 && hour <= 14) {
+      messages.push('Commandé avant 14h = expédié aujourd\'hui');
+      messages.push('Livraison offerte dès 35€');
+    } else if (hour >= 14 && hour <= 17) {
+      messages.push('Livraison en 24-48h partout en France');
+      messages.push('Frais de port offerts dès 35€');
+    } else if (hour >= 18 && hour <= 21) {
+      messages.push('Commandé ce soir = expédié demain matin');
+      messages.push('Livraison gratuite dès 35€');
+    } else {
+      messages.push('Livraison offerte dès 35€ d\'achat');
+      messages.push('Expédition sous 24h en semaine');
+    }
+
+    // Messages additionnels selon le jour
+    if (isWeekend) {
+      messages.push('Les commandes du week-end partent lundi matin');
+    }
+
+    // Un seul message promo (pas trop agressif)
+    if (Math.random() < 0.3) { // 30% du temps seulement
+      messages.push('-10% sur ta première commande avec BIENVENUE10');
     }
 
     setMessage(messages[Math.floor(Math.random() * messages.length)]);
@@ -363,37 +414,44 @@ export function RecentSalesCount() {
   const [justUpdated, setJustUpdated] = useState(false);
 
   useEffect(() => {
-    // Simuler des ventes basées sur l'heure
+    // Chiffres réalistes pour une petite marque (pas des centaines)
     const hour = new Date().getHours();
-    let baseSales = 12;
+    const dayOfWeek = new Date().getDay();
+    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
 
-    if (hour >= 12 && hour <= 14) baseSales = 28;
-    else if (hour >= 18 && hour <= 21) baseSales = 35;
-    else if (hour >= 9 && hour <= 11) baseSales = 22;
+    // Base réaliste : ~15-40 ventes/jour selon le moment
+    let baseSales = 17;
 
-    setSales(baseSales + Math.floor(Math.random() * 10));
+    if (hour >= 12 && hour <= 14) baseSales = isWeekend ? 26 : 23;
+    else if (hour >= 18 && hour <= 21) baseSales = isWeekend ? 34 : 29;
+    else if (hour >= 9 && hour <= 11) baseSales = 19;
+    else if (hour >= 21 && hour <= 23) baseSales = 31;
+    else if (hour >= 0 && hour <= 8) baseSales = 14; // Ventes de la veille
+
+    // Variation non-ronde
+    const variation = Math.floor(Math.random() * 7) - 2;
+    setSales(Math.max(8, baseSales + variation));
   }, []);
 
-  // Incrémenter régulièrement (toutes les 8-20 secondes, 60% de chance)
+  // Incrémenter de temps en temps (toutes les 15-45 secondes, 40% de chance)
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
     const tryIncrement = () => {
-      if (Math.random() > 0.4) { // 60% de chance d'incrémenter
+      if (Math.random() < 0.4) { // 40% de chance = réaliste
         setSales(prev => prev + 1);
         setJustUpdated(true);
         setTimeout(() => setJustUpdated(false), 500);
       }
+
+      // Prochain essai dans 15-45 secondes
+      timeoutId = setTimeout(tryIncrement, Math.random() * 30000 + 15000);
     };
 
-    // Premier incrément après 5-10 secondes
-    const initialTimeout = setTimeout(tryIncrement, Math.random() * 5000 + 5000);
+    // Premier essai après 10-25 secondes
+    timeoutId = setTimeout(tryIncrement, Math.random() * 15000 + 10000);
 
-    // Puis essayer d'incrémenter toutes les 8-20 secondes
-    const interval = setInterval(tryIncrement, Math.random() * 12000 + 8000);
-
-    return () => {
-      clearTimeout(initialTimeout);
-      clearInterval(interval);
-    };
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return (

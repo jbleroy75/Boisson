@@ -146,7 +146,7 @@ export default function ShopPage() {
               >
                 <span className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm uppercase tracking-wider mb-8">
                   <span className="w-2 h-2 bg-[#00D9A5] rounded-full animate-pulse" />
-                  Collection 2024
+                  Nouvelle Collection
                 </span>
 
                 <h1 className="text-white text-5xl md:text-6xl lg:text-7xl xl:text-8xl mb-6 leading-none">
