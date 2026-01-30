@@ -1,10 +1,28 @@
 import Stripe from 'stripe';
 
-// Server-side Stripe instance
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2026-01-28.clover',
-  typescript: true,
-});
+// Lazy-loaded Stripe instance to avoid build-time errors
+let stripeInstance: Stripe | null = null;
+
+function getStripe(): Stripe {
+  if (!stripeInstance) {
+    const secretKey = process.env.STRIPE_SECRET_KEY;
+    if (!secretKey) {
+      throw new Error('STRIPE_SECRET_KEY is not configured');
+    }
+    stripeInstance = new Stripe(secretKey, {
+      apiVersion: '2026-01-28.clover',
+      typescript: true,
+    });
+  }
+  return stripeInstance;
+}
+
+// Export getter for stripe instance
+export const stripe = {
+  get instance() {
+    return getStripe();
+  },
+};
 
 // Subscription tier price IDs (create these in Stripe Dashboard)
 export const STRIPE_PRICE_IDS = {
@@ -25,7 +43,7 @@ export async function createSubscriptionCheckout(params: {
 
   const priceId = STRIPE_PRICE_IDS[tierId];
 
-  const session = await stripe.checkout.sessions.create({
+  const session = await stripe.instance.checkout.sessions.create({
     mode: 'subscription',
     payment_method_types: ['card'],
     line_items: [
@@ -59,7 +77,7 @@ export async function createCustomerPortalSession(params: {
 }) {
   const { customerId, returnUrl } = params;
 
-  const session = await stripe.billingPortal.sessions.create({
+  const session = await stripe.instance.billingPortal.sessions.create({
     customer: customerId,
     return_url: returnUrl,
   });
@@ -69,15 +87,15 @@ export async function createCustomerPortalSession(params: {
 
 // Retrieve subscription details
 export async function getSubscription(subscriptionId: string) {
-  return stripe.subscriptions.retrieve(subscriptionId);
+  return stripe.instance.subscriptions.retrieve(subscriptionId);
 }
 
 // Cancel subscription
 export async function cancelSubscription(subscriptionId: string, immediately = false) {
   if (immediately) {
-    return stripe.subscriptions.cancel(subscriptionId);
+    return stripe.instance.subscriptions.cancel(subscriptionId);
   }
-  return stripe.subscriptions.update(subscriptionId, {
+  return stripe.instance.subscriptions.update(subscriptionId, {
     cancel_at_period_end: true,
   });
 }

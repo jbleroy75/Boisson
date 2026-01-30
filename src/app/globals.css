@@ -1,31 +1,64 @@
 @import "tailwindcss";
 
+/* Import distinctive fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
 :root {
   --color-orange: #FF6B35;
+  --color-orange-dark: #E55A2B;
+  --color-orange-light: #FF8F60;
   --color-green: #00D9A5;
+  --color-green-dark: #00B386;
   --color-pink: #FF1493;
-  --color-black: #1A1A1A;
-  --background: #ffffff;
-  --foreground: #1A1A1A;
+  --color-pink-light: #FF69B4;
+  --color-black: #0A0A0A;
+  --color-charcoal: #1A1A1A;
+  --color-cream: #FDF8F3;
+  --background: #FEFEFE;
+  --foreground: #0A0A0A;
+
+  /* Premium gradients */
+  --gradient-hero: linear-gradient(135deg, #FF6B35 0%, #FF1493 50%, #00D9A5 100%);
+  --gradient-sunset: linear-gradient(180deg, #FF6B35 0%, #FF1493 100%);
+  --gradient-tropical: linear-gradient(135deg, #00D9A5 0%, #00B386 100%);
+  --gradient-dark: linear-gradient(180deg, #1A1A1A 0%, #0A0A0A 100%);
+
+  /* Grain overlay */
+  --noise-opacity: 0.03;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-heading: var(--font-montserrat);
+  --font-sans: 'Outfit', system-ui, sans-serif;
+  --font-heading: 'Bebas Neue', system-ui, sans-serif;
 }
 
 /* Base styles */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-montserrat), system-ui, sans-serif;
-  font-weight: 700;
+  font-family: 'Bebas Neue', system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Noise texture overlay */
+.noise-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: var(--noise-opacity);
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* Custom scrollbar */
@@ -125,8 +158,108 @@ textarea:focus-visible {
   background-clip: text;
 }
 
+.text-gradient-tropical {
+  background: linear-gradient(135deg, var(--color-green) 0%, var(--color-orange) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .bg-gradient-brand {
   background: linear-gradient(135deg, var(--color-orange) 0%, var(--color-pink) 100%);
+}
+
+.bg-gradient-hero {
+  background: var(--gradient-hero);
+}
+
+/* Dramatic shadow utilities */
+.shadow-brutal {
+  box-shadow: 8px 8px 0px var(--color-black);
+}
+
+.shadow-brutal-sm {
+  box-shadow: 4px 4px 0px var(--color-black);
+}
+
+.shadow-glow-orange {
+  box-shadow: 0 0 60px rgba(255, 107, 53, 0.4);
+}
+
+.shadow-glow-pink {
+  box-shadow: 0 0 60px rgba(255, 20, 147, 0.4);
+}
+
+/* Geometric decorations */
+.geo-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  opacity: 0.1;
+}
+
+.geo-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid var(--color-orange);
+  opacity: 0.15;
+}
+
+/* Diagonal stripe pattern */
+.stripe-pattern {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 107, 53, 0.03) 10px,
+    rgba(255, 107, 53, 0.03) 20px
+  );
+}
+
+/* Dot grid pattern */
+.dot-pattern {
+  background-image: radial-gradient(circle, var(--color-orange) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.1;
+}
+
+/* Animated underline */
+.underline-animated {
+  position: relative;
+  display: inline-block;
+}
+
+.underline-animated::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--gradient-sunset);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.underline-animated:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Glass morphism */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Animation utilities - respect reduced motion */
@@ -152,6 +285,28 @@ textarea:focus-visible {
   }
 }
 
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @keyframes pulse-subtle {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.7; }
@@ -162,12 +317,70 @@ textarea:focus-visible {
   100% { background-position: 200% 0; }
 }
 
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes text-reveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes line-draw {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .animate-fade-in {
   animation: fade-in 0.6s ease-out forwards;
 }
 
 .animate-slide-up {
   animation: slide-up 0.8s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .animate-pulse-subtle {
@@ -180,12 +393,32 @@ textarea:focus-visible {
   animation: shimmer 1.5s infinite;
 }
 
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-rotate-slow {
+  animation: rotate-slow 20s linear infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
 /* Stagger animation delays */
 .delay-100 { animation-delay: 100ms; }
 .delay-200 { animation-delay: 200ms; }
 .delay-300 { animation-delay: 300ms; }
 .delay-400 { animation-delay: 400ms; }
 .delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+.delay-800 { animation-delay: 800ms; }
 
 /* Reduced motion - disable animations for users who prefer it */
 @media (prefers-reduced-motion: reduce) {
@@ -208,44 +441,126 @@ textarea:focus-visible {
   }
 }
 
-/* Product card hover effects */
+/* Product card hover effects - Premium style */
 .product-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  background: white;
+}
+
+.product-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+  pointer-events: none;
 }
 
 .product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
 }
 
-/* Button hover effects */
+.product-card:hover::after {
+  border-color: var(--color-orange);
+}
+
+/* Product card image zoom */
+.product-card .product-image {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.1);
+}
+
+/* Button hover effects - Bold style */
 .btn-primary {
   background-color: var(--color-orange);
   color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  transition: all 0.2s ease;
+  padding: 1rem 2rem;
+  border-radius: 0;
+  font-family: 'Bebas Neue', system-ui, sans-serif;
+  font-size: 1.125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 400;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--color-orange);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-black);
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-primary:hover {
-  background-color: #E55A2B;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+}
+
+.btn-primary:hover::before {
+  transform: translateY(0);
+}
+
+.btn-primary span {
+  position: relative;
+  z-index: 1;
 }
 
 .btn-secondary {
   background-color: transparent;
   color: var(--color-black);
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
+  padding: 1rem 2rem;
+  border-radius: 0;
+  font-family: 'Bebas Neue', system-ui, sans-serif;
+  font-size: 1.125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 400;
   border: 2px solid var(--color-black);
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-black);
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-secondary:hover {
-  background-color: var(--color-black);
   color: white;
+}
+
+.btn-secondary:hover::before {
+  transform: translateX(0);
+}
+
+.btn-secondary span {
+  position: relative;
+  z-index: 1;
+}
+
+/* Pill button variant */
+.btn-pill {
+  border-radius: 9999px;
+  padding: 0.75rem 1.75rem;
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 /* Flavor color backgrounds */
