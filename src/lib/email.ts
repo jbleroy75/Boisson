@@ -538,6 +538,170 @@ export async function sendB2BAdminNotification(data: B2BAdminNotificationData) {
   }
 }
 
+// Password Reset Email
+export interface PasswordResetEmailData {
+  email: string;
+  name: string | null;
+  resetToken: string;
+  resetUrl: string;
+}
+
+export async function sendPasswordResetEmail(data: PasswordResetEmailData) {
+  if (!resend) {
+    console.log('Email (dev mode):', 'Password reset', data);
+    return { success: true, id: 'dev-mode' };
+  }
+
+  const displayName = data.name || 'cher client';
+
+  try {
+    const result = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: data.email,
+      subject: 'Réinitialisation de votre mot de passe - Tamarque',
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head><meta charset="utf-8"></head>
+        <body style="font-family: 'Inter', Arial, sans-serif; margin: 0; padding: 0; background-color: #f5f5f5;">
+          <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+            <div style="background: linear-gradient(135deg, #FF6B35, #FF1493); padding: 40px 20px; text-align: center;">
+              <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Réinitialisation du mot de passe</h1>
+            </div>
+
+            <div style="padding: 40px 20px;">
+              <p style="font-size: 16px; color: #333;">Bonjour ${displayName},</p>
+              <p style="font-size: 16px; color: #666; line-height: 1.6;">
+                Vous avez demandé la réinitialisation de votre mot de passe.
+                Cliquez sur le bouton ci-dessous pour créer un nouveau mot de passe.
+              </p>
+
+              <div style="text-align: center; margin: 40px 0;">
+                <a href="${data.resetUrl}" style="display: inline-block; background-color: #FF6B35; color: #fff; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">
+                  Réinitialiser mon mot de passe
+                </a>
+              </div>
+
+              <div style="background-color: #fff3e0; border-left: 4px solid #FF6B35; padding: 15px 20px; margin: 30px 0;">
+                <p style="margin: 0; color: #666; font-size: 14px;">
+                  <strong>Ce lien expire dans 1 heure.</strong><br>
+                  Si vous n'avez pas demandé cette réinitialisation, ignorez simplement cet email.
+                </p>
+              </div>
+
+              <p style="font-size: 14px; color: #999; margin-top: 30px;">
+                Si le bouton ne fonctionne pas, copiez-collez ce lien dans votre navigateur :<br>
+                <span style="color: #666; word-break: break-all;">${data.resetUrl}</span>
+              </p>
+            </div>
+
+            <div style="background-color: #1A1A1A; padding: 30px 20px; text-align: center;">
+              <p style="color: #888; margin: 0 0 10px; font-size: 14px;">
+                Des questions ? Contactez-nous à contact@tamarque.com
+              </p>
+              <p style="color: #666; margin: 0; font-size: 12px;">
+                © 2024 Tamarque. Tous droits réservés.
+              </p>
+            </div>
+          </div>
+        </body>
+        </html>
+      `,
+    });
+
+    return { success: true, id: result.data?.id };
+  } catch (error) {
+    console.error('Failed to send password reset email:', error);
+    return { success: false, error };
+  }
+}
+
+// Payment Failed Email
+export interface PaymentFailedEmailData {
+  email: string;
+  name: string | null;
+  subscriptionId: string;
+  amount: number;
+  retryUrl: string;
+}
+
+export async function sendPaymentFailedEmail(data: PaymentFailedEmailData) {
+  if (!resend) {
+    console.log('Email (dev mode):', 'Payment failed', data);
+    return { success: true, id: 'dev-mode' };
+  }
+
+  const displayName = data.name || 'cher client';
+
+  try {
+    const result = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: data.email,
+      subject: 'Échec de paiement - Action requise - Tamarque',
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head><meta charset="utf-8"></head>
+        <body style="font-family: 'Inter', Arial, sans-serif; margin: 0; padding: 0; background-color: #f5f5f5;">
+          <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+            <div style="background-color: #FF4444; padding: 40px 20px; text-align: center;">
+              <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Échec de paiement</h1>
+            </div>
+
+            <div style="padding: 40px 20px;">
+              <p style="font-size: 16px; color: #333;">Bonjour ${displayName},</p>
+              <p style="font-size: 16px; color: #666; line-height: 1.6;">
+                Nous n'avons pas pu traiter votre paiement de <strong>€${data.amount.toFixed(2)}</strong>
+                pour votre abonnement Tamarque.
+              </p>
+
+              <div style="background-color: #FFF5F5; border-left: 4px solid #FF4444; padding: 20px; margin: 30px 0;">
+                <h3 style="margin: 0 0 10px; color: #FF4444;">Action requise</h3>
+                <p style="margin: 0; color: #666; font-size: 14px;">
+                  Veuillez mettre à jour vos informations de paiement pour éviter
+                  l'interruption de votre abonnement.
+                </p>
+              </div>
+
+              <div style="text-align: center; margin: 30px 0;">
+                <a href="${data.retryUrl}" style="display: inline-block; background-color: #FF6B35; color: #fff; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">
+                  Mettre à jour mon paiement
+                </a>
+              </div>
+
+              <p style="font-size: 14px; color: #666; line-height: 1.6;">
+                <strong>Raisons possibles :</strong>
+              </p>
+              <ul style="color: #666; font-size: 14px; line-height: 1.8;">
+                <li>Carte expirée</li>
+                <li>Fonds insuffisants</li>
+                <li>Informations de carte incorrectes</li>
+                <li>Blocage par votre banque</li>
+              </ul>
+
+              <p style="font-size: 14px; color: #999; margin-top: 30px;">
+                Si vous avez des questions, contactez-nous à support@tamarque.com
+              </p>
+            </div>
+
+            <div style="background-color: #1A1A1A; padding: 30px 20px; text-align: center;">
+              <p style="color: #666; margin: 0; font-size: 12px;">
+                © 2024 Tamarque. Tous droits réservés.
+              </p>
+            </div>
+          </div>
+        </body>
+        </html>
+      `,
+    });
+
+    return { success: true, id: result.data?.id };
+  } catch (error) {
+    console.error('Failed to send payment failed email:', error);
+    return { success: false, error };
+  }
+}
+
 // B2B Order Status Update
 export async function sendB2BOrderStatusUpdate(data: {
   to: string;

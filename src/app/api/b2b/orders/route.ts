@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { createServerSupabaseClient } from '@/lib/supabase';
+import { sendB2BOrderNotification } from '@/lib/email';
 import type { B2BOrderItem } from '@/types';
 
 // GET - Fetch orders for the authenticated distributor
@@ -133,8 +134,34 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to create order' }, { status: 500 });
     }
 
-    // TODO: Send confirmation email
-    // TODO: Notify admin of new order
+    // Get distributor details for email
+    const { data: distributorDetails } = await supabase
+      .from('distributors')
+      .select('company_name, user_id')
+      .eq('id', distributor.id)
+      .single();
+
+    const { data: userDetails } = await supabase
+      .from('users')
+      .select('email, name')
+      .eq('id', distributorDetails?.user_id)
+      .single();
+
+    // Send confirmation email to distributor and notify admin
+    if (distributorDetails && userDetails) {
+      await sendB2BOrderNotification({
+        distributorName: distributorDetails.company_name,
+        distributorEmail: userDetails.email,
+        orderId: order.id,
+        items: items.map((item) => ({
+          name: item.product_name,
+          quantity: item.quantity,
+          unitPrice: item.unit_price,
+        })),
+        total,
+        discount: discountPercent,
+      });
+    }
 
     return NextResponse.json({
       order,

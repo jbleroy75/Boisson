@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/lib/supabase';
+import { sendB2BRegistrationEmail, sendB2BAdminNotification } from '@/lib/email';
 
 interface ContactFormData {
   companyName: string;
@@ -99,8 +100,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // TODO: Send notification email to B2B team
-    // TODO: Send confirmation email to the requester
+    // Send confirmation email to the requester
+    await sendB2BRegistrationEmail({
+      to: email.trim().toLowerCase(),
+      companyName: companyName.trim(),
+      contactName: contactName.trim(),
+    });
+
+    // Send notification email to B2B team
+    await sendB2BAdminNotification({
+      clientId: data.id,
+      companyName: companyName.trim(),
+      email: email.trim().toLowerCase(),
+      companyType: region, // Using region as company type indicator
+      estimatedVolume,
+    });
 
     return NextResponse.json({
       success: true,

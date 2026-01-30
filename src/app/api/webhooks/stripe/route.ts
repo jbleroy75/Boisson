@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 import { stripe, STRIPE_WEBHOOK_EVENTS } from '@/lib/stripe';
 import { createServerSupabaseClient } from '@/lib/supabase';
+import { sendPaymentFailedEmail } from '@/lib/email';
 import type Stripe from 'stripe';
 
 // Disable body parsing, we need the raw body for signature verification
@@ -228,6 +229,7 @@ async function handleInvoicePaymentFailed(
   const invoiceData = invoice as unknown as {
     subscription: string | null;
     customer: string;
+    amount_due: number;
   };
 
   if (invoiceData.subscription) {
@@ -240,7 +242,31 @@ async function handleInvoicePaymentFailed(
       })
       .eq('stripe_subscription_id', invoiceData.subscription);
 
-    // TODO: Send email notification to user about failed payment
+    // Get user details from subscription
+    const { data: subscription } = await supabase
+      .from('subscriptions')
+      .select('user_id')
+      .eq('stripe_subscription_id', invoiceData.subscription)
+      .single();
+
+    if (subscription?.user_id) {
+      const { data: user } = await supabase
+        .from('users')
+        .select('email, name')
+        .eq('id', subscription.user_id)
+        .single();
+
+      if (user) {
+        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tamarque.com';
+        await sendPaymentFailedEmail({
+          email: user.email,
+          name: user.name,
+          subscriptionId: invoiceData.subscription,
+          amount: invoiceData.amount_due / 100, // Convert from cents
+          retryUrl: `${siteUrl}/account/subscription?retry=true`,
+        });
+      }
+    }
 
     console.log(`Invoice payment failed for subscription ${invoiceData.subscription}`);
   }

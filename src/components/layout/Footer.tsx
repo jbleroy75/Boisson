@@ -19,13 +19,22 @@ export default function Footer({ isB2B = false }: FooterProps) {
     setError(null);
 
     try {
-      // TODO: Integrate with Mailchimp
-      console.log('Newsletter signup:', email);
-      await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API call
+      const response = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Une erreur est survenue');
+      }
+
       setIsSubscribed(true);
       setEmail('');
-    } catch {
-      setError('Une erreur est survenue. Veuillez réessayer.');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Une erreur est survenue. Veuillez réessayer.');
     } finally {
       setIsLoading(false);
     }
