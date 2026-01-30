@@ -1,0 +1,182 @@
+{% comment %}
+  TAMARQUE - Abandoned Checkout Email
+  Copy this template into Shopify Admin > Settings > Notifications > Abandoned checkout
+{% endcomment %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Tu as oublié quelque chose... - Tamarque</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f5f5f5; font-family: 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+
+  <!-- Preview Text -->
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    👀 Hey ! Tu as laissé des produits dans ton panier. Ils t'attendent toujours !
+  </div>
+
+  <!-- Email Container -->
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f5f5f5;">
+    <tr>
+      <td align="center" style="padding: 40px 20px;">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
+
+          <!-- Header -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #1A1A1A 0%, #333333 100%); padding: 48px 40px; text-align: center;">
+              <!-- Logo -->
+              <div style="margin-bottom: 24px;">
+                <span style="font-size: 32px; font-weight: 800; color: #ffffff; letter-spacing: -1px;">TAMARQUE</span>
+              </div>
+              <!-- Eyes Icon -->
+              <div style="width: 72px; height: 72px; background-color: rgba(255,107,53,0.2); border-radius: 50%; margin: 0 auto 20px; line-height: 72px;">
+                <span style="font-size: 36px;">👀</span>
+              </div>
+              <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 700;">
+                Tu as oublié quelque chose...
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 40px;">
+
+              <!-- Greeting -->
+              <p style="font-size: 18px; color: #1A1A1A; margin: 0 0 16px;">
+                Hey {{ billing_address.first_name | default: "toi" }} !
+              </p>
+              <p style="font-size: 16px; color: #666666; line-height: 1.6; margin: 0 0 32px;">
+                On a remarqué que tu as laissé des produits dans ton panier.
+                Pas de stress, ils t'attendent toujours ! Mais ne tarde pas trop,
+                ils sont très demandés. 😉
+              </p>
+
+              <!-- Cart Items -->
+              <div style="background-color: #FAFAFA; border-radius: 12px; padding: 24px; margin-bottom: 32px;">
+                <h3 style="font-size: 14px; color: #1A1A1A; margin: 0 0 20px; text-transform: uppercase; letter-spacing: 1px;">
+                  🛒 Ton panier t'attend
+                </h3>
+
+                {% for line_item in line_items %}
+                <div style="display: table; width: 100%; {% unless forloop.last %}border-bottom: 1px solid #EEEEEE; padding-bottom: 16px; margin-bottom: 16px;{% endunless %}">
+                  <div style="display: table-cell; width: 70px; vertical-align: middle;">
+                    {% if line_item.image %}
+                    <img src="{{ line_item.image | img_url: '140x140' }}" alt="{{ line_item.title }}" width="60" height="60" style="border-radius: 10px; object-fit: cover;">
+                    {% else %}
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #FF6B35, #FF1493); border-radius: 10px;"></div>
+                    {% endif %}
+                  </div>
+                  <div style="display: table-cell; padding-left: 16px; vertical-align: middle;">
+                    <p style="margin: 0 0 4px; font-size: 15px; font-weight: 600; color: #1A1A1A;">
+                      {{ line_item.title }}
+                    </p>
+                    {% if line_item.variant_title != blank %}
+                    <p style="margin: 0 0 4px; font-size: 13px; color: #888888;">
+                      {{ line_item.variant_title }}
+                    </p>
+                    {% endif %}
+                    <p style="margin: 0; font-size: 13px; color: #888888;">
+                      Qté: {{ line_item.quantity }}
+                    </p>
+                  </div>
+                  <div style="display: table-cell; text-align: right; vertical-align: middle;">
+                    <p style="margin: 0; font-size: 16px; font-weight: 700; color: #FF6B35;">
+                      {{ line_item.final_line_price | money }}
+                    </p>
+                  </div>
+                </div>
+                {% endfor %}
+
+                <!-- Total -->
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #FF6B35;">
+                  <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td style="font-size: 16px; color: #1A1A1A;">Sous-total</td>
+                      <td style="text-align: right; font-size: 18px; font-weight: 700; color: #1A1A1A;">{{ subtotal_price | money }}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+
+              <!-- CTA Button -->
+              <div style="text-align: center; margin: 40px 0;">
+                <a href="{{ abandoned_checkout_url }}" style="display: inline-block; background: linear-gradient(135deg, #FF6B35 0%, #FF1493 100%); color: #ffffff; padding: 18px 48px; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 17px; box-shadow: 0 4px 16px rgba(255,107,53,0.4);">
+                  Finaliser ma commande →
+                </a>
+              </div>
+
+              <!-- Urgency -->
+              <div style="text-align: center; padding: 20px; background-color: #FFF9F5; border-radius: 12px; border: 1px dashed #FF6B35; margin-bottom: 32px;">
+                <p style="margin: 0; font-size: 14px; color: #1A1A1A;">
+                  ⏰ <strong>Ton panier est réservé pendant 24h</strong><br>
+                  <span style="color: #666666;">Après ça, on ne peut plus te garantir la disponibilité.</span>
+                </p>
+              </div>
+
+              <!-- Benefits Reminder -->
+              <div style="margin-bottom: 32px;">
+                <h3 style="font-size: 14px; color: #1A1A1A; margin: 0 0 16px; text-align: center;">
+                  Pourquoi commander chez Tamarque ?
+                </h3>
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td style="width: 33%; text-align: center; padding: 12px;">
+                      <div style="font-size: 24px; margin-bottom: 8px;">🚚</div>
+                      <p style="margin: 0; font-size: 13px; color: #666666;">Livraison gratuite<br>dès 49€</p>
+                    </td>
+                    <td style="width: 33%; text-align: center; padding: 12px;">
+                      <div style="font-size: 24px; margin-bottom: 8px;">↩️</div>
+                      <p style="margin: 0; font-size: 13px; color: #666666;">Retours gratuits<br>sous 30 jours</p>
+                    </td>
+                    <td style="width: 33%; text-align: center; padding: 12px;">
+                      <div style="font-size: 24px; margin-bottom: 8px;">💬</div>
+                      <p style="margin: 0; font-size: 13px; color: #666666;">Support réactif<br>7j/7</p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- Need Help -->
+              <div style="text-align: center;">
+                <p style="margin: 0; font-size: 14px; color: #666666;">
+                  Une question ? Réponds à cet email, on est là pour t'aider !
+                </p>
+              </div>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #1A1A1A; padding: 40px; text-align: center;">
+              <!-- Logo -->
+              <div style="margin-bottom: 20px;">
+                <span style="font-size: 24px; font-weight: 800; color: #ffffff; letter-spacing: -1px;">TAMARQUE</span>
+              </div>
+
+              <!-- Social Links -->
+              <div style="margin-bottom: 24px;">
+                <a href="https://instagram.com/tamarque" style="display: inline-block; margin: 0 8px; color: #888888; text-decoration: none; font-size: 14px;">Instagram</a>
+                <span style="color: #444;">•</span>
+                <a href="https://tiktok.com/@tamarque" style="display: inline-block; margin: 0 8px; color: #888888; text-decoration: none; font-size: 14px;">TikTok</a>
+              </div>
+
+              <!-- Legal -->
+              <p style="color: #666666; margin: 0; font-size: 12px; line-height: 1.6;">
+                © {{ 'now' | date: "%Y" }} Tamarque SAS. Tous droits réservés.<br>
+                <a href="{{ shop.url }}/unsubscribe" style="color: #666666;">Se désinscrire</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

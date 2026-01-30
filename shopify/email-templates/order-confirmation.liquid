@@ -1,0 +1,246 @@
+{% comment %}
+  TAMARQUE - Order Confirmation Email
+  Copy this template into Shopify Admin > Settings > Notifications > Order confirmation
+{% endcomment %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Confirmation de commande - Tamarque</title>
+  <!--[if mso]>
+  <style type="text/css">
+    body, table, td {font-family: Arial, sans-serif !important;}
+  </style>
+  <![endif]-->
+</head>
+<body style="margin: 0; padding: 0; background-color: #f5f5f5; font-family: 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+
+  <!-- Preview Text -->
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    Merci {{ customer.first_name }} ! Votre commande #{{ order_name }} est confirmée.
+  </div>
+
+  <!-- Email Container -->
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f5f5f5;">
+    <tr>
+      <td align="center" style="padding: 40px 20px;">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
+
+          <!-- Header with Gradient -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #FF6B35 0%, #FF1493 100%); padding: 48px 40px; text-align: center;">
+              <!-- Logo -->
+              <div style="margin-bottom: 24px;">
+                <span style="font-size: 32px; font-weight: 800; color: #ffffff; letter-spacing: -1px;">TAMARQUE</span>
+              </div>
+              <!-- Success Icon -->
+              <div style="width: 72px; height: 72px; background-color: rgba(255,255,255,0.2); border-radius: 50%; margin: 0 auto 20px; line-height: 72px;">
+                <span style="font-size: 36px;">✓</span>
+              </div>
+              <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 700;">
+                Commande confirmée !
+              </h1>
+              <p style="color: rgba(255,255,255,0.9); margin: 12px 0 0; font-size: 16px;">
+                Merci pour votre achat
+              </p>
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 40px;">
+
+              <!-- Greeting -->
+              <p style="font-size: 18px; color: #1A1A1A; margin: 0 0 16px;">
+                Bonjour <strong>{{ customer.first_name | default: "cher client" }}</strong>,
+              </p>
+              <p style="font-size: 16px; color: #666666; line-height: 1.6; margin: 0 0 32px;">
+                Nous avons bien reçu votre commande <strong style="color: #FF6B35;">#{{ order_name }}</strong>.
+                Elle est en cours de préparation et vous recevrez un email dès son expédition.
+              </p>
+
+              <!-- Order Summary Box -->
+              <div style="background-color: #FAFAFA; border-radius: 12px; padding: 24px; margin-bottom: 32px;">
+                <h2 style="font-size: 16px; color: #1A1A1A; margin: 0 0 20px; text-transform: uppercase; letter-spacing: 1px;">
+                  📦 Récapitulatif
+                </h2>
+
+                <!-- Order Items -->
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                  {% for line_item in line_items %}
+                  <tr>
+                    <td style="padding: 16px 0; border-bottom: 1px solid #EEEEEE;">
+                      <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td width="60" style="vertical-align: top;">
+                            {% if line_item.image %}
+                            <img src="{{ line_item.image | img_url: '120x120' }}" alt="{{ line_item.title }}" width="56" height="56" style="border-radius: 8px; object-fit: cover;">
+                            {% else %}
+                            <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #FF6B35, #FF1493); border-radius: 8px;"></div>
+                            {% endif %}
+                          </td>
+                          <td style="padding-left: 16px; vertical-align: top;">
+                            <p style="margin: 0 0 4px; font-size: 15px; font-weight: 600; color: #1A1A1A;">
+                              {{ line_item.title }}
+                            </p>
+                            {% if line_item.variant_title != blank %}
+                            <p style="margin: 0 0 4px; font-size: 13px; color: #888888;">
+                              {{ line_item.variant_title }}
+                            </p>
+                            {% endif %}
+                            <p style="margin: 0; font-size: 13px; color: #888888;">
+                              Qté: {{ line_item.quantity }}
+                            </p>
+                          </td>
+                          <td style="text-align: right; vertical-align: top;">
+                            <p style="margin: 0; font-size: 15px; font-weight: 600; color: #1A1A1A;">
+                              {{ line_item.final_line_price | money }}
+                            </p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </table>
+
+                <!-- Totals -->
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top: 20px;">
+                  <tr>
+                    <td style="padding: 8px 0; color: #666666; font-size: 14px;">Sous-total</td>
+                    <td style="padding: 8px 0; text-align: right; font-size: 14px;">{{ subtotal_price | money }}</td>
+                  </tr>
+                  {% if discounts_amount > 0 %}
+                  <tr>
+                    <td style="padding: 8px 0; color: #00D9A5; font-size: 14px;">
+                      Réduction
+                      {% for discount in discounts %}
+                        <span style="font-size: 12px;">({{ discount.code }})</span>
+                      {% endfor %}
+                    </td>
+                    <td style="padding: 8px 0; text-align: right; color: #00D9A5; font-size: 14px;">-{{ discounts_amount | money }}</td>
+                  </tr>
+                  {% endif %}
+                  <tr>
+                    <td style="padding: 8px 0; color: #666666; font-size: 14px;">Livraison</td>
+                    <td style="padding: 8px 0; text-align: right; font-size: 14px;">
+                      {% if shipping_price == 0 %}
+                        <span style="color: #00D9A5; font-weight: 600;">Gratuite ✨</span>
+                      {% else %}
+                        {{ shipping_price | money }}
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% if total_tax > 0 %}
+                  <tr>
+                    <td style="padding: 8px 0; color: #666666; font-size: 14px;">TVA</td>
+                    <td style="padding: 8px 0; text-align: right; font-size: 14px;">{{ total_tax | money }}</td>
+                  </tr>
+                  {% endif %}
+                  <tr>
+                    <td colspan="2" style="padding-top: 16px; border-top: 2px solid #FF6B35;"></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; font-size: 18px; font-weight: 700; color: #1A1A1A;">Total</td>
+                    <td style="padding: 8px 0; text-align: right; font-size: 20px; font-weight: 700; color: #FF6B35;">{{ total_price | money }}</td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- Shipping Address -->
+              {% if requires_shipping %}
+              <div style="margin-bottom: 32px;">
+                <h3 style="font-size: 14px; color: #1A1A1A; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 1px;">
+                  🚚 Livraison
+                </h3>
+                <div style="background-color: #FAFAFA; border-radius: 12px; padding: 20px;">
+                  <p style="margin: 0; font-size: 15px; color: #1A1A1A; line-height: 1.6;">
+                    {{ shipping_address.name }}<br>
+                    {{ shipping_address.street }}<br>
+                    {{ shipping_address.zip }} {{ shipping_address.city }}<br>
+                    {{ shipping_address.country }}
+                  </p>
+                </div>
+              </div>
+              {% endif %}
+
+              <!-- Payment Method -->
+              <div style="margin-bottom: 32px;">
+                <h3 style="font-size: 14px; color: #1A1A1A; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 1px;">
+                  💳 Paiement
+                </h3>
+                <div style="background-color: #FAFAFA; border-radius: 12px; padding: 20px;">
+                  {% for transaction in transactions %}
+                    <p style="margin: 0; font-size: 15px; color: #1A1A1A;">
+                      {{ transaction.gateway_display_name }} - {{ transaction.amount | money }}
+                      {% if transaction.status == "success" %}
+                        <span style="color: #00D9A5;">✓ Payé</span>
+                      {% endif %}
+                    </p>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- CTA Button -->
+              <div style="text-align: center; margin: 40px 0;">
+                <a href="{{ shop.url }}/account" style="display: inline-block; background: linear-gradient(135deg, #FF6B35 0%, #FF1493 100%); color: #ffffff; padding: 16px 40px; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 16px; box-shadow: 0 4px 16px rgba(255,107,53,0.4);">
+                  Suivre ma commande →
+                </a>
+              </div>
+
+              <!-- Need Help -->
+              <div style="text-align: center; padding: 24px; background-color: #FFF9F5; border-radius: 12px; border: 1px dashed #FF6B35;">
+                <p style="margin: 0 0 8px; font-size: 14px; color: #1A1A1A; font-weight: 600;">
+                  Une question ?
+                </p>
+                <p style="margin: 0; font-size: 14px; color: #666666;">
+                  Répondez à cet email ou contactez-nous à<br>
+                  <a href="mailto:contact@tamarque.com" style="color: #FF6B35; text-decoration: none; font-weight: 600;">contact@tamarque.com</a>
+                </p>
+              </div>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #1A1A1A; padding: 40px; text-align: center;">
+              <!-- Logo -->
+              <div style="margin-bottom: 20px;">
+                <span style="font-size: 24px; font-weight: 800; color: #ffffff; letter-spacing: -1px;">TAMARQUE</span>
+              </div>
+
+              <!-- Social Links -->
+              <div style="margin-bottom: 24px;">
+                <a href="https://instagram.com/tamarque" style="display: inline-block; margin: 0 8px; color: #888888; text-decoration: none; font-size: 14px;">Instagram</a>
+                <span style="color: #444;">•</span>
+                <a href="https://tiktok.com/@tamarque" style="display: inline-block; margin: 0 8px; color: #888888; text-decoration: none; font-size: 14px;">TikTok</a>
+                <span style="color: #444;">•</span>
+                <a href="https://facebook.com/tamarque" style="display: inline-block; margin: 0 8px; color: #888888; text-decoration: none; font-size: 14px;">Facebook</a>
+              </div>
+
+              <!-- Links -->
+              <div style="margin-bottom: 24px;">
+                <a href="{{ shop.url }}/faq" style="color: #888888; text-decoration: none; font-size: 13px; margin: 0 12px;">FAQ</a>
+                <a href="{{ shop.url }}/retours" style="color: #888888; text-decoration: none; font-size: 13px; margin: 0 12px;">Retours</a>
+                <a href="{{ shop.url }}/contact" style="color: #888888; text-decoration: none; font-size: 13px; margin: 0 12px;">Contact</a>
+              </div>
+
+              <!-- Legal -->
+              <p style="color: #666666; margin: 0; font-size: 12px; line-height: 1.6;">
+                © {{ 'now' | date: "%Y" }} Tamarque SAS. Tous droits réservés.<br>
+                123 Avenue de la Performance, 75008 Paris
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

@@ -1,0 +1,194 @@
+{% comment %}
+  TAMARQUE - Shipping Confirmation Email
+  Copy this template into Shopify Admin > Settings > Notifications > Shipping confirmation
+{% endcomment %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Votre commande est en route - Tamarque</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f5f5f5; font-family: 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+
+  <!-- Preview Text -->
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    🚀 Votre commande #{{ order_name }} est en route ! Suivez votre colis en temps réel.
+  </div>
+
+  <!-- Email Container -->
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f5f5f5;">
+    <tr>
+      <td align="center" style="padding: 40px 20px;">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
+
+          <!-- Header with Green Gradient (Shipped!) -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #00D9A5 0%, #00B589 100%); padding: 48px 40px; text-align: center;">
+              <!-- Logo -->
+              <div style="margin-bottom: 24px;">
+                <span style="font-size: 32px; font-weight: 800; color: #ffffff; letter-spacing: -1px;">TAMARQUE</span>
+              </div>
+              <!-- Truck Icon -->
+              <div style="width: 72px; height: 72px; background-color: rgba(255,255,255,0.2); border-radius: 50%; margin: 0 auto 20px; line-height: 72px;">
+                <span style="font-size: 36px;">🚚</span>
+              </div>
+              <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 700;">
+                C'est parti !
+              </h1>
+              <p style="color: rgba(255,255,255,0.9); margin: 12px 0 0; font-size: 16px;">
+                Votre commande est en route
+              </p>
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 40px;">
+
+              <!-- Greeting -->
+              <p style="font-size: 18px; color: #1A1A1A; margin: 0 0 16px;">
+                Super nouvelle <strong>{{ customer.first_name | default: "" }}</strong> !
+              </p>
+              <p style="font-size: 16px; color: #666666; line-height: 1.6; margin: 0 0 32px;">
+                Votre commande <strong style="color: #FF6B35;">#{{ order_name }}</strong> vient d'être expédiée
+                et est en route vers vous. Vous pouvez suivre son acheminement en temps réel.
+              </p>
+
+              <!-- Tracking Box -->
+              <div style="background: linear-gradient(135deg, #FF6B35 0%, #FF1493 100%); border-radius: 16px; padding: 32px; margin-bottom: 32px; text-align: center;">
+                <p style="margin: 0 0 8px; font-size: 14px; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 1px;">
+                  Numéro de suivi
+                </p>
+                <p style="margin: 0 0 24px; font-size: 24px; font-weight: 700; color: #ffffff; font-family: monospace; letter-spacing: 2px;">
+                  {{ fulfillment.tracking_number | default: "En cours de génération" }}
+                </p>
+
+                {% if fulfillment.tracking_url %}
+                <a href="{{ fulfillment.tracking_url }}" style="display: inline-block; background-color: #ffffff; color: #FF6B35; padding: 14px 32px; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 15px;">
+                  📍 Suivre mon colis
+                </a>
+                {% endif %}
+              </div>
+
+              <!-- Delivery Info -->
+              <div style="display: table; width: 100%; margin-bottom: 32px;">
+                <div style="display: table-cell; width: 50%; vertical-align: top; padding-right: 12px;">
+                  <div style="background-color: #FAFAFA; border-radius: 12px; padding: 20px; height: 100%;">
+                    <p style="margin: 0 0 8px; font-size: 12px; color: #888888; text-transform: uppercase; letter-spacing: 1px;">
+                      📦 Transporteur
+                    </p>
+                    <p style="margin: 0; font-size: 16px; font-weight: 600; color: #1A1A1A;">
+                      {{ fulfillment.tracking_company | default: "Standard" }}
+                    </p>
+                  </div>
+                </div>
+                <div style="display: table-cell; width: 50%; vertical-align: top; padding-left: 12px;">
+                  <div style="background-color: #FAFAFA; border-radius: 12px; padding: 20px; height: 100%;">
+                    <p style="margin: 0 0 8px; font-size: 12px; color: #888888; text-transform: uppercase; letter-spacing: 1px;">
+                      🗓 Livraison estimée
+                    </p>
+                    <p style="margin: 0; font-size: 16px; font-weight: 600; color: #1A1A1A;">
+                      2-4 jours ouvrés
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Items Shipped -->
+              <div style="margin-bottom: 32px;">
+                <h3 style="font-size: 14px; color: #1A1A1A; margin: 0 0 16px; text-transform: uppercase; letter-spacing: 1px;">
+                  Contenu du colis
+                </h3>
+                <div style="background-color: #FAFAFA; border-radius: 12px; padding: 20px;">
+                  {% for line_item in fulfillment.fulfillment_line_items %}
+                  <div style="display: table; width: 100%; {% unless forloop.last %}border-bottom: 1px solid #EEEEEE; padding-bottom: 16px; margin-bottom: 16px;{% endunless %}">
+                    <div style="display: table-cell; width: 50px; vertical-align: middle;">
+                      {% if line_item.line_item.image %}
+                      <img src="{{ line_item.line_item.image | img_url: '100x100' }}" alt="{{ line_item.line_item.title }}" width="44" height="44" style="border-radius: 8px; object-fit: cover;">
+                      {% else %}
+                      <div style="width: 44px; height: 44px; background: linear-gradient(135deg, #FF6B35, #FF1493); border-radius: 8px;"></div>
+                      {% endif %}
+                    </div>
+                    <div style="display: table-cell; padding-left: 12px; vertical-align: middle;">
+                      <p style="margin: 0; font-size: 14px; font-weight: 600; color: #1A1A1A;">
+                        {{ line_item.line_item.title }}
+                      </p>
+                      <p style="margin: 4px 0 0; font-size: 13px; color: #888888;">
+                        Qté: {{ line_item.quantity }}
+                      </p>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Shipping Address -->
+              <div style="margin-bottom: 32px;">
+                <h3 style="font-size: 14px; color: #1A1A1A; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 1px;">
+                  📍 Adresse de livraison
+                </h3>
+                <div style="background-color: #FAFAFA; border-radius: 12px; padding: 20px;">
+                  <p style="margin: 0; font-size: 15px; color: #1A1A1A; line-height: 1.6;">
+                    {{ shipping_address.name }}<br>
+                    {{ shipping_address.street }}<br>
+                    {{ shipping_address.zip }} {{ shipping_address.city }}<br>
+                    {{ shipping_address.country }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Tips Box -->
+              <div style="background-color: #FFF9F5; border-radius: 12px; padding: 24px; border-left: 4px solid #FF6B35;">
+                <p style="margin: 0 0 8px; font-size: 15px; font-weight: 600; color: #1A1A1A;">
+                  💡 Le saviez-vous ?
+                </p>
+                <p style="margin: 0; font-size: 14px; color: #666666; line-height: 1.6;">
+                  Nos boissons sont meilleures bien fraîches ! Placez-les au réfrigérateur dès réception pour une expérience optimale.
+                </p>
+              </div>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #1A1A1A; padding: 40px; text-align: center;">
+              <!-- Logo -->
+              <div style="margin-bottom: 20px;">
+                <span style="font-size: 24px; font-weight: 800; color: #ffffff; letter-spacing: -1px;">TAMARQUE</span>
+              </div>
+
+              <!-- Social Links -->
+              <div style="margin-bottom: 24px;">
+                <a href="https://instagram.com/tamarque" style="display: inline-block; margin: 0 8px; color: #888888; text-decoration: none; font-size: 14px;">Instagram</a>
+                <span style="color: #444;">•</span>
+                <a href="https://tiktok.com/@tamarque" style="display: inline-block; margin: 0 8px; color: #888888; text-decoration: none; font-size: 14px;">TikTok</a>
+                <span style="color: #444;">•</span>
+                <a href="https://facebook.com/tamarque" style="display: inline-block; margin: 0 8px; color: #888888; text-decoration: none; font-size: 14px;">Facebook</a>
+              </div>
+
+              <!-- Links -->
+              <div style="margin-bottom: 24px;">
+                <a href="{{ shop.url }}/faq" style="color: #888888; text-decoration: none; font-size: 13px; margin: 0 12px;">FAQ</a>
+                <a href="{{ shop.url }}/retours" style="color: #888888; text-decoration: none; font-size: 13px; margin: 0 12px;">Retours</a>
+                <a href="{{ shop.url }}/contact" style="color: #888888; text-decoration: none; font-size: 13px; margin: 0 12px;">Contact</a>
+              </div>
+
+              <!-- Legal -->
+              <p style="color: #666666; margin: 0; font-size: 12px; line-height: 1.6;">
+                © {{ 'now' | date: "%Y" }} Tamarque SAS. Tous droits réservés.<br>
+                123 Avenue de la Performance, 75008 Paris
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

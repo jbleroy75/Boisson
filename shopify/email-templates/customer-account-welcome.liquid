@@ -1,0 +1,198 @@
+{% comment %}
+  TAMARQUE - Customer Welcome Email
+  Copy this template into Shopify Admin > Settings > Notifications > Customer account welcome
+{% endcomment %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Bienvenue chez Tamarque !</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f5f5f5; font-family: 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+
+  <!-- Preview Text -->
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    🎉 Bienvenue dans la team Tamarque ! Voici 15% de réduction sur votre première commande.
+  </div>
+
+  <!-- Email Container -->
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f5f5f5;">
+    <tr>
+      <td align="center" style="padding: 40px 20px;">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
+
+          <!-- Header with Gradient -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #FF6B35 0%, #FF1493 100%); padding: 48px 40px; text-align: center;">
+              <!-- Logo -->
+              <div style="margin-bottom: 24px;">
+                <span style="font-size: 32px; font-weight: 800; color: #ffffff; letter-spacing: -1px;">TAMARQUE</span>
+              </div>
+              <!-- Party Icon -->
+              <div style="width: 72px; height: 72px; background-color: rgba(255,255,255,0.2); border-radius: 50%; margin: 0 auto 20px; line-height: 72px;">
+                <span style="font-size: 36px;">🎉</span>
+              </div>
+              <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 700;">
+                Bienvenue dans la team !
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 40px;">
+
+              <!-- Greeting -->
+              <p style="font-size: 18px; color: #1A1A1A; margin: 0 0 16px;">
+                Hey <strong>{{ customer.first_name | default: "toi" }}</strong> ! 👋
+              </p>
+              <p style="font-size: 16px; color: #666666; line-height: 1.6; margin: 0 0 32px;">
+                On est super contents de t'accueillir chez Tamarque. Tu viens de rejoindre une communauté
+                de sportifs qui ne font aucun compromis sur le goût ET la nutrition.
+              </p>
+
+              <!-- Promo Code Box -->
+              <div style="background: linear-gradient(135deg, #FF6B35 0%, #FF1493 100%); border-radius: 16px; padding: 32px; margin-bottom: 32px; text-align: center;">
+                <p style="margin: 0 0 8px; font-size: 14px; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 1px;">
+                  🎁 Ton cadeau de bienvenue
+                </p>
+                <p style="margin: 0 0 8px; font-size: 36px; font-weight: 800; color: #ffffff;">
+                  -15%
+                </p>
+                <p style="margin: 0 0 20px; font-size: 14px; color: rgba(255,255,255,0.9);">
+                  sur ta première commande
+                </p>
+                <div style="background-color: #ffffff; border-radius: 8px; padding: 16px; display: inline-block;">
+                  <span style="font-family: monospace; font-size: 24px; font-weight: 700; color: #FF6B35; letter-spacing: 3px;">WELCOME15</span>
+                </div>
+              </div>
+
+              <!-- Benefits -->
+              <div style="margin-bottom: 32px;">
+                <h3 style="font-size: 16px; color: #1A1A1A; margin: 0 0 20px;">
+                  Pourquoi tu vas adorer Tamarque :
+                </h3>
+
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #EEEEEE;">
+                      <table role="presentation" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td style="width: 48px; vertical-align: top;">
+                            <div style="width: 40px; height: 40px; background-color: #FFF0EB; border-radius: 10px; text-align: center; line-height: 40px; font-size: 20px;">💪</div>
+                          </td>
+                          <td style="padding-left: 12px; vertical-align: middle;">
+                            <p style="margin: 0; font-size: 15px; font-weight: 600; color: #1A1A1A;">20g de protéines</p>
+                            <p style="margin: 4px 0 0; font-size: 13px; color: #888888;">Par bouteille, pour une récupération optimale</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #EEEEEE;">
+                      <table role="presentation" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td style="width: 48px; vertical-align: top;">
+                            <div style="width: 40px; height: 40px; background-color: #E8FFF6; border-radius: 10px; text-align: center; line-height: 40px; font-size: 20px;">🍵</div>
+                          </td>
+                          <td style="padding-left: 12px; vertical-align: middle;">
+                            <p style="margin: 0; font-size: 15px; font-weight: 600; color: #1A1A1A;">Texture ice tea</p>
+                            <p style="margin: 4px 0 0; font-size: 13px; color: #888888;">Légère et rafraîchissante, pas de texture lourde</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #EEEEEE;">
+                      <table role="presentation" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td style="width: 48px; vertical-align: top;">
+                            <div style="width: 40px; height: 40px; background-color: #FFF5E6; border-radius: 10px; text-align: center; line-height: 40px; font-size: 20px;">🌿</div>
+                          </td>
+                          <td style="padding-left: 12px; vertical-align: middle;">
+                            <p style="margin: 0; font-size: 15px; font-weight: 600; color: #1A1A1A;">100% naturel</p>
+                            <p style="margin: 4px 0 0; font-size: 13px; color: #888888;">Sans sucres ajoutés, sans additifs artificiels</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 12px 0;">
+                      <table role="presentation" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td style="width: 48px; vertical-align: top;">
+                            <div style="width: 40px; height: 40px; background-color: #F0E6FF; border-radius: 10px; text-align: center; line-height: 40px; font-size: 20px;">✨</div>
+                          </td>
+                          <td style="padding-left: 12px; vertical-align: middle;">
+                            <p style="margin: 0; font-size: 15px; font-weight: 600; color: #1A1A1A;">Zéro ballonnement</p>
+                            <p style="margin: 4px 0 0; font-size: 13px; color: #888888;">Digestion facile grâce à notre formule unique</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- CTA Button -->
+              <div style="text-align: center; margin: 40px 0;">
+                <a href="{{ shop.url }}/shop" style="display: inline-block; background: linear-gradient(135deg, #FF6B35 0%, #FF1493 100%); color: #ffffff; padding: 16px 40px; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 16px; box-shadow: 0 4px 16px rgba(255,107,53,0.4);">
+                  Découvrir nos saveurs →
+                </a>
+              </div>
+
+              <!-- Social Follow -->
+              <div style="text-align: center; padding: 24px; background-color: #FAFAFA; border-radius: 12px;">
+                <p style="margin: 0 0 16px; font-size: 14px; color: #1A1A1A; font-weight: 600;">
+                  Rejoins-nous sur les réseaux ! 📱
+                </p>
+                <div>
+                  <a href="https://instagram.com/tamarque" style="display: inline-block; margin: 0 8px; padding: 10px 20px; background-color: #ffffff; border-radius: 8px; text-decoration: none; font-size: 14px; color: #1A1A1A; border: 1px solid #EEEEEE;">Instagram</a>
+                  <a href="https://tiktok.com/@tamarque" style="display: inline-block; margin: 0 8px; padding: 10px 20px; background-color: #ffffff; border-radius: 8px; text-decoration: none; font-size: 14px; color: #1A1A1A; border: 1px solid #EEEEEE;">TikTok</a>
+                </div>
+              </div>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #1A1A1A; padding: 40px; text-align: center;">
+              <!-- Logo -->
+              <div style="margin-bottom: 20px;">
+                <span style="font-size: 24px; font-weight: 800; color: #ffffff; letter-spacing: -1px;">TAMARQUE</span>
+              </div>
+
+              <!-- Tagline -->
+              <p style="color: #FF6B35; margin: 0 0 20px; font-size: 14px; font-weight: 600;">
+                Protein drinks that actually taste good.
+              </p>
+
+              <!-- Links -->
+              <div style="margin-bottom: 24px;">
+                <a href="{{ shop.url }}/faq" style="color: #888888; text-decoration: none; font-size: 13px; margin: 0 12px;">FAQ</a>
+                <a href="{{ shop.url }}/blog" style="color: #888888; text-decoration: none; font-size: 13px; margin: 0 12px;">Blog</a>
+                <a href="{{ shop.url }}/contact" style="color: #888888; text-decoration: none; font-size: 13px; margin: 0 12px;">Contact</a>
+              </div>
+
+              <!-- Legal -->
+              <p style="color: #666666; margin: 0; font-size: 12px; line-height: 1.6;">
+                © {{ 'now' | date: "%Y" }} Tamarque SAS. Tous droits réservés.<br>
+                <a href="{{ shop.url }}/unsubscribe" style="color: #666666;">Se désinscrire</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

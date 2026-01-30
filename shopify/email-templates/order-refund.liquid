@@ -1,0 +1,185 @@
+{% comment %}
+  TAMARQUE - Order Refund Email
+  Copy this template into Shopify Admin > Settings > Notifications > Order refund
+{% endcomment %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Confirmation de remboursement - Tamarque</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f5f5f5; font-family: 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+
+  <!-- Preview Text -->
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    💸 Votre remboursement de {{ refund.transactions.first.amount | money }} a été effectué
+  </div>
+
+  <!-- Email Container -->
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f5f5f5;">
+    <tr>
+      <td align="center" style="padding: 40px 20px;">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
+
+          <!-- Header -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #00D9A5 0%, #00B589 100%); padding: 48px 40px; text-align: center;">
+              <!-- Logo -->
+              <div style="margin-bottom: 24px;">
+                <span style="font-size: 32px; font-weight: 800; color: #ffffff; letter-spacing: -1px;">TAMARQUE</span>
+              </div>
+              <!-- Money Icon -->
+              <div style="width: 72px; height: 72px; background-color: rgba(255,255,255,0.2); border-radius: 50%; margin: 0 auto 20px; line-height: 72px;">
+                <span style="font-size: 36px;">💸</span>
+              </div>
+              <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 700;">
+                Remboursement effectué
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 40px;">
+
+              <!-- Greeting -->
+              <p style="font-size: 18px; color: #1A1A1A; margin: 0 0 16px;">
+                Bonjour {{ customer.first_name | default: "" }},
+              </p>
+              <p style="font-size: 16px; color: #666666; line-height: 1.6; margin: 0 0 32px;">
+                Nous avons procédé au remboursement de votre commande <strong style="color: #FF6B35;">#{{ order_name }}</strong>.
+                Le montant sera crédité sur votre moyen de paiement original.
+              </p>
+
+              <!-- Refund Amount Box -->
+              <div style="background: linear-gradient(135deg, #00D9A5 0%, #00B589 100%); border-radius: 16px; padding: 32px; margin-bottom: 32px; text-align: center;">
+                <p style="margin: 0 0 8px; font-size: 14px; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 1px;">
+                  Montant remboursé
+                </p>
+                <p style="margin: 0; font-size: 42px; font-weight: 800; color: #ffffff;">
+                  {% for transaction in refund.transactions %}
+                    {{ transaction.amount | money }}
+                  {% endfor %}
+                </p>
+              </div>
+
+              <!-- Refund Details -->
+              <div style="background-color: #FAFAFA; border-radius: 12px; padding: 24px; margin-bottom: 32px;">
+                <h3 style="font-size: 14px; color: #1A1A1A; margin: 0 0 20px; text-transform: uppercase; letter-spacing: 1px;">
+                  📋 Détails du remboursement
+                </h3>
+
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #EEEEEE; color: #666666; font-size: 14px;">Commande</td>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #EEEEEE; text-align: right; font-size: 14px; font-weight: 600; color: #1A1A1A;">#{{ order_name }}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #EEEEEE; color: #666666; font-size: 14px;">Date de la commande</td>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #EEEEEE; text-align: right; font-size: 14px; color: #1A1A1A;">{{ order.created_at | date: "%d/%m/%Y" }}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #EEEEEE; color: #666666; font-size: 14px;">Date du remboursement</td>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #EEEEEE; text-align: right; font-size: 14px; color: #1A1A1A;">{{ 'now' | date: "%d/%m/%Y" }}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 12px 0; color: #666666; font-size: 14px;">Moyen de paiement</td>
+                    <td style="padding: 12px 0; text-align: right; font-size: 14px; color: #1A1A1A;">
+                      {% for transaction in refund.transactions %}
+                        {{ transaction.gateway_display_name }}
+                      {% endfor %}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- Refunded Items -->
+              {% if refund.refund_line_items.size > 0 %}
+              <div style="margin-bottom: 32px;">
+                <h3 style="font-size: 14px; color: #1A1A1A; margin: 0 0 16px; text-transform: uppercase; letter-spacing: 1px;">
+                  📦 Articles remboursés
+                </h3>
+                <div style="background-color: #FAFAFA; border-radius: 12px; padding: 20px;">
+                  {% for line_item in refund.refund_line_items %}
+                  <div style="{% unless forloop.last %}border-bottom: 1px solid #EEEEEE; padding-bottom: 12px; margin-bottom: 12px;{% endunless %}">
+                    <p style="margin: 0 0 4px; font-size: 15px; font-weight: 600; color: #1A1A1A;">
+                      {{ line_item.line_item.title }}
+                    </p>
+                    <p style="margin: 0; font-size: 13px; color: #888888;">
+                      Qté: {{ line_item.quantity }} × {{ line_item.line_item.price | money }}
+                    </p>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endif %}
+
+              <!-- Timeline Notice -->
+              <div style="background-color: #FFF9F5; border-radius: 12px; padding: 24px; border-left: 4px solid #FF6B35; margin-bottom: 32px;">
+                <p style="margin: 0 0 8px; font-size: 14px; font-weight: 600; color: #1A1A1A;">
+                  ⏱ Délai de traitement
+                </p>
+                <p style="margin: 0; font-size: 14px; color: #666666; line-height: 1.6;">
+                  Le remboursement peut prendre <strong>3 à 10 jours ouvrés</strong> pour apparaître sur votre compte,
+                  selon votre banque ou votre moyen de paiement.
+                </p>
+              </div>
+
+              <!-- Reason (if provided) -->
+              {% if refund.note %}
+              <div style="margin-bottom: 32px;">
+                <h3 style="font-size: 14px; color: #1A1A1A; margin: 0 0 12px;">
+                  📝 Note
+                </h3>
+                <div style="background-color: #FAFAFA; border-radius: 12px; padding: 20px;">
+                  <p style="margin: 0; font-size: 14px; color: #666666; line-height: 1.6;">
+                    {{ refund.note }}
+                  </p>
+                </div>
+              </div>
+              {% endif %}
+
+              <!-- CTA - Shop Again -->
+              <div style="text-align: center; padding: 24px; background-color: #FAFAFA; border-radius: 12px;">
+                <p style="margin: 0 0 16px; font-size: 15px; color: #1A1A1A;">
+                  Désolés que cette commande ne vous ait pas convenu.<br>
+                  On espère vous revoir bientôt ! 💜
+                </p>
+                <a href="{{ shop.url }}/shop" style="display: inline-block; background: linear-gradient(135deg, #FF6B35 0%, #FF1493 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 15px;">
+                  Découvrir nos nouveautés
+                </a>
+              </div>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #1A1A1A; padding: 40px; text-align: center;">
+              <!-- Logo -->
+              <div style="margin-bottom: 20px;">
+                <span style="font-size: 24px; font-weight: 800; color: #ffffff; letter-spacing: -1px;">TAMARQUE</span>
+              </div>
+
+              <!-- Help -->
+              <p style="color: #888888; margin: 0 0 20px; font-size: 14px;">
+                Une question ? <a href="mailto:contact@tamarque.com" style="color: #FF6B35; text-decoration: none;">contact@tamarque.com</a>
+              </p>
+
+              <!-- Legal -->
+              <p style="color: #666666; margin: 0; font-size: 12px; line-height: 1.6;">
+                © {{ 'now' | date: "%Y" }} Tamarque SAS. Tous droits réservés.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
