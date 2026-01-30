@@ -41,7 +41,7 @@ export default function TestimonialsCarousel({
       opacity: 1,
       scale: 1,
       transition: {
-        type: 'spring',
+        type: 'spring' as const,
         stiffness: 300,
         damping: 30,
       },
@@ -51,7 +51,7 @@ export default function TestimonialsCarousel({
       opacity: 0,
       scale: 0.9,
       transition: {
-        type: 'spring',
+        type: 'spring' as const,
         stiffness: 300,
         damping: 30,
       },

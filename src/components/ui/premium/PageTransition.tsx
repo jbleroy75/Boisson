@@ -96,12 +96,11 @@ export function TransitionOverlay({
           {/* First layer */}
           <motion.div
             className="fixed inset-0 z-[100]"
-            style={{ backgroundColor: color }}
+            style={{ backgroundColor: color, transformOrigin: 'top' }}
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
             exit={{ scaleY: 0 }}
             transition={{ duration: 0.5, ease: [0.77, 0, 0.175, 1] }}
-            style={{ transformOrigin: 'top' }}
           />
           {/* Second layer */}
           <motion.div
