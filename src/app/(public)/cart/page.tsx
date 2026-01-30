@@ -62,11 +62,11 @@ export default function CartPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <h1 className="text-3xl md:text-4xl font-bold mb-2">Your Cart</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-2">Ton panier</h1>
             <p className="text-gray-600">
               {itemCount === 0
-                ? 'Your cart is empty'
-                : `${itemCount} item${itemCount !== 1 ? 's' : ''} in your cart`}
+                ? 'Ton panier est vide'
+                : `${itemCount} article${itemCount !== 1 ? 's' : ''} dans ton panier`}
             </p>
           </motion.div>
 
@@ -77,15 +77,15 @@ export default function CartPage() {
               className="text-center py-16"
             >
               <div className="text-6xl mb-6">🛒</div>
-              <h2 className="text-2xl font-bold mb-4">Your cart is empty</h2>
+              <h2 className="text-2xl font-bold mb-4">Ton panier est vide</h2>
               <p className="text-gray-600 mb-8">
-                Looks like you haven&apos;t added any products yet.
+                On dirait que tu n'as pas encore ajouté de produits.
               </p>
               <Link
                 href="/shop"
                 className="inline-block bg-[#FF6B35] text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-[#E55A2B] transition-colors"
               >
-                Browse Products
+                Découvrir nos produits
               </Link>
             </motion.div>
           ) : (
@@ -126,14 +126,14 @@ export default function CartPage() {
                               </Link>
                               {item.isSubscription && (
                                 <span className="ml-2 px-2 py-0.5 bg-[#00D9A5]/10 text-[#00D9A5] text-xs font-medium rounded-full">
-                                  Subscription -15%
+                                  Abonnement -15%
                                 </span>
                               )}
                             </div>
                             <button
                               onClick={() => removeFromCart(item.product.id)}
                               className="text-gray-400 hover:text-red-500 transition-colors p-1"
-                              aria-label="Remove item"
+                              aria-label="Supprimer l'article"
                             >
                               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path
@@ -198,7 +198,7 @@ export default function CartPage() {
                   onClick={clearCart}
                   className="text-gray-500 hover:text-red-500 text-sm transition-colors"
                 >
-                  Clear all items
+                  Vider le panier
                 </button>
               </div>
 
@@ -210,23 +210,23 @@ export default function CartPage() {
                 className="lg:col-span-1"
               >
                 <div className="bg-white rounded-2xl p-6 shadow-sm sticky top-24">
-                  <h2 className="text-xl font-bold mb-6">Order Summary</h2>
+                  <h2 className="text-xl font-bold mb-6">Récapitulatif</h2>
 
                   <div className="space-y-4 mb-6">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Subtotal</span>
-                      <span className="font-medium">${subtotal.toFixed(2)}</span>
+                      <span className="text-gray-600">Sous-total</span>
+                      <span className="font-medium">{subtotal.toFixed(2)}€</span>
                     </div>
                     {discount > 0 && (
                       <div className="flex justify-between text-[#00D9A5]">
-                        <span>Subscription Discount</span>
-                        <span className="font-medium">-${discount.toFixed(2)}</span>
+                        <span>Réduction abonnement</span>
+                        <span className="font-medium">-{discount.toFixed(2)}€</span>
                       </div>
                     )}
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Shipping</span>
+                      <span className="text-gray-600">Livraison</span>
                       <span className="font-medium text-[#00D9A5]">
-                        {total >= 50 ? 'FREE' : '$5.99'}
+                        {total >= 50 ? 'GRATUITE' : '5,99€'}
                       </span>
                     </div>
                   </div>
@@ -236,14 +236,14 @@ export default function CartPage() {
                   <div className="flex justify-between text-lg mb-6">
                     <span className="font-bold">Total</span>
                     <span className="font-bold text-[#FF6B35]">
-                      ${(total + (total >= 50 ? 0 : 5.99)).toFixed(2)}
+                      {(total + (total >= 50 ? 0 : 5.99)).toFixed(2)}€
                     </span>
                   </div>
 
                   {total < 50 && (
                     <div className="bg-[#FF6B35]/10 rounded-lg p-4 mb-6">
                       <p className="text-sm text-[#FF6B35]">
-                        Add ${(50 - total).toFixed(2)} more for free shipping!
+                        Plus que {(50 - total).toFixed(2)}€ pour la livraison gratuite !
                       </p>
                     </div>
                   )}
@@ -270,10 +270,10 @@ export default function CartPage() {
                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
                           />
                         </svg>
-                        Processing...
+                        Traitement en cours...
                       </span>
                     ) : (
-                      'Proceed to Checkout'
+                      'Passer commande'
                     )}
                   </button>
 
@@ -281,15 +281,15 @@ export default function CartPage() {
                   <div className="mt-6 pt-6 border-t space-y-3">
                     <div className="flex items-center gap-2 text-sm text-gray-600">
                       <span>🔒</span>
-                      <span>Secure checkout with SSL</span>
+                      <span>Paiement sécurisé SSL</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-600">
                       <span>📦</span>
-                      <span>Free shipping over $50</span>
+                      <span>Livraison gratuite dès 50€</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-600">
                       <span>↩️</span>
-                      <span>30-day return policy</span>
+                      <span>Retour sous 30 jours</span>
                     </div>
                   </div>
                 </div>
@@ -304,7 +304,7 @@ export default function CartPage() {
                 href="/shop"
                 className="text-[#FF6B35] hover:underline font-medium"
               >
-                ← Continue Shopping
+                ← Continuer mes achats
               </Link>
             </div>
           )}

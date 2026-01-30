@@ -30,13 +30,13 @@ export const FLAVOR_COLORS: Record<string, string> = {
   'dragon-fruit-mango-passion': '#FF1493',
 };
 
-// Mock products data (until Shopify is connected)
+// Données produits mock (en attendant la connexion Shopify)
 export const MOCK_PRODUCTS: Product[] = [
   {
     id: '1',
     slug: 'yuzu-peach',
-    name: 'Yuzu Peach',
-    description: 'A refreshing blend of Japanese yuzu citrus and sweet peach. Light, tangy, and perfect for post-workout recovery.',
+    name: 'Yuzu Pêche',
+    description: 'Un mélange rafraîchissant de yuzu japonais et de pêche douce. Léger, acidulé, parfait pour la récupération post-entraînement.',
     price: 3.99,
     compareAtPrice: 4.99,
     images: ['/images/products/yuzu-peach-1.jpg', '/images/products/yuzu-peach-2.jpg'],
@@ -51,14 +51,14 @@ export const MOCK_PRODUCTS: Product[] = [
       fat: 0,
       sodium: 150,
     },
-    ingredients: ['Water', 'Whey Protein Isolate', 'Natural Yuzu Extract', 'Peach Puree', 'Citric Acid', 'Stevia', 'Natural Flavors'],
+    ingredients: ['Eau', 'Isolat de Whey', 'Extrait naturel de Yuzu', 'Purée de Pêche', 'Acide citrique', 'Stévia', 'Arômes naturels'],
     inStock: true,
   },
   {
     id: '2',
     slug: 'hibiscus-raspberry',
-    name: 'Hibiscus Raspberry',
-    description: 'Floral hibiscus meets tart raspberry in this antioxidant-rich blend. Deep flavor, zero bloating.',
+    name: 'Hibiscus Framboise',
+    description: 'L\'hibiscus floral rencontre la framboise acidulée dans ce mélange riche en antioxydants. Goût intense, zéro ballonnement.',
     price: 3.99,
     compareAtPrice: 4.99,
     images: ['/images/products/hibiscus-raspberry-1.jpg', '/images/products/hibiscus-raspberry-2.jpg'],
@@ -73,14 +73,14 @@ export const MOCK_PRODUCTS: Product[] = [
       fat: 0,
       sodium: 140,
     },
-    ingredients: ['Water', 'Whey Protein Isolate', 'Hibiscus Extract', 'Raspberry Puree', 'Citric Acid', 'Stevia', 'Natural Flavors'],
+    ingredients: ['Eau', 'Isolat de Whey', 'Extrait d\'Hibiscus', 'Purée de Framboise', 'Acide citrique', 'Stévia', 'Arômes naturels'],
     inStock: true,
   },
   {
     id: '3',
     slug: 'matcha-vanilla',
-    name: 'Matcha Vanilla',
-    description: 'Premium Japanese matcha with smooth vanilla. Natural caffeine boost with sustained energy release.',
+    name: 'Matcha Vanille',
+    description: 'Matcha japonais premium avec une vanille onctueuse. Boost naturel de caféine avec une libération d\'énergie progressive.',
     price: 4.49,
     compareAtPrice: 5.49,
     images: ['/images/products/matcha-vanilla-1.jpg', '/images/products/matcha-vanilla-2.jpg'],
@@ -95,14 +95,14 @@ export const MOCK_PRODUCTS: Product[] = [
       fat: 0,
       sodium: 160,
     },
-    ingredients: ['Water', 'Whey Protein Isolate', 'Ceremonial Grade Matcha', 'Vanilla Extract', 'Citric Acid', 'Stevia', 'Natural Flavors'],
+    ingredients: ['Eau', 'Isolat de Whey', 'Matcha de cérémonie', 'Extrait de Vanille', 'Acide citrique', 'Stévia', 'Arômes naturels'],
     inStock: true,
   },
   {
     id: '4',
     slug: 'coco-pineapple',
-    name: 'Coco Pineapple',
-    description: 'Tropical paradise in a bottle. Coconut water base with fresh pineapple for ultimate hydration.',
+    name: 'Coco Ananas',
+    description: 'Un paradis tropical en bouteille. Base d\'eau de coco avec ananas frais pour une hydratation optimale.',
     price: 3.99,
     compareAtPrice: 4.99,
     images: ['/images/products/coco-pineapple-1.jpg', '/images/products/coco-pineapple-2.jpg'],
@@ -117,14 +117,14 @@ export const MOCK_PRODUCTS: Product[] = [
       fat: 0,
       sodium: 180,
     },
-    ingredients: ['Coconut Water', 'Whey Protein Isolate', 'Pineapple Puree', 'Citric Acid', 'Stevia', 'Natural Flavors'],
+    ingredients: ['Eau de Coco', 'Isolat de Whey', 'Purée d\'Ananas', 'Acide citrique', 'Stévia', 'Arômes naturels'],
     inStock: true,
   },
   {
     id: '5',
     slug: 'dragon-fruit-mango-passion',
-    name: 'Dragon Fruit Mango Passion',
-    description: 'Exotic trio of dragon fruit, mango, and passion fruit. Vibrant pink color, tropical taste sensation.',
+    name: 'Pitaya Mangue Passion',
+    description: 'Trio exotique de fruit du dragon, mangue et passion. Couleur rose vibrante, explosion de saveurs tropicales.',
     price: 4.49,
     compareAtPrice: 5.49,
     images: ['/images/products/dragon-fruit-1.jpg', '/images/products/dragon-fruit-2.jpg'],
@@ -139,12 +139,12 @@ export const MOCK_PRODUCTS: Product[] = [
       fat: 0,
       sodium: 150,
     },
-    ingredients: ['Water', 'Whey Protein Isolate', 'Dragon Fruit Puree', 'Mango Puree', 'Passion Fruit Extract', 'Citric Acid', 'Stevia', 'Natural Flavors'],
+    ingredients: ['Eau', 'Isolat de Whey', 'Purée de Pitaya', 'Purée de Mangue', 'Extrait de Fruit de la Passion', 'Acide citrique', 'Stévia', 'Arômes naturels'],
     inStock: true,
   },
 ];
 
-// Subscription tiers
+// Formules d'abonnement
 export const SUBSCRIPTION_TIERS: SubscriptionTier[] = [
   {
     id: 'starter',
@@ -153,24 +153,24 @@ export const SUBSCRIPTION_TIERS: SubscriptionTier[] = [
     discount: 15,
     price: 40.69,
     features: [
-      '12 bottles per month',
-      '15% off retail price',
-      'Free shipping',
-      'Cancel anytime',
+      '12 bouteilles par mois',
+      '-15% sur le prix public',
+      'Livraison gratuite',
+      'Résiliable à tout moment',
     ],
   },
   {
     id: 'athlete',
-    name: 'Athlete',
+    name: 'Athlète',
     bottles: 24,
     discount: 20,
     price: 76.61,
     features: [
-      '24 bottles per month',
-      '20% off retail price',
-      'Free shipping',
-      'Early access to new flavors',
-      'Cancel anytime',
+      '24 bouteilles par mois',
+      '-20% sur le prix public',
+      'Livraison gratuite',
+      'Accès anticipé aux nouvelles saveurs',
+      'Résiliable à tout moment',
     ],
   },
   {
@@ -180,12 +180,12 @@ export const SUBSCRIPTION_TIERS: SubscriptionTier[] = [
     discount: 25,
     price: 143.64,
     features: [
-      '48 bottles per month',
-      '25% off retail price',
-      'Free priority shipping',
-      'Early access to new flavors',
-      'Exclusive merchandise',
-      'Cancel anytime',
+      '48 bouteilles par mois',
+      '-25% sur le prix public',
+      'Livraison express gratuite',
+      'Accès anticipé aux nouvelles saveurs',
+      'Goodies exclusifs',
+      'Résiliable à tout moment',
     ],
   },
 ];
@@ -198,21 +198,21 @@ export const B2B_VOLUME_PRICING: VolumePricing[] = [
   { minQuantity: 1000, maxQuantity: null, discountPercent: 50 },
 ];
 
-// Mock reviews
+// Avis clients mock
 export const MOCK_REVIEWS: Review[] = [
   {
     id: '1',
     author: 'Sarah M.',
     rating: 5,
-    comment: 'Finally a protein drink that doesn\'t feel like drinking a milkshake! The ice tea texture is amazing and the Yuzu Peach flavor is addictive.',
+    comment: 'Enfin une boisson protéinée qui ne ressemble pas à un milkshake ! La texture ice tea est incroyable et la saveur Yuzu Pêche est addictive.',
     date: '2024-01-15',
     verified: true,
   },
   {
     id: '2',
-    author: 'Marcus T.',
+    author: 'Marc T.',
     rating: 5,
-    comment: 'I train twice a day and these are perfect. No bloating, great taste, and I actually look forward to my protein intake now.',
+    comment: 'Je m\'entraîne deux fois par jour et c\'est parfait. Zéro ballonnement, super goût, et j\'attends avec impatience ma dose de protéines maintenant.',
     date: '2024-01-10',
     verified: true,
   },
@@ -220,7 +220,7 @@ export const MOCK_REVIEWS: Review[] = [
     id: '3',
     author: 'Emma L.',
     rating: 4,
-    comment: 'The Matcha Vanilla gives me the perfect energy boost before my morning runs. Love that it\'s all natural ingredients.',
+    comment: 'Le Matcha Vanille me donne le boost d\'énergie parfait avant mes runs du matin. J\'adore que ce soit 100% naturel.',
     date: '2024-01-08',
     verified: true,
   },
@@ -228,7 +228,7 @@ export const MOCK_REVIEWS: Review[] = [
     id: '4',
     author: 'David K.',
     rating: 5,
-    comment: 'Switched from traditional protein shakes and never looking back. The Dragon Fruit flavor is incredible!',
+    comment: 'J\'ai abandonné mes shakers classiques et je ne reviendrai jamais en arrière. La saveur Pitaya est incroyable !',
     date: '2024-01-05',
     verified: true,
   },
@@ -236,7 +236,7 @@ export const MOCK_REVIEWS: Review[] = [
     id: '5',
     author: 'Lisa R.',
     rating: 5,
-    comment: 'As a triathlete, I need something light that won\'t weigh me down. Tamarque is exactly what I\'ve been looking for.',
+    comment: 'En tant que triathlète, j\'ai besoin de quelque chose de léger qui ne me plombe pas. Tamarque c\'est exactement ce que je cherchais.',
     date: '2024-01-02',
     verified: true,
   },
@@ -269,8 +269,8 @@ export const NAV_LINKS = [
 ];
 
 export const B2B_NAV_LINKS = [
-  { href: '/fournisseurs', label: 'Home' },
-  { href: '/fournisseurs/resources', label: 'Resources' },
-  { href: '/fournisseurs/order', label: 'Order' },
+  { href: '/fournisseurs', label: 'Accueil' },
+  { href: '/fournisseurs/resources', label: 'Ressources' },
+  { href: '/fournisseurs/order', label: 'Commander' },
   { href: '/fournisseurs/contact', label: 'Contact' },
 ];

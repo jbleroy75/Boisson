@@ -119,9 +119,9 @@ export default function ShopPage() {
               transition={{ duration: 0.6 }}
               className="text-center"
             >
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">Shop All Flavors</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">Toutes nos saveurs</h1>
               <p className="text-xl text-white/80 max-w-2xl mx-auto">
-                5 exotic flavors crafted for athletes. Ice tea texture, 20g protein, 100% natural.
+                5 saveurs exotiques créées pour les athlètes. Texture ice tea, 20g de protéines, 100% naturelle.
               </p>
             </motion.div>
           </div>
@@ -134,7 +134,7 @@ export default function ShopPage() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
               {/* Sport Type Filter */}
               <div className="flex flex-wrap gap-2">
-                <span className="text-sm text-gray-500 mr-2 self-center">Filter:</span>
+                <span className="text-sm text-gray-500 mr-2 self-center">Filtrer :</span>
                 {(['all', 'endurance', 'strength', 'recovery'] as const).map((type) => (
                   <button
                     key={type}
@@ -145,30 +145,30 @@ export default function ShopPage() {
                         : 'bg-white text-gray-600 hover:bg-gray-100'
                     }`}
                   >
-                    {type === 'all' ? 'All' : type.charAt(0).toUpperCase() + type.slice(1)}
+                    {type === 'all' ? 'Tous' : type === 'endurance' ? 'Endurance' : type === 'strength' ? 'Force' : 'Récupération'}
                   </button>
                 ))}
               </div>
 
               {/* Sort */}
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500">Sort by:</span>
+                <span className="text-sm text-gray-500">Trier par :</span>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as SortOption)}
                   className="bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6B35]"
                 >
-                  <option value="popularity">Popularity</option>
-                  <option value="name">Name</option>
-                  <option value="price-asc">Price: Low to High</option>
-                  <option value="price-desc">Price: High to Low</option>
+                  <option value="popularity">Popularité</option>
+                  <option value="name">Nom</option>
+                  <option value="price-asc">Prix : croissant</option>
+                  <option value="price-desc">Prix : décroissant</option>
                 </select>
               </div>
             </div>
 
             {/* Results count */}
             <p className="text-sm text-gray-500 mb-6">
-              Showing {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}
+              {filteredProducts.length} produit{filteredProducts.length !== 1 ? 's' : ''}
             </p>
 
             {/* Loading State */}
@@ -187,12 +187,12 @@ export default function ShopPage() {
 
                 {filteredProducts.length === 0 && (
                   <div className="text-center py-16">
-                    <p className="text-gray-500 text-lg">No products match your filters.</p>
+                    <p className="text-gray-500 text-lg">Aucun produit ne correspond à vos filtres.</p>
                     <button
                       onClick={() => setSelectedSportType('all')}
                       className="mt-4 text-[#FF6B35] hover:underline"
                     >
-                      Clear filters
+                      Effacer les filtres
                     </button>
                   </div>
                 )}
@@ -204,15 +204,15 @@ export default function ShopPage() {
         {/* Subscribe CTA */}
         <section className="py-16 bg-[#1A1A1A] text-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Save Up to 25% with a Subscription</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Économise jusqu'à 25% avec l'abonnement</h2>
             <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-              Never run out of your favorite protein drinks. Free shipping, cancel anytime.
+              Ne sois plus jamais à court de tes boissons préférées. Livraison gratuite, annulation à tout moment.
             </p>
             <Link
               href="/subscribe"
               className="inline-block bg-[#FF6B35] text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-[#E55A2B] transition-colors"
             >
-              View Subscription Plans
+              Voir les formules d'abonnement
             </Link>
           </div>
         </section>
@@ -276,7 +276,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
               disabled={isAdding}
               className="w-full bg-[#FF6B35] text-white py-3 rounded-lg font-semibold hover:bg-[#E55A2B] transition-colors disabled:opacity-75"
             >
-              {isAdding ? 'Added!' : 'Quick Add'}
+              {isAdding ? 'Ajouté !' : 'Ajouter'}
             </button>
           </motion.div>
 

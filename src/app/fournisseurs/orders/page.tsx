@@ -123,14 +123,14 @@ export default function B2BOrdersPage() {
             className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8"
           >
             <div>
-              <h1 className="text-3xl font-bold mb-2">Order History</h1>
-              <p className="text-gray-600">View and manage your B2B orders</p>
+              <h1 className="text-3xl font-bold mb-2">Historique des commandes</h1>
+              <p className="text-gray-600">Consultez et gérez vos commandes B2B</p>
             </div>
             <Link
               href="/fournisseurs/order"
               className="bg-[#FF6B35] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#E55A2B] transition-colors"
             >
-              Place New Order
+              Nouvelle commande
             </Link>
           </motion.div>
 
@@ -142,21 +142,21 @@ export default function B2BOrdersPage() {
             className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
           >
             <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="text-gray-500 text-sm mb-1">Total Orders</div>
+              <div className="text-gray-500 text-sm mb-1">Total commandes</div>
               <div className="text-2xl font-bold">{orders.length}</div>
             </div>
             <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="text-gray-500 text-sm mb-1">Total Spent</div>
-              <div className="text-2xl font-bold text-[#FF6B35]">${totalSpent.toFixed(2)}</div>
+              <div className="text-gray-500 text-sm mb-1">Total dépensé</div>
+              <div className="text-2xl font-bold text-[#FF6B35]">{totalSpent.toFixed(2)}€</div>
             </div>
             <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="text-gray-500 text-sm mb-1">Pending Orders</div>
+              <div className="text-gray-500 text-sm mb-1">En attente</div>
               <div className="text-2xl font-bold text-yellow-600">
                 {orders.filter((o) => o.status === 'pending').length}
               </div>
             </div>
             <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="text-gray-500 text-sm mb-1">In Transit</div>
+              <div className="text-gray-500 text-sm mb-1">En transit</div>
               <div className="text-2xl font-bold text-purple-600">
                 {orders.filter((o) => o.status === 'shipped').length}
               </div>
@@ -171,19 +171,29 @@ export default function B2BOrdersPage() {
             className="flex gap-2 mb-6 overflow-x-auto"
           >
             {(['all', 'pending', 'confirmed', 'shipped', 'delivered', 'cancelled'] as const).map(
-              (status) => (
-                <button
-                  key={status}
-                  onClick={() => setFilter(status)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
-                    filter === status
-                      ? 'bg-[#FF6B35] text-white'
-                      : 'bg-white text-gray-600 hover:bg-gray-100'
-                  }`}
-                >
-                  {status === 'all' ? 'All Orders' : status.charAt(0).toUpperCase() + status.slice(1)}
-                </button>
-              )
+              (status) => {
+                const statusLabels: Record<string, string> = {
+                  all: 'Toutes',
+                  pending: 'En attente',
+                  confirmed: 'Confirmée',
+                  shipped: 'Expédiée',
+                  delivered: 'Livrée',
+                  cancelled: 'Annulée',
+                };
+                return (
+                  <button
+                    key={status}
+                    onClick={() => setFilter(status)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+                      filter === status
+                        ? 'bg-[#FF6B35] text-white'
+                        : 'bg-white text-gray-600 hover:bg-gray-100'
+                    }`}
+                  >
+                    {statusLabels[status]}
+                  </button>
+                );
+              }
             )}
           </motion.div>
 
@@ -197,17 +207,17 @@ export default function B2BOrdersPage() {
             {filteredOrders.length === 0 ? (
               <div className="bg-white rounded-2xl p-12 text-center shadow-sm">
                 <div className="text-4xl mb-4">📦</div>
-                <h3 className="text-xl font-bold mb-2">No orders found</h3>
+                <h3 className="text-xl font-bold mb-2">Aucune commande trouvée</h3>
                 <p className="text-gray-600 mb-6">
                   {filter === 'all'
-                    ? "You haven't placed any orders yet."
-                    : `No ${filter} orders found.`}
+                    ? 'Vous n\'avez pas encore passé de commande.'
+                    : 'Aucune commande avec ce statut.'}
                 </p>
                 <Link
                   href="/fournisseurs/order"
                   className="inline-block bg-[#FF6B35] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#E55A2B] transition-colors"
                 >
-                  Place Your First Order
+                  Passer votre première commande
                 </Link>
               </div>
             ) : (
@@ -227,7 +237,7 @@ export default function B2BOrdersPage() {
                         </span>
                       </div>
                       <p className="text-gray-500 text-sm">
-                        Placed on {new Date(order.created_at).toLocaleDateString('en-US', {
+                        Commandée le {new Date(order.created_at).toLocaleDateString('fr-FR', {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric',
@@ -236,10 +246,10 @@ export default function B2BOrdersPage() {
                     </div>
                     <div className="text-right">
                       <div className="text-2xl font-bold text-[#FF6B35]">
-                        ${order.total.toFixed(2)}
+                        {order.total.toFixed(2)}€
                       </div>
                       <div className="text-sm text-gray-500">
-                        {order.items.reduce((sum, i) => sum + i.quantity, 0)} units
+                        {order.items.reduce((sum, i) => sum + i.quantity, 0)} unités
                       </div>
                     </div>
                   </div>
@@ -257,7 +267,7 @@ export default function B2BOrdersPage() {
                             <span className="text-gray-500 ml-2">x {item.quantity}</span>
                           </div>
                           <span className="font-medium">
-                            ${(item.quantity * item.unit_price).toFixed(2)}
+                            {(item.quantity * item.unit_price).toFixed(2)}€
                           </span>
                         </div>
                       ))}
@@ -279,7 +289,7 @@ export default function B2BOrdersPage() {
                             d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                           />
                         </svg>
-                        Download Invoice
+                        Télécharger la facture
                       </a>
                     )}
                     {order.status === 'shipped' && (
@@ -292,7 +302,7 @@ export default function B2BOrdersPage() {
                             d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
                           />
                         </svg>
-                        Track Shipment
+                        Suivre la livraison
                       </button>
                     )}
                     <button className="flex items-center gap-2 px-4 py-2 bg-[#FF6B35] text-white rounded-lg text-sm font-medium hover:bg-[#E55A2B] transition-colors">
@@ -304,7 +314,7 @@ export default function B2BOrdersPage() {
                           d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                         />
                       </svg>
-                      Reorder
+                      Recommander
                     </button>
                   </div>
                 </div>

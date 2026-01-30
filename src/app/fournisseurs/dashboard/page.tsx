@@ -38,9 +38,9 @@ export default function DistributorDashboard() {
   };
 
   const recentOrders = [
-    { id: 'B2B-001', date: 'Jan 20, 2024', items: 500, total: 1395.0, status: 'Shipped' },
-    { id: 'B2B-002', date: 'Jan 5, 2024', items: 300, total: 837.0, status: 'Delivered' },
-    { id: 'B2B-003', date: 'Dec 15, 2023', items: 750, total: 1792.5, status: 'Delivered' },
+    { id: 'B2B-001', date: '20 jan 2024', items: 500, total: 1395.0, status: 'Expédié' },
+    { id: 'B2B-002', date: '5 jan 2024', items: 300, total: 837.0, status: 'Livré' },
+    { id: 'B2B-003', date: '15 déc 2023', items: 750, total: 1792.5, status: 'Livré' },
   ];
 
   return (
@@ -55,14 +55,14 @@ export default function DistributorDashboard() {
             className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8"
           >
             <div>
-              <h1 className="text-3xl font-bold mb-1">Distributor Dashboard</h1>
-              <p className="text-gray-600">Welcome back, {distributorData.company}</p>
+              <h1 className="text-3xl font-bold mb-1">Tableau de bord</h1>
+              <p className="text-gray-600">Bienvenue, {distributorData.company}</p>
             </div>
             <Link
               href="/fournisseurs/order"
               className="bg-[#FF6B35] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#E55A2B] transition-colors"
             >
-              New Order
+              Nouvelle commande
             </Link>
           </motion.div>
 
@@ -77,12 +77,12 @@ export default function DistributorDashboard() {
               <div className="bg-white rounded-2xl p-6 shadow-sm">
                 <ul className="space-y-2">
                   {[
-                    { href: '/fournisseurs/dashboard', label: 'Overview', icon: '📊', active: true },
-                    { href: '/fournisseurs/order', label: 'Place Order', icon: '🛒' },
-                    { href: '/fournisseurs/orders', label: 'Order History', icon: '📦' },
-                    { href: '/fournisseurs/invoices', label: 'Invoices', icon: '📄' },
-                    { href: '/fournisseurs/resources', label: 'Resources', icon: '📁' },
-                    { href: '/fournisseurs/profile', label: 'Company Profile', icon: '🏢' },
+                    { href: '/fournisseurs/dashboard', label: 'Vue d\'ensemble', icon: '📊', active: true },
+                    { href: '/fournisseurs/order', label: 'Commander', icon: '🛒' },
+                    { href: '/fournisseurs/orders', label: 'Historique commandes', icon: '📦' },
+                    { href: '/fournisseurs/invoices', label: 'Factures', icon: '📄' },
+                    { href: '/fournisseurs/resources', label: 'Ressources', icon: '📁' },
+                    { href: '/fournisseurs/profile', label: 'Profil entreprise', icon: '🏢' },
                   ].map((item) => (
                     <li key={item.href}>
                       <Link
@@ -105,7 +105,7 @@ export default function DistributorDashboard() {
                   className="flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 w-full transition-colors"
                 >
                   <span>🚪</span>
-                  <span>Sign Out</span>
+                  <span>Se déconnecter</span>
                 </button>
               </div>
             </motion.nav>
@@ -120,24 +120,24 @@ export default function DistributorDashboard() {
                 className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"
               >
                 <div className="bg-white rounded-2xl p-6 shadow-sm">
-                  <div className="text-gray-500 text-sm mb-1">Total Orders</div>
+                  <div className="text-gray-500 text-sm mb-1">Total commandes</div>
                   <div className="text-3xl font-bold">{distributorData.totalOrders}</div>
                 </div>
                 <div className="bg-white rounded-2xl p-6 shadow-sm">
-                  <div className="text-gray-500 text-sm mb-1">Total Spent</div>
+                  <div className="text-gray-500 text-sm mb-1">Total dépensé</div>
                   <div className="text-3xl font-bold text-[#FF6B35]">
-                    €{distributorData.totalSpent.toLocaleString()}
+                    {distributorData.totalSpent.toLocaleString()}€
                   </div>
                 </div>
                 <div className="bg-white rounded-2xl p-6 shadow-sm">
-                  <div className="text-gray-500 text-sm mb-1">Pending Orders</div>
+                  <div className="text-gray-500 text-sm mb-1">En attente</div>
                   <div className="text-3xl font-bold text-[#FFD700]">
                     {distributorData.pendingOrders}
                   </div>
                 </div>
                 <div className="bg-gradient-to-br from-[#00D9A5] to-[#00B589] rounded-2xl p-6 text-white">
-                  <div className="text-white/80 text-sm mb-1">Your Discount Tier</div>
-                  <div className="text-3xl font-bold">40% OFF</div>
+                  <div className="text-white/80 text-sm mb-1">Votre remise</div>
+                  <div className="text-3xl font-bold">-40%</div>
                 </div>
               </motion.div>
 
@@ -154,9 +154,9 @@ export default function DistributorDashboard() {
                 >
                   <div className="text-3xl mb-3">🛒</div>
                   <div className="font-semibold group-hover:text-[#FF6B35] transition-colors">
-                    Place New Order
+                    Passer commande
                   </div>
-                  <div className="text-sm text-gray-500">Order products at your discount tier</div>
+                  <div className="text-sm text-gray-500">Commander avec votre remise distributeur</div>
                 </Link>
                 <Link
                   href="/fournisseurs/resources"
@@ -164,9 +164,9 @@ export default function DistributorDashboard() {
                 >
                   <div className="text-3xl mb-3">📥</div>
                   <div className="font-semibold group-hover:text-[#FF6B35] transition-colors">
-                    Download Catalog
+                    Télécharger le catalogue
                   </div>
-                  <div className="text-sm text-gray-500">Product specs & marketing assets</div>
+                  <div className="text-sm text-gray-500">Fiches produits et assets marketing</div>
                 </Link>
                 <Link
                   href="/fournisseurs/invoices"
@@ -174,9 +174,9 @@ export default function DistributorDashboard() {
                 >
                   <div className="text-3xl mb-3">📄</div>
                   <div className="font-semibold group-hover:text-[#FF6B35] transition-colors">
-                    View Invoices
+                    Voir les factures
                   </div>
-                  <div className="text-sm text-gray-500">Download invoices & statements</div>
+                  <div className="text-sm text-gray-500">Télécharger factures et relevés</div>
                 </Link>
               </motion.div>
 
@@ -188,12 +188,12 @@ export default function DistributorDashboard() {
                 className="bg-white rounded-2xl shadow-sm overflow-hidden"
               >
                 <div className="flex justify-between items-center p-6 border-b">
-                  <h2 className="text-xl font-bold">Recent Orders</h2>
+                  <h2 className="text-xl font-bold">Commandes récentes</h2>
                   <Link
                     href="/fournisseurs/orders"
                     className="text-[#FF6B35] text-sm font-semibold hover:underline"
                   >
-                    View All
+                    Voir tout
                   </Link>
                 </div>
                 <div className="overflow-x-auto">
@@ -201,22 +201,22 @@ export default function DistributorDashboard() {
                     <thead className="bg-gray-50">
                       <tr>
                         <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
-                          Order ID
+                          N° Commande
                         </th>
                         <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
                           Date
                         </th>
                         <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
-                          Items
+                          Quantité
                         </th>
                         <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
                           Total
                         </th>
                         <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
-                          Status
+                          Statut
                         </th>
                         <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
-                          Invoice
+                          Facture
                         </th>
                       </tr>
                     </thead>
@@ -225,14 +225,14 @@ export default function DistributorDashboard() {
                         <tr key={order.id} className="border-b last:border-b-0 hover:bg-gray-50">
                           <td className="px-6 py-4 font-medium">{order.id}</td>
                           <td className="px-6 py-4 text-gray-600">{order.date}</td>
-                          <td className="px-6 py-4 text-gray-600">{order.items} units</td>
-                          <td className="px-6 py-4 font-semibold">€{order.total.toFixed(2)}</td>
+                          <td className="px-6 py-4 text-gray-600">{order.items} unités</td>
+                          <td className="px-6 py-4 font-semibold">{order.total.toFixed(2)}€</td>
                           <td className="px-6 py-4">
                             <span
                               className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                                order.status === 'Delivered'
+                                order.status === 'Livré'
                                   ? 'bg-[#00D9A5]/10 text-[#00D9A5]'
-                                  : order.status === 'Shipped'
+                                  : order.status === 'Expédié'
                                   ? 'bg-blue-100 text-blue-600'
                                   : 'bg-yellow-100 text-yellow-600'
                               }`}
@@ -242,7 +242,7 @@ export default function DistributorDashboard() {
                           </td>
                           <td className="px-6 py-4">
                             <button className="text-[#FF6B35] hover:underline text-sm font-medium">
-                              Download PDF
+                              Télécharger PDF
                             </button>
                           </td>
                         </tr>
@@ -260,17 +260,17 @@ export default function DistributorDashboard() {
                 className="bg-white rounded-2xl p-6 shadow-sm"
               >
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-xl font-bold">Company Information</h2>
+                  <h2 className="text-xl font-bold">Informations entreprise</h2>
                   <Link
                     href="/fournisseurs/profile"
                     className="text-[#FF6B35] text-sm font-semibold hover:underline"
                   >
-                    Edit
+                    Modifier
                   </Link>
                 </div>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   <div>
-                    <label className="block text-sm text-gray-500 mb-1">Company Name</label>
+                    <label className="block text-sm text-gray-500 mb-1">Raison sociale</label>
                     <div className="font-medium">{distributorData.company}</div>
                   </div>
                   <div>
@@ -278,14 +278,14 @@ export default function DistributorDashboard() {
                     <div className="font-medium">{distributorData.siret}</div>
                   </div>
                   <div>
-                    <label className="block text-sm text-gray-500 mb-1">Region</label>
+                    <label className="block text-sm text-gray-500 mb-1">Région</label>
                     <div className="font-medium">{distributorData.region}</div>
                   </div>
                   <div>
-                    <label className="block text-sm text-gray-500 mb-1">Status</label>
+                    <label className="block text-sm text-gray-500 mb-1">Statut</label>
                     <div className="flex items-center gap-2">
                       <span className="w-2 h-2 bg-[#00D9A5] rounded-full"></span>
-                      <span className="font-medium text-[#00D9A5]">Approved</span>
+                      <span className="font-medium text-[#00D9A5]">Approuvé</span>
                     </div>
                   </div>
                 </div>

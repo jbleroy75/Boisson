@@ -26,36 +26,36 @@ export default function B2BResourcesPage() {
 
   const resources = [
     {
-      category: 'Product Catalog',
+      category: 'Catalogue Produits',
       items: [
-        { name: 'Full Product Catalog 2024', type: 'PDF', size: '4.2 MB', restricted: false },
-        { name: 'Nutrition Facts Sheet', type: 'PDF', size: '1.1 MB', restricted: false },
-        { name: 'Ingredient Specifications', type: 'PDF', size: '2.3 MB', restricted: true },
+        { name: 'Catalogue complet 2024', type: 'PDF', size: '4.2 Mo', restricted: false },
+        { name: 'Fiches nutritionnelles', type: 'PDF', size: '1.1 Mo', restricted: false },
+        { name: 'Spécifications ingrédients', type: 'PDF', size: '2.3 Mo', restricted: true },
       ],
     },
     {
-      category: 'Marketing Assets',
+      category: 'Assets Marketing',
       items: [
-        { name: 'Product Photos (High-Res)', type: 'ZIP', size: '156 MB', restricted: true },
-        { name: 'Logo Pack (All Formats)', type: 'ZIP', size: '8.4 MB', restricted: true },
-        { name: 'Social Media Templates', type: 'ZIP', size: '24 MB', restricted: true },
-        { name: 'POS Display Materials', type: 'PDF', size: '12 MB', restricted: true },
+        { name: 'Photos produits (Haute résolution)', type: 'ZIP', size: '156 Mo', restricted: true },
+        { name: 'Pack Logo (Tous formats)', type: 'ZIP', size: '8.4 Mo', restricted: true },
+        { name: 'Templates réseaux sociaux', type: 'ZIP', size: '24 Mo', restricted: true },
+        { name: 'PLV et displays', type: 'PDF', size: '12 Mo', restricted: true },
       ],
     },
     {
-      category: 'Sales Materials',
+      category: 'Supports de vente',
       items: [
-        { name: 'Sales Presentation Deck', type: 'PPTX', size: '18 MB', restricted: true },
-        { name: 'Product One-Pagers', type: 'PDF', size: '3.5 MB', restricted: false },
-        { name: 'Customer Testimonials Pack', type: 'ZIP', size: '45 MB', restricted: true },
+        { name: 'Présentation commerciale', type: 'PPTX', size: '18 Mo', restricted: true },
+        { name: 'Fiches produits', type: 'PDF', size: '3.5 Mo', restricted: false },
+        { name: 'Témoignages clients', type: 'ZIP', size: '45 Mo', restricted: true },
       ],
     },
     {
-      category: 'Training',
+      category: 'Formation',
       items: [
-        { name: 'Product Training Video', type: 'MP4', size: '320 MB', restricted: true },
-        { name: 'FAQ Document', type: 'PDF', size: '0.8 MB', restricted: false },
-        { name: 'Brand Guidelines', type: 'PDF', size: '5.2 MB', restricted: true },
+        { name: 'Vidéo de formation produit', type: 'MP4', size: '320 Mo', restricted: true },
+        { name: 'Document FAQ', type: 'PDF', size: '0.8 Mo', restricted: false },
+        { name: 'Charte graphique', type: 'PDF', size: '5.2 Mo', restricted: true },
       ],
     },
   ];
@@ -70,9 +70,9 @@ export default function B2BResourcesPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <h1 className="text-3xl font-bold mb-2">Distributor Resources</h1>
+            <h1 className="text-3xl font-bold mb-2">Ressources distributeur</h1>
             <p className="text-gray-600">
-              Download product catalogs, marketing assets, and sales materials.
+              Téléchargez catalogues produits, assets marketing et supports de vente.
             </p>
           </motion.div>
 
@@ -87,17 +87,17 @@ export default function B2BResourcesPage() {
                 <span className="text-2xl">🔒</span>
                 <div>
                   <h3 className="font-semibold text-yellow-800 mb-1">
-                    Some resources require login
+                    Certaines ressources nécessitent une connexion
                   </h3>
                   <p className="text-yellow-700 text-sm mb-3">
-                    Sign in with your distributor account to access all resources including
-                    high-resolution assets and marketing materials.
+                    Connectez-vous avec votre compte distributeur pour accéder à toutes les
+                    ressources dont les assets haute résolution et le matériel marketing.
                   </p>
                   <Link
                     href="/login?callbackUrl=/fournisseurs/resources"
                     className="inline-block bg-yellow-800 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-900 transition-colors"
                   >
-                    Sign In
+                    Se connecter
                   </Link>
                 </div>
               </div>
@@ -147,7 +147,7 @@ export default function B2BResourcesPage() {
                         </div>
                         {canDownload ? (
                           <button
-                            onClick={() => alert(`Downloading: ${item.name}`)}
+                            onClick={() => alert(`Téléchargement : ${item.name}`)}
                             className="flex items-center gap-2 px-4 py-2 bg-[#FF6B35]/10 text-[#FF6B35] rounded-lg hover:bg-[#FF6B35]/20 transition-colors text-sm font-medium"
                           >
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -158,7 +158,7 @@ export default function B2BResourcesPage() {
                                 d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                               />
                             </svg>
-                            Download
+                            Télécharger
                           </button>
                         ) : (
                           <div className="flex items-center gap-2 text-gray-400 text-sm">
@@ -170,7 +170,7 @@ export default function B2BResourcesPage() {
                                 d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
                               />
                             </svg>
-                            Login Required
+                            Connexion requise
                           </div>
                         )}
                       </div>
@@ -190,16 +190,16 @@ export default function B2BResourcesPage() {
           >
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div>
-                <h2 className="text-2xl font-bold mb-2">Need Custom Assets?</h2>
+                <h2 className="text-2xl font-bold mb-2">Besoin d'assets personnalisés ?</h2>
                 <p className="text-gray-300">
-                  Our marketing team can create co-branded materials tailored to your business.
+                  Notre équipe marketing peut créer des supports co-brandés adaptés à votre activité.
                 </p>
               </div>
               <Link
                 href="/fournisseurs/contact"
                 className="bg-[#FF6B35] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#E55A2B] transition-colors whitespace-nowrap"
               >
-                Request Custom Assets
+                Demander des assets personnalisés
               </Link>
             </div>
           </motion.div>

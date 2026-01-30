@@ -3,6 +3,15 @@ import { MOCK_PRODUCTS } from '@/lib/constants';
 
 const baseUrl = 'https://tamarque.com';
 
+// Mock blog posts - in production, fetch from Sanity
+const BLOG_POSTS = [
+  { slug: 'top-5-post-workout-recipes', publishedAt: '2024-01-20' },
+  { slug: 'protein-needs-for-runners', publishedAt: '2024-01-15' },
+  { slug: 'ice-tea-texture-revolution', publishedAt: '2024-01-10' },
+  { slug: 'natural-ingredients-matter', publishedAt: '2024-01-05' },
+  { slug: 'summer-hydration-guide', publishedAt: '2024-01-01' },
+];
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
@@ -11,6 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
+      images: [`${baseUrl}/images/hero/homepage-hero.jpg`],
     },
     {
       url: `${baseUrl}/shop`,
@@ -61,6 +71,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.5,
     },
     {
+      url: `${baseUrl}/shipping`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.4,
+    },
+    {
       url: `${baseUrl}/cgv`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
@@ -80,22 +96,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Product pages
+  // Product pages with images
   const productPages: MetadataRoute.Sitemap = MOCK_PRODUCTS.map((product) => ({
     url: `${baseUrl}/shop/${product.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
+    images: product.images?.length
+      ? product.images
+      : [`${baseUrl}/images/products/${product.slug}.jpg`],
   }));
 
-  // Blog posts - would come from Sanity in production
-  // const posts = await getPosts();
-  // const blogPages = posts.map(post => ({
-  //   url: `${baseUrl}/blog/${post.slug}`,
-  //   lastModified: new Date(post.publishedAt),
-  //   changeFrequency: 'monthly',
-  //   priority: 0.6,
-  // }));
+  // Blog posts
+  const blogPages: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.publishedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }));
 
-  return [...staticPages, ...productPages];
+  return [...staticPages, ...productPages, ...blogPages];
 }

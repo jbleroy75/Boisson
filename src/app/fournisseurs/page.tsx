@@ -25,29 +25,29 @@ export default function FournisseursPage() {
                 transition={{ duration: 0.8 }}
               >
                 <span className="inline-block px-4 py-1 bg-[#FF6B35] text-white rounded-full text-sm font-medium mb-6">
-                  B2B Partnership
+                  Partenariat B2B
                 </span>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-                  Become a Tamarque
+                  Devenez
                   <br />
-                  <span className="text-[#FF6B35]">Distributor</span>
+                  <span className="text-[#FF6B35]">Distributeur Tamarque</span>
                 </h1>
                 <p className="text-xl text-gray-300 mb-8 max-w-lg">
-                  Join our network of premium distributors. Exclusive margins, marketing support,
-                  and territorial rights for the protein drink revolution.
+                  Rejoignez notre réseau de distributeurs premium. Marges exclusives, support marketing
+                  et droits territoriaux pour la révolution de la boisson protéinée.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link
                     href="/fournisseurs/contact"
                     className="bg-[#FF6B35] text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-[#E55A2B] transition-colors text-center"
                   >
-                    Request Partnership
+                    Demander un partenariat
                   </Link>
                   <Link
                     href="/fournisseurs/dashboard"
                     className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white/10 transition-colors text-center"
                   >
-                    Distributor Login
+                    Espace distributeur
                   </Link>
                 </div>
               </motion.div>
@@ -60,10 +60,10 @@ export default function FournisseursPage() {
               >
                 <div className="grid grid-cols-2 gap-6">
                   {[
-                    { value: '40%+', label: 'Profit Margins' },
-                    { value: '200+', label: 'Active Partners' },
-                    { value: '€2M+', label: 'Partner Revenue' },
-                    { value: '24h', label: 'Order Fulfillment' },
+                    { value: '40%+', label: 'Marges bénéficiaires' },
+                    { value: '200+', label: 'Partenaires actifs' },
+                    { value: '2M€+', label: 'CA partenaires' },
+                    { value: '24h', label: 'Traitement commande' },
                   ].map((stat, i) => (
                     <div
                       key={i}
@@ -88,9 +88,9 @@ export default function FournisseursPage() {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <h2 className="text-4xl font-bold mb-4">Why Partner With Us</h2>
+              <h2 className="text-4xl font-bold mb-4">Pourquoi devenir partenaire</h2>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                We provide everything you need to succeed as a Tamarque distributor.
+                Nous vous fournissons tout ce dont vous avez besoin pour réussir en tant que distributeur Tamarque.
               </p>
             </motion.div>
 
@@ -98,39 +98,39 @@ export default function FournisseursPage() {
               {[
                 {
                   icon: '💰',
-                  title: 'Competitive Margins',
+                  title: 'Marges compétitives',
                   description:
-                    'Up to 50% discount on wholesale orders. Volume-based pricing tiers that grow with your business.',
+                    'Jusqu\'à 50% de remise sur les commandes en gros. Tarifs dégressifs qui évoluent avec votre business.',
                 },
                 {
                   icon: '🗺️',
-                  title: 'Territorial Exclusivity',
+                  title: 'Exclusivité territoriale',
                   description:
-                    'Secure your region. We protect your territory from competing distributors.',
+                    'Sécurisez votre région. Nous protégeons votre territoire contre les distributeurs concurrents.',
                 },
                 {
                   icon: '📦',
-                  title: 'Fast Fulfillment',
+                  title: 'Livraison rapide',
                   description:
-                    '24-hour order processing. Direct shipping to your warehouse or customers.',
+                    'Traitement des commandes sous 24h. Livraison directe dans votre entrepôt ou chez vos clients.',
                 },
                 {
                   icon: '📈',
-                  title: 'Marketing Support',
+                  title: 'Support marketing',
                   description:
-                    'POS materials, digital assets, and co-branded campaigns to drive sales.',
+                    'Matériel PLV, assets digitaux et campagnes co-brandées pour booster vos ventes.',
                 },
                 {
                   icon: '🎓',
-                  title: 'Training & Support',
+                  title: 'Formation & Accompagnement',
                   description:
-                    'Dedicated account manager, product training, and 24/7 support line.',
+                    'Account manager dédié, formation produit et support 24/7.',
                 },
                 {
                   icon: '💳',
-                  title: 'Flexible Payment',
+                  title: 'Paiement flexible',
                   description:
-                    'NET30 payment terms for qualified distributors. Stripe invoicing for easy tracking.',
+                    'Conditions de paiement NET30 pour les distributeurs qualifiés. Facturation Stripe pour un suivi simplifié.',
                 },
               ].map((benefit, i) => (
                 <motion.div
@@ -159,9 +159,9 @@ export default function FournisseursPage() {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <h2 className="text-4xl font-bold mb-4">Volume Pricing</h2>
+              <h2 className="text-4xl font-bold mb-4">Tarifs dégressifs</h2>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                The more you order, the more you save. Simple, transparent pricing.
+                Plus vous commandez, plus vous économisez. Tarifs simples et transparents.
               </p>
             </motion.div>
 
@@ -170,17 +170,17 @@ export default function FournisseursPage() {
                 <table className="w-full">
                   <thead className="bg-[#1A1A1A] text-white">
                     <tr>
-                      <th className="px-6 py-4 text-left">Order Volume</th>
-                      <th className="px-6 py-4 text-left">Discount</th>
-                      <th className="px-6 py-4 text-left">Price/Unit</th>
+                      <th className="px-6 py-4 text-left">Volume de commande</th>
+                      <th className="px-6 py-4 text-left">Remise</th>
+                      <th className="px-6 py-4 text-left">Prix/unité</th>
                     </tr>
                   </thead>
                   <tbody>
                     {[
-                      { volume: '1 - 99 units', discount: 'Standard', price: '€3.99' },
-                      { volume: '100 - 499 units', discount: '30% OFF', price: '€2.79' },
-                      { volume: '500 - 999 units', discount: '40% OFF', price: '€2.39' },
-                      { volume: '1,000+ units', discount: '50% OFF', price: '€1.99' },
+                      { volume: '1 - 99 unités', discount: 'Standard', price: '3,99€' },
+                      { volume: '100 - 499 unités', discount: '-30%', price: '2,79€' },
+                      { volume: '500 - 999 unités', discount: '-40%', price: '2,39€' },
+                      { volume: '1 000+ unités', discount: '-50%', price: '1,99€' },
                     ].map((tier, i) => (
                       <tr key={i} className={i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
                         <td className="px-6 py-4 font-medium">{tier.volume}</td>
@@ -214,24 +214,24 @@ export default function FournisseursPage() {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <h2 className="text-4xl font-bold mb-4">Distributor Success Stories</h2>
+              <h2 className="text-4xl font-bold mb-4">Témoignages de nos distributeurs</h2>
             </motion.div>
 
             <div className="grid md:grid-cols-2 gap-8">
               {[
                 {
                   quote:
-                    'Tamarque transformed our sports nutrition offering. The ice tea texture is a game-changer - our gym clients love it.',
+                    'Tamarque a transformé notre offre nutrition sportive. La texture ice tea est révolutionnaire - nos clients en salle l\'adorent.',
                   author: 'Pierre Dubois',
                   company: 'FitDistrib Lyon',
-                  revenue: '+45% revenue',
+                  revenue: '+45% CA',
                 },
                 {
                   quote:
-                    'The margins are excellent and the support team is always available. Best B2B partnership we have.',
+                    'Les marges sont excellentes et l\'équipe support est toujours disponible. Le meilleur partenariat B2B qu\'on ait.',
                   author: 'Marie Laurent',
                   company: 'NutriPro Paris',
-                  revenue: '+60% growth',
+                  revenue: '+60% croissance',
                 },
               ].map((testimonial, i) => (
                 <motion.div
@@ -273,23 +273,23 @@ export default function FournisseursPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Partner?</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">Prêt à devenir partenaire ?</h2>
               <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-                Join 200+ distributors who trust Tamarque. Request a quote today and start
-                growing your business.
+                Rejoignez 200+ distributeurs qui font confiance à Tamarque. Demandez un devis aujourd'hui
+                et développez votre activité.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/fournisseurs/contact"
                   className="bg-white text-[#FF6B35] px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
                 >
-                  Request Quote
+                  Demander un devis
                 </Link>
                 <Link
                   href="/fournisseurs/resources"
                   className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white/10 transition-colors"
                 >
-                  Download Catalog
+                  Télécharger le catalogue
                 </Link>
               </div>
             </motion.div>

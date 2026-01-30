@@ -87,12 +87,12 @@ export default function SubscribePage() {
               className="text-center max-w-3xl mx-auto"
             >
               <span className="inline-block px-4 py-1 bg-white/20 rounded-full text-sm font-medium mb-6">
-                Save up to 25%
+                Économise jusqu'à 25%
               </span>
-              <h1 className="text-4xl md:text-6xl font-bold mb-6">Subscribe & Never Run Out</h1>
+              <h1 className="text-4xl md:text-6xl font-bold mb-6">Abonne-toi et ne sois plus jamais à court</h1>
               <p className="text-xl text-white/80">
-                Get your favorite protein drinks delivered monthly. Free shipping, cancel anytime,
-                exclusive perks.
+                Reçois tes boissons protéinées préférées chaque mois. Livraison gratuite, annulation à tout moment,
+                avantages exclusifs.
               </p>
             </motion.div>
           </div>
@@ -129,21 +129,21 @@ export default function SubscribePage() {
                   >
                     {tier.id === 'athlete' && (
                       <span className="inline-block px-3 py-1 bg-[#FF6B35] text-white text-xs font-semibold rounded-full mb-4">
-                        Most Popular
+                        Le plus populaire
                       </span>
                     )}
                     <h3 className="text-2xl font-bold mb-2">{tier.name}</h3>
                     <div className="flex items-baseline gap-2 mb-4">
                       <span className="text-4xl font-bold text-[#FF6B35]">
-                        ${tier.price.toFixed(2)}
+                        {tier.price.toFixed(2)}€
                       </span>
-                      <span className="text-gray-500">/month</span>
+                      <span className="text-gray-500">/mois</span>
                     </div>
                     <div className="flex items-center gap-2 mb-6">
                       <span className="px-2 py-1 bg-[#00D9A5]/10 text-[#00D9A5] rounded text-sm font-semibold">
-                        {tier.discount}% OFF
+                        -{tier.discount}%
                       </span>
-                      <span className="text-gray-500 text-sm">{tier.bottles} bottles</span>
+                      <span className="text-gray-500 text-sm">{tier.bottles} bouteilles</span>
                     </div>
                     <ul className="space-y-3">
                       {tier.features.map((feature, i) => (
@@ -174,9 +174,9 @@ export default function SubscribePage() {
         <section className="py-16 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Customize Your Mix</h2>
+              <h2 className="text-3xl font-bold mb-4">Personnalise ton mix</h2>
               <p className="text-gray-600">
-                Choose how many of each flavor you want in your {currentTier.name} box.
+                Choisis combien de chaque saveur tu veux dans ta box {currentTier.name}.
               </p>
             </div>
 
@@ -217,7 +217,7 @@ export default function SubscribePage() {
             {/* Total & Actions */}
             <div className="flex items-center justify-between p-6 bg-gray-100 rounded-2xl mb-8">
               <div>
-                <div className="text-sm text-gray-500">Total bottles selected</div>
+                <div className="text-sm text-gray-500">Bouteilles sélectionnées</div>
                 <div
                   className={`text-2xl font-bold ${
                     totalBottles === currentTier.bottles ? 'text-[#00D9A5]' : 'text-[#FF6B35]'
@@ -230,13 +230,13 @@ export default function SubscribePage() {
                 onClick={autoBalance}
                 className="px-4 py-2 bg-white rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
               >
-                Auto Balance
+                Équilibrer auto
               </button>
             </div>
 
             {totalBottles !== currentTier.bottles && (
               <p className="text-center text-[#FF6B35] mb-8">
-                Please select exactly {currentTier.bottles} bottles to continue.
+                Sélectionne exactement {currentTier.bottles} bouteilles pour continuer.
               </p>
             )}
 
@@ -273,10 +273,10 @@ export default function SubscribePage() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
                     />
                   </svg>
-                  Redirecting to checkout...
+                  Redirection vers le paiement...
                 </span>
               ) : (
-                `Subscribe Now - $${currentTier.price.toFixed(2)}/month`
+                `S'abonner - ${currentTier.price.toFixed(2)}€/mois`
               )}
             </button>
           </div>
@@ -285,28 +285,28 @@ export default function SubscribePage() {
         {/* Benefits Section */}
         <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-12">Subscription Benefits</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">Les avantages de l'abonnement</h2>
             <div className="grid md:grid-cols-4 gap-8">
               {[
                 {
                   icon: '📦',
-                  title: 'Free Shipping',
-                  description: 'Every delivery ships free, no minimum required.',
+                  title: 'Livraison gratuite',
+                  description: 'Chaque livraison est offerte, sans minimum.',
                 },
                 {
                   icon: '🔄',
-                  title: 'Flexible Schedule',
-                  description: 'Pause, skip, or reschedule anytime from your dashboard.',
+                  title: 'Planning flexible',
+                  description: 'Mets en pause, saute ou reprogramme depuis ton espace.',
                 },
                 {
                   icon: '🎁',
-                  title: 'Exclusive Perks',
-                  description: 'Early access to new flavors and member-only merchandise.',
+                  title: 'Avantages exclusifs',
+                  description: 'Accès anticipé aux nouvelles saveurs et goodies réservés aux membres.',
                 },
                 {
                   icon: '❌',
-                  title: 'Cancel Anytime',
-                  description: 'No commitment, no fees. Cancel with one click.',
+                  title: 'Sans engagement',
+                  description: 'Pas d\'engagement, pas de frais. Annule en un clic.',
                 },
               ].map((benefit, i) => (
                 <motion.div
@@ -329,24 +329,24 @@ export default function SubscribePage() {
         {/* FAQ */}
         <section className="py-16 bg-white">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">Questions fréquentes</h2>
             <div className="space-y-4">
               {[
                 {
-                  q: 'How does the subscription work?',
-                  a: "Choose your plan, customize your flavor mix, and we'll deliver your bottles every month. You can pause, skip, or cancel anytime.",
+                  q: 'Comment fonctionne l\'abonnement ?',
+                  a: "Choisis ta formule, personnalise ton mix de saveurs, et on te livre chaque mois. Tu peux mettre en pause, sauter ou annuler à tout moment.",
                 },
                 {
-                  q: 'Can I change my flavor mix?',
-                  a: 'Absolutely! Log into your account and modify your mix before each billing cycle.',
+                  q: 'Je peux changer mes saveurs ?',
+                  a: 'Bien sûr ! Connecte-toi à ton compte et modifie ton mix avant chaque cycle de facturation.',
                 },
                 {
-                  q: 'When will I be charged?',
-                  a: "You'll be charged when you subscribe, then on the same date each month.",
+                  q: 'Quand suis-je débité ?',
+                  a: "Tu es débité à la souscription, puis à la même date chaque mois.",
                 },
                 {
-                  q: 'What if I want to cancel?',
-                  a: 'No problem! Cancel anytime from your account dashboard. No fees, no questions.',
+                  q: 'Et si je veux annuler ?',
+                  a: 'Pas de souci ! Annule quand tu veux depuis ton espace client. Sans frais, sans questions.',
                 },
               ].map((faq, i) => (
                 <details key={i} className="group bg-gray-50 rounded-xl">

@@ -12,67 +12,67 @@ import type { BlogPost } from '@/types';
 const MOCK_BLOG_POSTS = [
   {
     id: '1',
-    slug: 'top-5-post-workout-recipes',
-    title: 'Top 5 Post-Workout Protein Recipes with Tamarque',
-    excerpt: 'Discover delicious ways to enjoy your protein intake after an intense workout session.',
+    slug: 'top-5-recettes-post-entrainement',
+    title: 'Top 5 des recettes protéinées post-entraînement avec Tamarque',
+    excerpt: 'Découvre des façons délicieuses de consommer tes protéines après une séance intense.',
     heroImage: '/images/blog/post-workout.jpg',
     author: { name: 'Sophie Martin', avatar: '/images/authors/sophie.jpg' },
     publishedAt: '2024-01-20',
-    readTime: '5 min read',
-    tags: ['Recipes'],
+    readTime: '5 min',
+    tags: ['Recettes'],
     body: '',
   },
   {
     id: '2',
-    slug: 'protein-needs-for-runners',
-    title: 'How Much Protein Do Runners Really Need?',
-    excerpt: 'Breaking down the science of protein requirements for endurance athletes.',
+    slug: 'besoins-proteines-coureurs',
+    title: 'Combien de protéines pour les coureurs ?',
+    excerpt: 'Décryptage scientifique des besoins en protéines des athlètes d\'endurance.',
     heroImage: '/images/blog/runners.jpg',
     author: { name: 'Dr. Lucas Bernard', avatar: '/images/authors/lucas.jpg' },
     publishedAt: '2024-01-15',
-    readTime: '8 min read',
+    readTime: '8 min',
     tags: ['Nutrition'],
     body: '',
   },
   {
     id: '3',
-    slug: 'ice-tea-texture-revolution',
-    title: 'The Ice Tea Texture Revolution: Why Clear Protein is the Future',
-    excerpt: 'Learn why athletes are switching from thick shakes to refreshing ice tea texture drinks.',
+    slug: 'revolution-texture-ice-tea',
+    title: 'La révolution texture ice tea : pourquoi la protéine claire est l\'avenir',
+    excerpt: 'Pourquoi les athlètes abandonnent les shakes épais pour les boissons texture ice tea.',
     heroImage: '/images/blog/ice-tea.jpg',
     author: { name: 'Emma Dubois', avatar: '/images/authors/emma.jpg' },
     publishedAt: '2024-01-10',
-    readTime: '6 min read',
+    readTime: '6 min',
     tags: ['Innovation'],
     body: '',
   },
   {
     id: '4',
-    slug: 'natural-ingredients-matter',
-    title: 'Why 100% Natural Ingredients Matter for Your Performance',
-    excerpt: 'The science behind clean nutrition and how artificial ingredients affect athletes.',
+    slug: 'ingredients-naturels-performance',
+    title: 'Pourquoi les ingrédients 100% naturels comptent pour ta performance',
+    excerpt: 'La science derrière la nutrition clean et l\'impact des ingrédients artificiels.',
     heroImage: '/images/blog/natural.jpg',
     author: { name: 'Dr. Lucas Bernard', avatar: '/images/authors/lucas.jpg' },
     publishedAt: '2024-01-05',
-    readTime: '7 min read',
-    tags: ['Health'],
+    readTime: '7 min',
+    tags: ['Santé'],
     body: '',
   },
   {
     id: '5',
-    slug: 'summer-hydration-guide',
-    title: 'Summer Hydration Guide: Staying Fueled in the Heat',
-    excerpt: 'Tips and tricks for maintaining optimal hydration and protein intake during hot weather training.',
+    slug: 'guide-hydratation-ete',
+    title: 'Guide de l\'hydratation en été : rester performant par temps chaud',
+    excerpt: 'Astuces pour maintenir une hydratation et un apport protéique optimal en période de chaleur.',
     heroImage: '/images/blog/summer.jpg',
     author: { name: 'Sophie Martin', avatar: '/images/authors/sophie.jpg' },
     publishedAt: '2024-01-01',
-    readTime: '6 min read',
-    tags: ['Training'],
+    readTime: '6 min',
+    tags: ['Entraînement'],
     body: '',
   },
 ];
 
-const CATEGORIES = ['All', 'Recipes', 'Nutrition', 'Training', 'Innovation', 'Health'];
+const CATEGORIES = ['Tous', 'Recettes', 'Nutrition', 'Entraînement', 'Innovation', 'Santé'];
 
 function getReadTime(post: BlogPost): string {
   // If the post has a calculated readTime, use it
@@ -87,11 +87,11 @@ function getReadTime(post: BlogPost): string {
 
 function getCategoryEmoji(category: string): string {
   switch (category) {
-    case 'Recipes': return '🍹';
+    case 'Recettes': return '🍹';
     case 'Nutrition': return '🥗';
-    case 'Training': return '🏃';
+    case 'Entraînement': return '🏃';
     case 'Innovation': return '💡';
-    case 'Health': return '💪';
+    case 'Santé': return '💪';
     default: return '📰';
   }
 }
@@ -126,7 +126,7 @@ export default function BlogPage() {
     loadPosts();
   }, []);
 
-  const filteredPosts = selectedCategory === 'All'
+  const filteredPosts = selectedCategory === 'Tous'
     ? posts
     : posts.filter((post) => post.tags.includes(selectedCategory));
 
@@ -145,9 +145,9 @@ export default function BlogPage() {
               animate={{ opacity: 1, y: 0 }}
               className="text-center max-w-3xl mx-auto"
             >
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">The Tamarque Blog</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">Le Blog Tamarque</h1>
               <p className="text-xl text-gray-600">
-                Expert tips on nutrition, training, and living your best athletic life.
+                Conseils d'experts en nutrition, entraînement et style de vie sportif.
               </p>
             </motion.div>
           </div>
@@ -212,7 +212,7 @@ export default function BlogPage() {
                               <div>
                                 <div className="font-medium">{featuredPost.author.name}</div>
                                 <div className="text-sm text-gray-500">
-                                  {new Date(featuredPost.publishedAt).toLocaleDateString('en-US', {
+                                  {new Date(featuredPost.publishedAt).toLocaleDateString('fr-FR', {
                                     year: 'numeric',
                                     month: 'long',
                                     day: 'numeric',
@@ -281,9 +281,9 @@ export default function BlogPage() {
             {filteredPosts.length === 0 && (
               <div className="text-center py-20">
                 <div className="text-4xl mb-4">📭</div>
-                <h3 className="text-xl font-bold mb-2">No posts found</h3>
+                <h3 className="text-xl font-bold mb-2">Aucun article trouvé</h3>
                 <p className="text-gray-600">
-                  No articles in this category yet. Check back soon!
+                  Pas encore d'articles dans cette catégorie. Reviens bientôt !
                 </p>
               </div>
             )}
@@ -298,21 +298,21 @@ export default function BlogPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl font-bold mb-4">Get Weekly Nutrition Tips</h2>
+              <h2 className="text-3xl font-bold mb-4">Reçois nos conseils nutrition chaque semaine</h2>
               <p className="text-gray-400 mb-8">
-                Join 10,000+ athletes getting expert advice on nutrition, training, and recovery.
+                Rejoins 10 000+ athlètes qui reçoivent des conseils d'experts en nutrition, entraînement et récupération.
               </p>
               <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                 <input
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="Ton adresse email"
                   className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#FF6B35]"
                 />
                 <button
                   type="submit"
                   className="px-6 py-3 bg-[#FF6B35] text-white rounded-lg font-semibold hover:bg-[#E55A2B] transition-colors"
                 >
-                  Subscribe
+                  S'inscrire
                 </button>
               </form>
             </motion.div>

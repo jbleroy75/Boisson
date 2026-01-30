@@ -39,9 +39,9 @@ export default function ThankYouPage() {
               </svg>
             </motion.div>
 
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Thank You!</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Merci !</h1>
             <p className="text-xl text-gray-600 mb-8">
-              Your order has been received and is being processed.
+              Ta commande a bien été reçue et est en cours de traitement.
             </p>
 
             {/* Order Info */}
@@ -49,23 +49,23 @@ export default function ThankYouPage() {
               <div className="grid md:grid-cols-3 gap-6 text-center">
                 <div>
                   <div className="text-3xl mb-2">📧</div>
-                  <h3 className="font-semibold mb-1">Confirmation Email</h3>
+                  <h3 className="font-semibold mb-1">Email de confirmation</h3>
                   <p className="text-sm text-gray-600">
-                    A confirmation email has been sent to your inbox.
+                    Un email de confirmation a été envoyé dans ta boîte mail.
                   </p>
                 </div>
                 <div>
                   <div className="text-3xl mb-2">📦</div>
-                  <h3 className="font-semibold mb-1">Shipping</h3>
+                  <h3 className="font-semibold mb-1">Expédition</h3>
                   <p className="text-sm text-gray-600">
-                    Your order will ship within 1-2 business days.
+                    Ta commande sera expédiée sous 1-2 jours ouvrés.
                   </p>
                 </div>
                 <div>
                   <div className="text-3xl mb-2">🔔</div>
-                  <h3 className="font-semibold mb-1">Tracking</h3>
+                  <h3 className="font-semibold mb-1">Suivi</h3>
                   <p className="text-sm text-gray-600">
-                    You&apos;ll receive tracking info once your order ships.
+                    Tu recevras les infos de suivi dès l'expédition.
                   </p>
                 </div>
               </div>
@@ -73,31 +73,31 @@ export default function ThankYouPage() {
 
             {/* What's Next */}
             <div className="bg-gradient-to-br from-[#FF6B35]/10 to-[#FF1493]/10 rounded-2xl p-8 mb-8">
-              <h2 className="text-2xl font-bold mb-4">What&apos;s Next?</h2>
+              <h2 className="text-2xl font-bold mb-4">Et maintenant ?</h2>
               <ul className="text-left space-y-3 max-w-md mx-auto">
                 <li className="flex items-center gap-3">
                   <span className="w-6 h-6 bg-[#FF6B35] text-white rounded-full flex items-center justify-center text-sm font-bold">
                     1
                   </span>
-                  <span>Check your email for order confirmation</span>
+                  <span>Vérifie ta boîte mail pour la confirmation</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="w-6 h-6 bg-[#FF6B35] text-white rounded-full flex items-center justify-center text-sm font-bold">
                     2
                   </span>
-                  <span>We&apos;ll prepare your order for shipping</span>
+                  <span>On prépare ta commande avec soin</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="w-6 h-6 bg-[#FF6B35] text-white rounded-full flex items-center justify-center text-sm font-bold">
                     3
                   </span>
-                  <span>Receive tracking information via email</span>
+                  <span>Tu reçois le numéro de suivi par email</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="w-6 h-6 bg-[#FF6B35] text-white rounded-full flex items-center justify-center text-sm font-bold">
                     4
                   </span>
-                  <span>Enjoy your Tamarque protein drinks!</span>
+                  <span>Profite de tes boissons Tamarque !</span>
                 </li>
               </ul>
             </div>
@@ -108,19 +108,19 @@ export default function ThankYouPage() {
                 href="/shop"
                 className="px-8 py-4 bg-[#FF6B35] text-white rounded-xl font-semibold hover:bg-[#E55A2B] transition-colors"
               >
-                Continue Shopping
+                Continuer mes achats
               </Link>
               <Link
                 href="/account"
                 className="px-8 py-4 bg-white text-gray-800 rounded-xl font-semibold hover:bg-gray-50 transition-colors border border-gray-200"
               >
-                View Your Orders
+                Voir mes commandes
               </Link>
             </div>
 
             {/* Social Share */}
             <div className="mt-12">
-              <p className="text-gray-500 mb-4">Share your purchase with friends!</p>
+              <p className="text-gray-500 mb-4">Partage ton achat avec tes amis !</p>
               <div className="flex justify-center gap-4">
                 <button className="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

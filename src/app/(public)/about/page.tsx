@@ -305,24 +305,24 @@ export default function AboutPage() {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Ready to Experience the Difference?
+                Prêt à découvrir la différence ?
               </h2>
               <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-                Join thousands of athletes who&apos;ve made the switch to refreshing protein.
-                20g protein, ice tea texture, 100% natural.
+                Rejoins des milliers d'athlètes qui ont fait le switch vers une protéine rafraîchissante.
+                20g de protéines, texture ice tea, 100% naturelle.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/shop"
                   className="px-8 py-4 bg-[#FF6B35] text-white rounded-xl font-semibold text-lg hover:bg-[#E55A2B] transition-colors"
                 >
-                  Shop Now
+                  Commander
                 </Link>
                 <Link
                   href="/subscribe"
                   className="px-8 py-4 bg-white/10 text-white rounded-xl font-semibold text-lg hover:bg-white/20 transition-colors border border-white/20"
                 >
-                  Subscribe & Save 25%
+                  S'abonner et économiser 25%
                 </Link>
               </div>
             </motion.div>

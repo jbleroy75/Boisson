@@ -71,10 +71,10 @@ export default function B2BProfilePage() {
     try {
       // In production, save to API
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      setMessage({ type: 'success', text: 'Profile updated successfully!' });
+      setMessage({ type: 'success', text: 'Profil mis à jour avec succès !' });
       setIsEditing(false);
     } catch (error) {
-      setMessage({ type: 'error', text: 'Failed to update profile. Please try again.' });
+      setMessage({ type: 'error', text: 'Erreur lors de la mise à jour. Veuillez réessayer.' });
     } finally {
       setIsSaving(false);
     }
@@ -92,8 +92,8 @@ export default function B2BProfilePage() {
             className="flex justify-between items-center mb-8"
           >
             <div>
-              <h1 className="text-3xl font-bold mb-2">Company Profile</h1>
-              <p className="text-gray-600">Manage your business information</p>
+              <h1 className="text-3xl font-bold mb-2">Profil entreprise</h1>
+              <p className="text-gray-600">Gérez les informations de votre entreprise</p>
             </div>
             {!isEditing && (
               <button
@@ -108,7 +108,7 @@ export default function B2BProfilePage() {
                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
                   />
                 </svg>
-                Edit Profile
+                Modifier le profil
               </button>
             )}
           </motion.div>
@@ -137,11 +137,11 @@ export default function B2BProfilePage() {
           >
             {/* Company Information */}
             <div className="p-6 border-b">
-              <h2 className="text-xl font-bold mb-6">Company Information</h2>
+              <h2 className="text-xl font-bold mb-6">Informations entreprise</h2>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Company Name
+                    Raison sociale
                   </label>
                   <input
                     type="text"
@@ -153,7 +153,7 @@ export default function B2BProfilePage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    SIRET Number
+                    Numéro SIRET
                   </label>
                   <input
                     type="text"
@@ -161,11 +161,11 @@ export default function B2BProfilePage() {
                     disabled
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-600"
                   />
-                  <p className="text-xs text-gray-500 mt-1">Contact support to update SIRET</p>
+                  <p className="text-xs text-gray-500 mt-1">Contactez le support pour modifier le SIRET</p>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    VAT Number
+                    Numéro de TVA
                   </label>
                   <input
                     type="text"
@@ -176,7 +176,7 @@ export default function B2BProfilePage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Website</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Site web</label>
                   <input
                     type="url"
                     value={profile.website}
@@ -190,11 +190,11 @@ export default function B2BProfilePage() {
 
             {/* Address */}
             <div className="p-6 border-b">
-              <h2 className="text-xl font-bold mb-6">Billing Address</h2>
+              <h2 className="text-xl font-bold mb-6">Adresse de facturation</h2>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Street Address
+                    Adresse
                   </label>
                   <input
                     type="text"
@@ -205,7 +205,7 @@ export default function B2BProfilePage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Ville</label>
                   <input
                     type="text"
                     value={profile.city}
@@ -216,7 +216,7 @@ export default function B2BProfilePage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Postal Code
+                    Code postal
                   </label>
                   <input
                     type="text"
@@ -227,7 +227,7 @@ export default function B2BProfilePage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Region</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Région</label>
                   <select
                     value={profile.region}
                     onChange={(e) => setProfile({ ...profile, region: e.target.value })}
@@ -242,7 +242,7 @@ export default function B2BProfilePage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Pays</label>
                   <input
                     type="text"
                     value={profile.country}
@@ -255,11 +255,11 @@ export default function B2BProfilePage() {
 
             {/* Contact Information */}
             <div className="p-6 border-b">
-              <h2 className="text-xl font-bold mb-6">Contact Information</h2>
+              <h2 className="text-xl font-bold mb-6">Informations de contact</h2>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Contact Name
+                    Nom du contact
                   </label>
                   <input
                     type="text"
@@ -280,7 +280,7 @@ export default function B2BProfilePage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
                   <input
                     type="tel"
                     value={profile.contact_phone}
@@ -299,14 +299,14 @@ export default function B2BProfilePage() {
                   onClick={() => setIsEditing(false)}
                   className="px-6 py-3 border border-gray-300 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
                 >
-                  Cancel
+                  Annuler
                 </button>
                 <button
                   onClick={handleSave}
                   disabled={isSaving}
                   className="px-6 py-3 bg-[#FF6B35] text-white rounded-lg font-semibold hover:bg-[#E55A2B] transition-colors disabled:opacity-50"
                 >
-                  {isSaving ? 'Saving...' : 'Save Changes'}
+                  {isSaving ? 'Enregistrement...' : 'Enregistrer'}
                 </button>
               </div>
             )}
@@ -331,10 +331,9 @@ export default function B2BProfilePage() {
                 </svg>
               </div>
               <div>
-                <h3 className="font-bold text-lg">Account Verified</h3>
+                <h3 className="font-bold text-lg">Compte vérifié</h3>
                 <p className="text-gray-600 text-sm">
-                  Your distributor account is verified and active. You&apos;re eligible for volume
-                  discounts.
+                  Votre compte distributeur est vérifié et actif. Vous bénéficiez des remises sur volume.
                 </p>
               </div>
             </div>

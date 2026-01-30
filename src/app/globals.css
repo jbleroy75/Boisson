@@ -350,15 +350,97 @@ html {
   }
 }
 
-/* Dark mode placeholder (ready for implementation) */
+/* ============================================
+   DARK MODE
+   ============================================ */
+
+/* Dark mode via class (for manual toggle) */
+.dark {
+  --background: #0f0f0f;
+  --foreground: #f5f5f5;
+  --color-orange: #FF7F50;
+  --color-green: #10E8A7;
+  --color-pink: #FF69B4;
+}
+
+.dark body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #4a4a4a;
+}
+
+/* Dark mode skeleton */
+.dark .skeleton {
+  background: linear-gradient(
+    90deg,
+    #2a2a2a 25%,
+    #3a3a3a 50%,
+    #2a2a2a 75%
+  );
+  background-size: 200% 100%;
+}
+
+/* Dark mode buttons */
+.dark .btn-primary {
+  background-color: var(--color-orange);
+}
+
+.dark .btn-primary:hover {
+  background-color: #FF8F60;
+}
+
+.dark .btn-secondary {
+  color: #f5f5f5;
+  border-color: #f5f5f5;
+}
+
+.dark .btn-secondary:hover {
+  background-color: #f5f5f5;
+  color: #0f0f0f;
+}
+
+/* Dark mode product cards */
+.dark .product-card {
+  background-color: #1a1a1a;
+}
+
+.dark .product-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Dark mode selection */
+.dark ::selection {
+  background-color: var(--color-orange);
+  color: #0f0f0f;
+}
+
+/* Dark mode high contrast */
+@media (prefers-contrast: high) {
+  .dark {
+    --background: #000000;
+    --foreground: #ffffff;
+    --color-orange: #FFA07A;
+  }
+}
+
+/* System preference dark mode (fallback) */
 @media (prefers-color-scheme: dark) {
-  /*
-   * Dark mode styles - to be implemented
-   * :root {
-   *   --background: #1A1A1A;
-   *   --foreground: #ffffff;
-   * }
-   */
+  :root:not(.light) {
+    --background: #0f0f0f;
+    --foreground: #f5f5f5;
+  }
 }
 
 /* Link underline for accessibility */

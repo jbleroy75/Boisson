@@ -335,3 +335,335 @@ export function generateCollectionPageSchema(
 export function combineSchemas(...schemas: object[]): string {
   return JSON.stringify(schemas.length === 1 ? schemas[0] : schemas);
 }
+
+/**
+ * HowTo Schema for recipe/tutorial articles
+ */
+export function generateHowToSchema(howTo: {
+  name: string;
+  description: string;
+  image?: string;
+  totalTime?: string; // ISO 8601 duration format (e.g., "PT30M" for 30 minutes)
+  steps: { name: string; text: string; image?: string }[];
+  tools?: string[];
+  supplies?: { name: string; quantity?: string }[];
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: howTo.name,
+    description: howTo.description,
+    image: howTo.image,
+    totalTime: howTo.totalTime,
+    tool: howTo.tools?.map((tool) => ({
+      '@type': 'HowToTool',
+      name: tool,
+    })),
+    supply: howTo.supplies?.map((supply) => ({
+      '@type': 'HowToSupply',
+      name: supply.name,
+      requiredQuantity: supply.quantity,
+    })),
+    step: howTo.steps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+      image: step.image,
+    })),
+  };
+}
+
+/**
+ * Recipe Schema for food/drink recipes
+ */
+export function generateRecipeSchema(recipe: {
+  name: string;
+  description: string;
+  image: string;
+  author: string;
+  datePublished: string;
+  prepTime?: string;
+  cookTime?: string;
+  totalTime?: string;
+  recipeYield?: string;
+  recipeCategory?: string;
+  recipeCuisine?: string;
+  nutrition?: {
+    calories?: string;
+    proteinContent?: string;
+    carbohydrateContent?: string;
+    fatContent?: string;
+  };
+  recipeIngredient: string[];
+  recipeInstructions: { text: string }[];
+  aggregateRating?: {
+    ratingValue: number;
+    reviewCount: number;
+  };
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Recipe',
+    name: recipe.name,
+    description: recipe.description,
+    image: recipe.image,
+    author: {
+      '@type': 'Person',
+      name: recipe.author,
+    },
+    datePublished: recipe.datePublished,
+    prepTime: recipe.prepTime,
+    cookTime: recipe.cookTime,
+    totalTime: recipe.totalTime,
+    recipeYield: recipe.recipeYield,
+    recipeCategory: recipe.recipeCategory,
+    recipeCuisine: recipe.recipeCuisine,
+    nutrition: recipe.nutrition
+      ? {
+          '@type': 'NutritionInformation',
+          ...recipe.nutrition,
+        }
+      : undefined,
+    recipeIngredient: recipe.recipeIngredient,
+    recipeInstructions: recipe.recipeInstructions.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      text: step.text,
+    })),
+    aggregateRating: recipe.aggregateRating
+      ? {
+          '@type': 'AggregateRating',
+          ratingValue: recipe.aggregateRating.ratingValue,
+          reviewCount: recipe.aggregateRating.reviewCount,
+        }
+      : undefined,
+  };
+}
+
+/**
+ * VideoObject Schema
+ */
+export function generateVideoSchema(video: {
+  name: string;
+  description: string;
+  thumbnailUrl: string;
+  uploadDate: string;
+  duration?: string; // ISO 8601 duration
+  contentUrl?: string;
+  embedUrl?: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: video.name,
+    description: video.description,
+    thumbnailUrl: video.thumbnailUrl,
+    uploadDate: video.uploadDate,
+    duration: video.duration,
+    contentUrl: video.contentUrl,
+    embedUrl: video.embedUrl,
+    publisher: {
+      '@type': 'Organization',
+      name: 'Tamarque',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/images/logo/logo.png`,
+      },
+    },
+  };
+}
+
+/**
+ * Review Schema (standalone for testimonials)
+ */
+export function generateReviewSchema(review: {
+  itemReviewed: {
+    type: 'Product' | 'Organization' | 'Brand';
+    name: string;
+  };
+  author: string;
+  reviewBody: string;
+  reviewRating: number;
+  datePublished: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Review',
+    itemReviewed: {
+      '@type': review.itemReviewed.type,
+      name: review.itemReviewed.name,
+    },
+    author: {
+      '@type': 'Person',
+      name: review.author,
+    },
+    reviewBody: review.reviewBody,
+    reviewRating: {
+      '@type': 'Rating',
+      ratingValue: review.reviewRating,
+      bestRating: '5',
+      worstRating: '1',
+    },
+    datePublished: review.datePublished,
+    publisher: {
+      '@type': 'Organization',
+      name: 'Tamarque',
+    },
+  };
+}
+
+/**
+ * Aggregate Rating Schema (standalone for brand/company)
+ */
+export function generateAggregateRatingSchema(rating: {
+  itemReviewed: {
+    type: 'Organization' | 'Brand' | 'Product';
+    name: string;
+  };
+  ratingValue: number;
+  reviewCount: number;
+  bestRating?: number;
+  worstRating?: number;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'AggregateRating',
+    itemReviewed: {
+      '@type': rating.itemReviewed.type,
+      name: rating.itemReviewed.name,
+    },
+    ratingValue: rating.ratingValue,
+    reviewCount: rating.reviewCount,
+    bestRating: rating.bestRating || 5,
+    worstRating: rating.worstRating || 1,
+  };
+}
+
+/**
+ * Sale Event Schema
+ */
+export function generateSaleEventSchema(event: {
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  url?: string;
+  image?: string;
+  offers?: {
+    name: string;
+    price: number;
+    priceCurrency: string;
+    discount?: string;
+  }[];
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SaleEvent',
+    name: event.name,
+    description: event.description,
+    startDate: event.startDate,
+    endDate: event.endDate,
+    url: event.url || SITE_URL,
+    image: event.image,
+    location: {
+      '@type': 'VirtualLocation',
+      url: SITE_URL,
+    },
+    organizer: {
+      '@type': 'Organization',
+      name: 'Tamarque',
+      url: SITE_URL,
+    },
+    offers: event.offers?.map((offer) => ({
+      '@type': 'Offer',
+      name: offer.name,
+      price: offer.price.toFixed(2),
+      priceCurrency: offer.priceCurrency,
+      availability: 'https://schema.org/InStock',
+      validFrom: event.startDate,
+      validThrough: event.endDate,
+    })),
+  };
+}
+
+/**
+ * Special Offer Schema
+ */
+export function generateSpecialOfferSchema(offer: {
+  name: string;
+  description: string;
+  discount: string; // e.g., "25%" or "10€"
+  validFrom: string;
+  validThrough: string;
+  eligibleProducts?: string[];
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Offer',
+    name: offer.name,
+    description: offer.description,
+    priceSpecification: {
+      '@type': 'PriceSpecification',
+      discount: offer.discount,
+    },
+    validFrom: offer.validFrom,
+    validThrough: offer.validThrough,
+    eligibleRegion: {
+      '@type': 'Country',
+      name: 'France',
+    },
+    seller: {
+      '@type': 'Organization',
+      name: 'Tamarque',
+    },
+  };
+}
+
+/**
+ * Subscription Service Schema
+ */
+export function generateSubscriptionSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `${SITE_URL}/subscribe#subscription`,
+    name: 'Abonnement Tamarque',
+    description: 'Recevez vos boissons protéinées préférées automatiquement avec 15-25% de réduction',
+    provider: {
+      '@type': 'Organization',
+      name: 'Tamarque',
+    },
+    serviceType: 'Subscription Box',
+    areaServed: {
+      '@type': 'Country',
+      name: 'France',
+    },
+    offers: [
+      {
+        '@type': 'Offer',
+        name: 'Pack Starter',
+        description: '6 bouteilles par mois',
+        price: '25.50',
+        priceCurrency: 'EUR',
+        availability: 'https://schema.org/InStock',
+      },
+      {
+        '@type': 'Offer',
+        name: 'Pack Athlete',
+        description: '12 bouteilles par mois',
+        price: '48.00',
+        priceCurrency: 'EUR',
+        availability: 'https://schema.org/InStock',
+      },
+      {
+        '@type': 'Offer',
+        name: 'Pack Team',
+        description: '24 bouteilles par mois',
+        price: '90.00',
+        priceCurrency: 'EUR',
+        availability: 'https://schema.org/InStock',
+      },
+    ],
+  };
+}

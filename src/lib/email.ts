@@ -406,3 +406,189 @@ export async function sendNewsletterWelcome(email: string) {
     return { success: false, error };
   }
 }
+
+// B2B Registration Emails
+export interface B2BRegistrationEmailData {
+  to: string;
+  companyName: string;
+  contactName: string;
+}
+
+export async function sendB2BRegistrationEmail(data: B2BRegistrationEmailData) {
+  if (!resend) {
+    console.log('Email (dev mode):', 'B2B registration confirmation', data);
+    return { success: true, id: 'dev-mode' };
+  }
+
+  try {
+    const result = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: data.to,
+      subject: 'Demande de partenariat B2B reçue - Tamarque',
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head><meta charset="utf-8"></head>
+        <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f5f5f5;">
+          <div style="max-width: 600px; margin: 0 auto; background: #fff;">
+            <div style="background: linear-gradient(135deg, #FF6B35, #FF1493); padding: 40px; text-align: center;">
+              <h1 style="color: #fff; margin: 0;">Demande reçue ! 🤝</h1>
+            </div>
+            <div style="padding: 40px;">
+              <p style="font-size: 16px;">Bonjour ${data.contactName},</p>
+              <p style="color: #666; line-height: 1.6;">
+                Nous avons bien reçu votre demande de partenariat B2B pour
+                <strong>${data.companyName}</strong>.
+              </p>
+              <div style="background: #fff3e0; border-left: 4px solid #FF6B35; padding: 20px; margin: 30px 0;">
+                <h3 style="margin: 0 0 10px; color: #FF6B35;">Prochaines étapes</h3>
+                <ol style="color: #666; padding-left: 20px; margin: 0;">
+                  <li style="margin-bottom: 8px;">Notre équipe commerciale examine votre dossier</li>
+                  <li style="margin-bottom: 8px;">Vérification de votre SIRET et informations</li>
+                  <li style="margin-bottom: 8px;">Contact sous 48h pour discuter de vos besoins</li>
+                  <li>Activation de votre compte et envoi de vos identifiants</li>
+                </ol>
+              </div>
+              <p style="color: #666;">
+                En attendant, n'hésitez pas à nous contacter si vous avez des questions.
+              </p>
+              <p style="color: #666; margin-top: 30px;">
+                À très bientôt,<br>
+                <strong>L'équipe commerciale Tamarque</strong>
+              </p>
+            </div>
+            <div style="background: #1A1A1A; padding: 30px; text-align: center;">
+              <p style="color: #888; margin: 0; font-size: 14px;">
+                b2b@tamarque.com | +33 1 23 45 67 89
+              </p>
+            </div>
+          </div>
+        </body>
+        </html>
+      `,
+    });
+
+    return { success: true, id: result.data?.id };
+  } catch (error) {
+    console.error('Failed to send B2B registration email:', error);
+    return { success: false, error };
+  }
+}
+
+export interface B2BAdminNotificationData {
+  clientId: string;
+  companyName: string;
+  email: string;
+  companyType: string;
+  estimatedVolume: string;
+}
+
+export async function sendB2BAdminNotification(data: B2BAdminNotificationData) {
+  const adminEmail = process.env.B2B_ADMIN_EMAIL || 'b2b@tamarque.com';
+
+  if (!resend) {
+    console.log('Email (dev mode):', 'B2B admin notification', data);
+    return { success: true, id: 'dev-mode' };
+  }
+
+  try {
+    const result = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: adminEmail,
+      subject: `🆕 Nouveau partenaire B2B: ${data.companyName}`,
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head><meta charset="utf-8"></head>
+        <body style="font-family: Arial, sans-serif;">
+          <h2>Nouvelle demande de partenariat B2B</h2>
+          <table style="border-collapse: collapse; width: 100%;">
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;"><strong>Entreprise</strong></td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">${data.companyName}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;"><strong>Email</strong></td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">${data.email}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;"><strong>Type</strong></td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">${data.companyType}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;"><strong>Volume estimé</strong></td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">${data.estimatedVolume} unités/mois</td>
+            </tr>
+          </table>
+          <p style="margin-top: 30px;">
+            <a href="https://tamarque.com/admin/b2b/${data.clientId}"
+               style="background: #FF6B35; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px;">
+              Voir la demande
+            </a>
+          </p>
+        </body>
+        </html>
+      `,
+    });
+
+    return { success: true, id: result.data?.id };
+  } catch (error) {
+    console.error('Failed to send B2B admin notification:', error);
+    return { success: false, error };
+  }
+}
+
+// B2B Order Status Update
+export async function sendB2BOrderStatusUpdate(data: {
+  to: string;
+  companyName: string;
+  orderId: string;
+  status: string;
+  message?: string;
+}) {
+  if (!resend) {
+    console.log('Email (dev mode):', 'B2B order status update', data);
+    return { success: true, id: 'dev-mode' };
+  }
+
+  const statusMessages: Record<string, { title: string; color: string }> = {
+    confirmed: { title: 'Commande confirmée', color: '#00D9A5' },
+    processing: { title: 'Commande en préparation', color: '#FF6B35' },
+    shipped: { title: 'Commande expédiée', color: '#00B589' },
+    delivered: { title: 'Commande livrée', color: '#00D9A5' },
+    cancelled: { title: 'Commande annulée', color: '#FF4444' },
+  };
+
+  const statusInfo = statusMessages[data.status] || { title: data.status, color: '#666' };
+
+  try {
+    const result = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: data.to,
+      subject: `${statusInfo.title} - Commande #${data.orderId}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background: ${statusInfo.color}; padding: 30px; text-align: center;">
+            <h1 style="color: #fff; margin: 0;">${statusInfo.title}</h1>
+          </div>
+          <div style="padding: 30px;">
+            <p>Bonjour,</p>
+            <p>La commande <strong>#${data.orderId}</strong> pour <strong>${data.companyName}</strong>
+               a été mise à jour.</p>
+            ${data.message ? `<p style="background: #f5f5f5; padding: 15px; border-radius: 8px;">${data.message}</p>` : ''}
+            <a href="https://tamarque.com/fournisseurs/orders/${data.orderId}"
+               style="display: inline-block; background: #FF6B35; color: #fff; padding: 12px 24px;
+                      text-decoration: none; border-radius: 6px; margin-top: 20px;">
+              Voir la commande
+            </a>
+          </div>
+        </div>
+      `,
+    });
+
+    return { success: true, id: result.data?.id };
+  } catch (error) {
+    console.error('Failed to send B2B order status update:', error);
+    return { success: false, error };
+  }
+}

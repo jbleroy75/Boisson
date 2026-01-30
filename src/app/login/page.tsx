@@ -33,7 +33,7 @@ function LoginForm() {
     if (!isLogin) {
       // Registration
       if (formData.password !== formData.confirmPassword) {
-        setFormError('Passwords do not match');
+        setFormError('Les mots de passe ne correspondent pas');
         setIsLoading(false);
         return;
       }
@@ -73,7 +73,7 @@ function LoginForm() {
       });
 
       if (result?.error) {
-        setFormError('Invalid email or password');
+        setFormError('Email ou mot de passe incorrect');
         setIsLoading(false);
       } else {
         router.push(callbackUrl);
@@ -100,19 +100,19 @@ function LoginForm() {
             </span>
           </Link>
           <h1 className="text-2xl font-bold mt-4">
-            {isLogin ? 'Welcome Back' : 'Create Account'}
+            {isLogin ? 'Content de te revoir' : 'Créer un compte'}
           </h1>
           <p className="text-gray-500 mt-2">
             {isLogin
-              ? 'Sign in to access your account'
-              : 'Join Tamarque and start your journey'}
+              ? 'Connecte-toi pour accéder à ton espace'
+              : 'Rejoins Tamarque et commence l\'aventure'}
           </p>
         </div>
 
         {/* Error Messages */}
         {(error || formError) && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
-            {formError || 'An error occurred. Please try again.'}
+            {formError || 'Une erreur s\'est produite. Réessaie.'}
           </div>
         )}
 
@@ -121,7 +121,7 @@ function LoginForm() {
           {!isLogin && (
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                Full Name
+                Nom complet
               </label>
               <input
                 type="text"
@@ -129,7 +129,7 @@ function LoginForm() {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
-                placeholder="John Doe"
+                placeholder="Jean Dupont"
                 required={!isLogin}
               />
             </div>
@@ -137,7 +137,7 @@ function LoginForm() {
 
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email Address
+              Adresse email
             </label>
             <input
               type="email"
@@ -145,14 +145,14 @@ function LoginForm() {
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
-              placeholder="you@example.com"
+              placeholder="toi@exemple.com"
               required
             />
           </div>
 
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-              Password
+              Mot de passe
             </label>
             <input
               type="password"
@@ -172,7 +172,7 @@ function LoginForm() {
                 htmlFor="confirmPassword"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Confirm Password
+                Confirmer le mot de passe
               </label>
               <input
                 type="password"
@@ -190,7 +190,7 @@ function LoginForm() {
           {isLogin && (
             <div className="flex justify-end">
               <Link href="/forgot-password" className="text-sm text-[#FF6B35] hover:underline">
-                Forgot password?
+                Mot de passe oublié ?
               </Link>
             </div>
           )}
@@ -217,12 +217,12 @@ function LoginForm() {
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   />
                 </svg>
-                Processing...
+                Chargement...
               </span>
             ) : isLogin ? (
-              'Sign In'
+              'Se connecter'
             ) : (
-              'Create Account'
+              'Créer mon compte'
             )}
           </button>
         </form>
@@ -233,7 +233,7 @@ function LoginForm() {
             <div className="w-full border-t border-gray-200"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-4 bg-white text-gray-500">Or continue with</span>
+            <span className="px-4 bg-white text-gray-500">Ou continuer avec</span>
           </div>
         </div>
 
@@ -265,7 +265,7 @@ function LoginForm() {
 
         {/* Toggle Login/Register */}
         <p className="text-center mt-6 text-sm text-gray-600">
-          {isLogin ? "Don't have an account? " : 'Already have an account? '}
+          {isLogin ? "Pas encore de compte ? " : 'Déjà un compte ? '}
           <button
             onClick={() => {
               setIsLogin(!isLogin);
@@ -273,7 +273,7 @@ function LoginForm() {
             }}
             className="text-[#FF6B35] font-semibold hover:underline"
           >
-            {isLogin ? 'Sign up' : 'Sign in'}
+            {isLogin ? 'Créer un compte' : 'Se connecter'}
           </button>
         </p>
       </div>

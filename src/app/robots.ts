@@ -31,8 +31,21 @@ export default function robots(): MetadataRoute.Robots {
           '/fournisseurs/',
         ],
       },
+      {
+        userAgent: 'Googlebot-Image',
+        allow: '/images/',
+        disallow: ['/api/', '/_next/'],
+      },
+      {
+        userAgent: 'Googlebot-News',
+        allow: '/blog/',
+      },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: [
+      `${baseUrl}/sitemap.xml`,
+      `${baseUrl}/sitemap-images.xml`,
+      `${baseUrl}/sitemap-news.xml`,
+    ],
     host: baseUrl,
   };
 }

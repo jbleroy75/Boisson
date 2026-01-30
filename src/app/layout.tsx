@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from 'next';
 import { Montserrat, Inter } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 import { Providers } from './providers';
 import { OrganizationSchema } from '@/components/seo/StructuredData';
+import { generateWebsiteSchema, generateAggregateRatingSchema } from '@/lib/seo/schemas';
 import { Analytics } from '@vercel/analytics/next';
 
 const montserrat = Montserrat({
@@ -99,7 +101,34 @@ export default function RootLayout({
   return (
     <html lang="fr" className="scroll-smooth">
       <head>
+        {/* Preconnect for performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://connect.facebook.net" />
+
+        {/* Structured Data */}
         <OrganizationSchema />
+        <Script
+          id="website-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateWebsiteSchema()),
+          }}
+        />
+        <Script
+          id="aggregate-rating-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              generateAggregateRatingSchema({
+                itemReviewed: { type: 'Brand', name: 'Tamarque' },
+                ratingValue: 4.9,
+                reviewCount: 1247,
+              })
+            ),
+          }}
+        />
       </head>
       <body className={`${montserrat.variable} ${inter.variable} font-sans antialiased`}>
         {/* Skip to main content link for keyboard navigation */}

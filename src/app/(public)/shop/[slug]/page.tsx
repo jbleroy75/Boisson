@@ -41,7 +41,7 @@ function transformShopifyProduct(shopifyProduct: {
       fat: 0,
       sodium: 150,
     },
-    ingredients: ['Water', 'Whey Protein Isolate', 'Natural Flavors', 'Citric Acid', 'Stevia'],
+    ingredients: ['Eau', 'Isolat de Whey', 'Arômes naturels', 'Acide citrique', 'Stévia'],
     inStock: true,
   };
 }
@@ -99,9 +99,9 @@ export default function ProductPage() {
         <Header />
         <main className="pt-20 min-h-screen flex items-center justify-center">
           <div className="text-center">
-            <h1 className="text-2xl font-bold mb-4">Product not found</h1>
+            <h1 className="text-2xl font-bold mb-4">Produit introuvable</h1>
             <Link href="/shop" className="text-[#FF6B35] hover:underline">
-              Back to Shop
+              Retour à la boutique
             </Link>
           </div>
         </main>
@@ -148,11 +148,11 @@ function ProductContent({ product }: { product: Product }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <nav className="text-sm text-gray-500">
           <Link href="/" className="hover:text-[#FF6B35]">
-            Home
+            Accueil
           </Link>
           <span className="mx-2">/</span>
           <Link href="/shop" className="hover:text-[#FF6B35]">
-            Shop
+            Boutique
           </Link>
           <span className="mx-2">/</span>
           <span className="text-gray-900">{product.name}</span>
@@ -223,7 +223,7 @@ function ProductContent({ product }: { product: Product }) {
                 </span>
               ))}
               <span className="px-3 py-1 bg-[#00D9A5]/10 text-[#00D9A5] rounded-full text-sm font-medium">
-                100% Natural
+                100% Naturel
               </span>
             </div>
 
@@ -233,13 +233,13 @@ function ProductContent({ product }: { product: Product }) {
 
             {/* Price */}
             <div className="flex items-baseline gap-3 mb-6">
-              <span className="text-3xl font-bold text-[#FF6B35]">${product.price.toFixed(2)}</span>
+              <span className="text-3xl font-bold text-[#FF6B35]">{product.price.toFixed(2)}€</span>
               {product.compareAtPrice && (
                 <span className="text-xl text-gray-400 line-through">
-                  ${product.compareAtPrice.toFixed(2)}
+                  {product.compareAtPrice.toFixed(2)}€
                 </span>
               )}
-              <span className="text-sm text-gray-500">per bottle</span>
+              <span className="text-sm text-gray-500">par bouteille</span>
             </div>
 
             {/* Purchase Options */}
@@ -254,8 +254,8 @@ function ProductContent({ product }: { product: Product }) {
               >
                 <div className="flex justify-between items-center">
                   <div>
-                    <div className="font-semibold">One-time purchase</div>
-                    <div className="text-sm text-gray-500">${product.price.toFixed(2)} per bottle</div>
+                    <div className="font-semibold">Achat unique</div>
+                    <div className="text-sm text-gray-500">{product.price.toFixed(2)}€ par bouteille</div>
                   </div>
                   <div
                     className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
@@ -278,13 +278,13 @@ function ProductContent({ product }: { product: Product }) {
                 <div className="flex justify-between items-center">
                   <div>
                     <div className="font-semibold flex items-center gap-2">
-                      Subscribe & Save 15%
+                      Abonne-toi et économise 15%
                       <span className="px-2 py-0.5 bg-[#00D9A5] text-white text-xs rounded-full">
-                        Best Value
+                        Meilleur prix
                       </span>
                     </div>
                     <div className="text-sm text-gray-500">
-                      ${(product.price * 0.85).toFixed(2)} per bottle, delivered monthly
+                      {(product.price * 0.85).toFixed(2)}€ par bouteille, livré chaque mois
                     </div>
                   </div>
                   <div
@@ -321,11 +321,10 @@ function ProductContent({ product }: { product: Product }) {
                 className="flex-1 bg-[#FF6B35] text-white rounded-xl font-semibold text-lg hover:bg-[#E55A2B] transition-colors disabled:opacity-75"
               >
                 {isAdding ? (
-                  'Added to Cart!'
+                  'Ajouté au panier !'
                 ) : (
                   <>
-                    Add to Cart - $
-                    {(product.price * quantity * (isSubscription ? 0.85 : 1)).toFixed(2)}
+                    Ajouter au panier - {(product.price * quantity * (isSubscription ? 0.85 : 1)).toFixed(2)}€
                   </>
                 )}
               </button>
@@ -334,10 +333,10 @@ function ProductContent({ product }: { product: Product }) {
             {/* USPs */}
             <div className="grid grid-cols-2 gap-4 mb-8">
               {[
-                { icon: '🚚', text: 'Free shipping over $50' },
-                { icon: '↩️', text: '30-day returns' },
-                { icon: '🌿', text: '100% natural ingredients' },
-                { icon: '💪', text: '20g protein per bottle' },
+                { icon: '🚚', text: 'Livraison offerte dès 50€' },
+                { icon: '↩️', text: 'Retours sous 30 jours' },
+                { icon: '🌿', text: '100% ingrédients naturels' },
+                { icon: '💪', text: '20g de protéines par bouteille' },
               ].map((usp, i) => (
                 <div key={i} className="flex items-center gap-2 text-sm text-gray-600">
                   <span>{usp.icon}</span>
@@ -352,28 +351,28 @@ function ProductContent({ product }: { product: Product }) {
       {/* Why Ice Tea Texture */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Why Ice Tea Texture?</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">Pourquoi la texture Ice Tea ?</h2>
           <div className="grid md:grid-cols-4 gap-8">
             {[
               {
                 icon: '💧',
-                title: 'Light & Refreshing',
-                description: 'No thick, chalky consistency. Just smooth, refreshing hydration.',
+                title: 'Légère & Rafraîchissante',
+                description: 'Fini les textures épaisses et crayeuses. Une hydratation fluide et agréable.',
               },
               {
                 icon: '⚡',
-                title: 'Fast Absorption',
-                description: 'Whey protein isolate absorbs quickly for faster recovery.',
+                title: 'Absorption Rapide',
+                description: 'L\'isolat de whey s\'absorbe rapidement pour une récupération optimale.',
               },
               {
                 icon: '🪶',
-                title: 'Zero Bloating',
-                description: "Easy on your stomach, even during intense workouts.",
+                title: 'Zéro Ballonnement',
+                description: 'Facile à digérer, même pendant tes entraînements les plus intenses.',
               },
               {
                 icon: '🍃',
-                title: 'Natural Taste',
-                description: 'Real fruit extracts for authentic, delicious flavors.',
+                title: 'Goût Naturel',
+                description: 'De vrais extraits de fruits pour des saveurs authentiques.',
               },
             ].map((item, i) => (
               <div key={i} className="text-center">
@@ -392,18 +391,18 @@ function ProductContent({ product }: { product: Product }) {
           <div className="grid md:grid-cols-2 gap-12">
             {/* Nutrition Table */}
             <div>
-              <h2 className="text-3xl font-bold mb-8">Nutrition Facts</h2>
+              <h2 className="text-3xl font-bold mb-8">Informations nutritionnelles</h2>
               <div className="bg-gray-50 rounded-2xl p-6">
                 <div className="text-sm text-gray-500 mb-4">
-                  Serving Size: {product.nutrition.servingSize}
+                  Portion : {product.nutrition.servingSize}
                 </div>
                 <div className="space-y-3">
                   {[
                     { label: 'Calories', value: product.nutrition.calories, unit: '' },
-                    { label: 'Protein', value: product.nutrition.protein, unit: 'g' },
-                    { label: 'Carbohydrates', value: product.nutrition.carbs, unit: 'g' },
-                    { label: 'Sugar', value: product.nutrition.sugar, unit: 'g' },
-                    { label: 'Fat', value: product.nutrition.fat, unit: 'g' },
+                    { label: 'Protéines', value: product.nutrition.protein, unit: 'g' },
+                    { label: 'Glucides', value: product.nutrition.carbs, unit: 'g' },
+                    { label: 'Sucres', value: product.nutrition.sugar, unit: 'g' },
+                    { label: 'Lipides', value: product.nutrition.fat, unit: 'g' },
                     { label: 'Sodium', value: product.nutrition.sodium, unit: 'mg' },
                   ].map((item) => (
                     <div
@@ -423,25 +422,25 @@ function ProductContent({ product }: { product: Product }) {
 
             {/* Ingredients */}
             <div>
-              <h2 className="text-3xl font-bold mb-8">Ingredients</h2>
+              <h2 className="text-3xl font-bold mb-8">Ingrédients</h2>
               <div className="bg-[#00D9A5]/10 rounded-2xl p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <span className="text-2xl">🌿</span>
-                  <span className="font-semibold text-[#00D9A5]">100% Natural</span>
+                  <span className="font-semibold text-[#00D9A5]">100% Naturel</span>
                 </div>
                 <p className="text-gray-700 leading-relaxed">{product.ingredients.join(', ')}</p>
                 <div className="mt-6 grid grid-cols-3 gap-4 text-center">
                   <div className="bg-white rounded-xl p-3">
-                    <div className="text-xs text-gray-500">No Artificial</div>
-                    <div className="font-semibold">Sweeteners</div>
+                    <div className="text-xs text-gray-500">Sans</div>
+                    <div className="font-semibold">Édulcorants artificiels</div>
                   </div>
                   <div className="bg-white rounded-xl p-3">
-                    <div className="text-xs text-gray-500">No Artificial</div>
-                    <div className="font-semibold">Colors</div>
+                    <div className="text-xs text-gray-500">Sans</div>
+                    <div className="font-semibold">Colorants</div>
                   </div>
                   <div className="bg-white rounded-xl p-3">
-                    <div className="text-xs text-gray-500">No</div>
-                    <div className="font-semibold">Preservatives</div>
+                    <div className="text-xs text-gray-500">Sans</div>
+                    <div className="font-semibold">Conservateurs</div>
                   </div>
                 </div>
               </div>
@@ -454,7 +453,7 @@ function ProductContent({ product }: { product: Product }) {
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold">Customer Reviews</h2>
+            <h2 className="text-3xl font-bold">Avis clients</h2>
             <div className="flex items-center gap-2">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
@@ -463,7 +462,7 @@ function ProductContent({ product }: { product: Product }) {
                   </svg>
                 ))}
               </div>
-              <span className="text-gray-500">4.9 ({MOCK_REVIEWS.length} reviews)</span>
+              <span className="text-gray-500">4.9 ({MOCK_REVIEWS.length} avis)</span>
             </div>
           </div>
 
@@ -499,7 +498,7 @@ function ProductContent({ product }: { product: Product }) {
                           clipRule="evenodd"
                         />
                       </svg>
-                      Verified
+                      Vérifié
                     </span>
                   )}
                 </div>
@@ -512,7 +511,7 @@ function ProductContent({ product }: { product: Product }) {
       {/* Related Products */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-8">You May Also Like</h2>
+          <h2 className="text-3xl font-bold mb-8">Tu pourrais aussi aimer</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {relatedProducts.map((p) => (
               <Link
@@ -531,7 +530,7 @@ function ProductContent({ product }: { product: Product }) {
                 </div>
                 <div className="p-4">
                   <h3 className="font-bold">{p.name}</h3>
-                  <p className="text-[#FF6B35] font-semibold">${p.price.toFixed(2)}</p>
+                  <p className="text-[#FF6B35] font-semibold">{p.price.toFixed(2)}€</p>
                 </div>
               </Link>
             ))}
