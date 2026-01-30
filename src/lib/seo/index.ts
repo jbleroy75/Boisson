@@ -8,7 +8,7 @@ import type { Product } from '@/types';
 
 const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://tamarque.com';
 const SITE_NAME = 'Tamarque';
-const DEFAULT_DESCRIPTION = 'La première boisson protéinée avec une texture ice tea. 20g de protéines, 100% naturel, zéro ballonnement.';
+const DEFAULT_DESCRIPTION = 'La première boisson protéinée avec une texture légère. 20g de protéines, 100% naturel, zéro ballonnement.';
 
 /**
  * Base metadata that all pages inherit
@@ -16,13 +16,13 @@ const DEFAULT_DESCRIPTION = 'La première boisson protéinée avec une texture i
 export const baseMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Tamarque | Boisson Protéinée Texture Ice Tea',
+    default: 'Tamarque | Boisson Protéinée Texture Nouvelle Génération',
     template: '%s | Tamarque',
   },
   description: DEFAULT_DESCRIPTION,
   keywords: [
     'boisson protéinée',
-    'protéine ice tea',
+    'protéine légère',
     'protéine naturelle',
     'boisson sport',
     'récupération musculation',
@@ -112,7 +112,7 @@ export function generatePageMetadata(options: {
  */
 export function generateProductMetadata(product: Product): Metadata {
   const title = `${product.name} - Boisson Protéinée`;
-  const description = product.description || `${product.name}: boisson protéinée texture ice tea avec ${product.nutrition.protein}g de protéines. 100% naturel, zéro ballonnement.`;
+  const description = product.description || `${product.name}: boisson protéinée texture légère avec ${product.nutrition.protein}g de protéines. 100% naturel, zéro ballonnement.`;
   const image = product.images?.[0] || '/images/og-product.jpg';
 
   return {
@@ -122,7 +122,7 @@ export function generateProductMetadata(product: Product): Metadata {
       product.name.toLowerCase(),
       'boisson protéinée',
       'whey protein',
-      'ice tea protéiné',
+      'légère protéiné',
       ...(product.sportType || []),
     ],
     alternates: {
@@ -215,12 +215,12 @@ export function getAllProductSlugs(): { slug: string }[] {
  */
 export const PAGE_METADATA: Record<string, { title: string; description: string; keywords?: string[] }> = {
   home: {
-    title: 'Boisson Protéinée Texture Ice Tea',
-    description: 'La première boisson protéinée avec une texture ice tea. 20g de protéines, 100% naturel, zéro ballonnement. Enfin une boisson protéinée qu\'on a vraiment envie de boire.',
+    title: 'Boisson Protéinée Texture Nouvelle Génération',
+    description: 'La première boisson protéinée avec une texture légère. 20g de protéines, 100% naturel, zéro ballonnement. Enfin une boisson protéinée qu\'on a vraiment envie de boire.',
   },
   shop: {
     title: 'Nos Boissons Protéinées',
-    description: 'Découvrez nos 5 saveurs exotiques de boissons protéinées. Ice tea texture, 20g de protéines, 100% naturel. Livraison gratuite dès 50€.',
+    description: 'Découvrez nos 5 saveurs exotiques de boissons protéinées. Texture légère, 20g de protéines, 100% naturel. Livraison gratuite dès 50€.',
     keywords: ['acheter boisson protéinée', 'shop protéine', 'boisson sport'],
   },
   pack: {

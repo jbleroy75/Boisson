@@ -221,7 +221,7 @@ export default function FournisseursPage() {
               {[
                 {
                   quote:
-                    'Tamarque a transformé notre offre nutrition sportive. La texture ice tea est révolutionnaire - nos clients en salle l\'adorent.',
+                    'Tamarque a transformé notre offre nutrition sportive. La texture légère est révolutionnaire - nos clients en salle l\'adorent.',
                   author: 'Pierre Dubois',
                   company: 'FitDistrib Lyon',
                   revenue: '+45% CA',

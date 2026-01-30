@@ -45,7 +45,7 @@ export default function Footer({ isB2B = false }: FooterProps) {
               </span>
             </Link>
             <p className="text-gray-400 text-sm mb-6">
-              La première boisson protéinée avec une texture ice tea. 20g de protéines, 100% naturel, zéro ballonnement.
+              La boisson protéinée nouvelle génération. 20g de protéines, 100% naturel, zéro ballonnement.
             </p>
             {/* Social icons */}
             <div className="flex space-x-4" role="list" aria-label="Réseaux sociaux">

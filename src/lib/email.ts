@@ -203,7 +203,7 @@ function welcomeEmailTemplate(data: WelcomeEmailData): string {
           <p style="font-size: 16px; color: #333;">Bonjour ${data.name},</p>
           <p style="font-size: 16px; color: #666; line-height: 1.6;">
             Merci de rejoindre la famille Tamarque ! Vous êtes maintenant prêt(e) à découvrir
-            nos boissons protéinées texture ice tea.
+            nos boissons protéinées légère et rafraîchissante.
           </p>
 
           <div style="margin: 30px 0; background-color: #fff3e0; border-radius: 8px; padding: 20px; border-left: 4px solid #FF6B35;">
@@ -217,7 +217,7 @@ function welcomeEmailTemplate(data: WelcomeEmailData): string {
           <h3 style="margin: 30px 0 15px;">Pourquoi Tamarque ?</h3>
           <ul style="color: #666; line-height: 1.8; padding-left: 20px;">
             <li><strong>20g de protéines</strong> par bouteille</li>
-            <li>Texture <strong>ice tea</strong> unique et rafraîchissante</li>
+            <li>Texture <strong>légère</strong> unique et rafraîchissante</li>
             <li>Ingrédients <strong>100% naturels</strong></li>
             <li><strong>Zéro ballonnement</strong></li>
           </ul>

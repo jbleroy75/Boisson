@@ -82,13 +82,14 @@ export default function WishlistPage() {
     flavor: 'yuzu-peach',
     sportType: ['endurance'],
     nutrition: {
-      servingSize: '330ml',
+      servingSize: '500ml',
       calories: 120,
       protein: 20,
       carbs: 8,
       sugar: 4,
-      fat: 0.5,
+      fat: 0,
       sodium: 150,
+      caffeine: 100,
     },
     ingredients: [],
   });

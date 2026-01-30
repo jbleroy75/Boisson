@@ -9,7 +9,7 @@ export function OrganizationSchema() {
     name: 'Tamarque',
     url: 'https://tamarque.com',
     logo: 'https://tamarque.com/images/logo/logo.png',
-    description: 'Boissons protéinées texture ice tea - 20g de protéines, 100% naturel',
+    description: 'Boissons protéinées légères et rafraîchissantes - 20g de protéines, 100% naturel',
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: '+33-1-XX-XX-XX-XX',

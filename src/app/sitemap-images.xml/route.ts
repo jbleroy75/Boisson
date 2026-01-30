@@ -23,8 +23,8 @@ export async function GET() {
       loc: baseUrl,
       image: {
         loc: `${baseUrl}/images/hero/homepage-hero.jpg`,
-        title: 'Tamarque - Boissons Protéinées Texture Ice Tea',
-        caption: 'La première boisson protéinée avec une texture ice tea',
+        title: 'Tamarque - Boissons Protéinées Légères',
+        caption: 'La boisson protéinée nouvelle génération',
       },
     },
     {

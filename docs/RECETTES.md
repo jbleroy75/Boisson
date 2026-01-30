@@ -18,9 +18,26 @@
 |------------|--------------|--------------|--------------|-------|
 | Eau filtrée | 400ml | 420ml | 450ml | Eau froide |
 | Isolat de Whey (clear/hydrolysé) | 20g | 25g | 30g | WPI 90%+ |
+| **Caféine anhydre** | 80mg | **100mg** | 150mg | ⚡ Énergie |
 | Acide citrique | 0.5g | 1g | 1.5g | Ajuste l'acidité |
 | Stévia (poudre) | 0.1g | 0.15g | 0.2g | Ou 3-5 gouttes liquide |
 | Sel (sodium) | 0.2g | 0.3g | 0.4g | Équilibre électrolytes |
+
+### Note sur la caféine (100mg/portion)
+
+**Équivalence** : 100mg = ~1 expresso = ~1 Red Bull
+
+**Sources possibles pour tests maison** :
+- Caféine anhydre en poudre (Amazon, MyProtein) - ATTENTION dosage précis requis
+- Capsules de caféine 100mg (ouvrir et vider)
+- Extrait de thé vert concentré (~50mg caféine/ml)
+- Extrait de guarana
+
+**Réglementation** :
+- Max recommandé : 400mg/jour pour adulte
+- Mention obligatoire : "Teneur élevée en caféine" si >150mg/L
+- Pour 500ml à 100mg = 200mg/L → **mention obligatoire**
+- Déconseillé : enfants, femmes enceintes/allaitantes
 
 ### Protocole de préparation maison
 
@@ -219,12 +236,17 @@ Pour améliorer la stabilité :
 |------------|----------|---------------------|---------------|
 | Eau purifiée | 840L | Local | <10ppm TDS |
 | Isolat de Whey Hydrolysé | 50kg | Fonterra/Arla/Lactalis | WPI 90%, Clear grade |
+| **Caféine anhydre** | **0.2kg** | BASF/DSM | Food grade, 100mg/500ml |
 | Acide citrique (E330) | 2kg | Jungbunzlauer | Food grade |
 | Citrate de sodium (E331) | 0.8kg | | Buffer pH |
 | Chlorure de sodium | 0.6kg | | Iodé, food grade |
 | Stévia (Reb A 97%) | 0.3kg | PureCircle | |
 | Sorbate de potassium (E202) | 0.15kg | | Conservateur |
 | Acide ascorbique (E300) | 0.2kg | | Antioxydant |
+
+### Calcul caféine pour 1000L (2000 bouteilles de 500ml)
+- Cible : 100mg par bouteille de 500ml
+- Total : 100mg × 2000 = 200 000mg = **0.2kg de caféine anhydre**
 
 ### Arômes et couleurs par saveur
 
@@ -292,6 +314,11 @@ Pour améliorer la stabilité :
 | dont sucres | 3-6g | 4% |
 | Lipides | 0g | 0% |
 | Sodium | 150-180mg | 8% |
+| **Caféine** | **100mg** | - |
+
+⚠️ **Mentions obligatoires caféine** :
+- "Teneur élevée en caféine (100mg/500ml)"
+- "Déconseillé aux enfants et aux femmes enceintes ou allaitantes"
 
 ### Critères microbiologiques
 

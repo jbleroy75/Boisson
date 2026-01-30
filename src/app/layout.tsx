@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Montserrat, Inter } from 'next/font/google';
+import { Bebas_Neue, Outfit } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
 import { Providers } from './providers';
@@ -7,17 +7,17 @@ import { OrganizationSchema } from '@/components/seo/StructuredData';
 import { generateWebsiteSchema, generateAggregateRatingSchema } from '@/lib/seo/schemas';
 import { Analytics } from '@vercel/analytics/next';
 
-const montserrat = Montserrat({
-  variable: '--font-montserrat',
+const bebasNeue = Bebas_Neue({
+  variable: '--font-bebas-neue',
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['400'],
   display: 'swap',
 });
 
-const inter = Inter({
-  variable: '--font-inter',
+const outfit = Outfit({
+  variable: '--font-outfit',
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
 });
 
@@ -31,21 +31,22 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: 'Tamarque | Boisson Protéinée Texture Ice Tea',
+    default: 'Tamarque | Boisson Protéinée et Énergisante',
     template: '%s | Tamarque',
   },
   description:
-    'La première boisson protéinée avec une texture ice tea. 20g de protéines, 100% naturel, zéro ballonnement. Enfin une boisson protéinée qu\'on a vraiment envie de boire.',
+    'Tamarque : la boisson qui combine protéines et caféine naturelle. 20g de protéines, 80mg de caféine, 100% naturel. Prête à boire, comme un soda.',
   keywords: [
     'boisson protéinée',
-    'protéine ice tea',
-    'protéine naturelle',
+    'boisson énergisante',
+    'protéine caféine',
     'boisson sport',
     'récupération musculation',
     'whey isolate',
-    'protéine claire',
+    'pré workout',
     'fitness',
     'crossfit',
+    'boisson prête à boire',
   ],
   authors: [{ name: 'Tamarque' }],
   creator: 'Tamarque',
@@ -55,23 +56,23 @@ export const metadata: Metadata = {
     locale: 'fr_FR',
     url: 'https://tamarque.com',
     siteName: 'Tamarque',
-    title: 'Tamarque | Boisson Protéinée Texture Ice Tea',
+    title: 'Tamarque | Boisson Protéinée et Énergisante',
     description:
-      'La première boisson protéinée avec une texture ice tea. 20g de protéines, 100% naturel, zéro ballonnement.',
+      'La boisson qui combine protéines et caféine naturelle. 20g de protéines, 80mg de caféine, prête à boire.',
     images: [
       {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Tamarque - Boissons Protéinées',
+        alt: 'Tamarque - Boisson Protéinée et Énergisante',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tamarque | Boisson Protéinée Texture Ice Tea',
+    title: 'Tamarque | Boisson Protéinée et Énergisante',
     description:
-      'La première boisson protéinée avec une texture ice tea. 20g de protéines, 100% naturel.',
+      'La boisson qui combine protéines et caféine naturelle. 20g de protéines, 80mg de caféine.',
     images: ['/images/og-image.jpg'],
     creator: '@tamarque',
   },
@@ -130,7 +131,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${montserrat.variable} ${inter.variable} font-sans antialiased`}>
+      <body className={`${bebasNeue.variable} ${outfit.variable} font-sans antialiased`}>
         {/* Skip to main content link for keyboard navigation */}
         <a
           href="#main-content"

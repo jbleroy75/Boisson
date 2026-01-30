@@ -55,6 +55,13 @@
 | dont sucres | <8g | - |
 | Lipides | <1g | - |
 | Sodium | 150-200mg | ±10% |
+| **Caféine** | **100mg** | ±10% |
+
+### Caféine - Réglementation
+- Source : Caféine anhydre (synthétique) ou naturelle (guarana, thé vert)
+- Mention obligatoire : **"Teneur élevée en caféine (100mg/500ml)"**
+- Mention obligatoire : **"Déconseillé aux enfants et aux femmes enceintes ou allaitantes"**
+- Positionnement : Énergie clean, pas de crash
 
 ## Claims recherchés
 - ✅ "Source de protéines" (>12g/portion)
@@ -62,6 +69,8 @@
 - ✅ "Sans sucres ajoutés" (si possible)
 - ✅ "Arômes naturels"
 - ✅ "Sans colorants artificiels"
+- ✅ "Contient de la caféine" - Boost énergie
+- ⚠️ Mentions obligatoires caféine (voir section nutritionnelle)
 
 ---
 
@@ -123,12 +132,13 @@
 - Volac (Volactive)
 - Glanbia (Provon)
 
-## Base de formulation (pour 1000L)
+## Base de formulation (pour 1000L = 2000 bouteilles)
 
 | Ingrédient | Fonction | Quantité | E-number |
 |------------|----------|----------|----------|
 | Eau purifiée | Base | 840L | - |
 | Isolat Whey Hydrolysé | Protéine | 50kg | - |
+| **Caféine anhydre** | **Énergie** | **0.2kg** | - |
 | Acide citrique | Acidifiant | 2kg | E330 |
 | Citrate de sodium | Buffer | 0.8kg | E331 |
 | Stévia (Reb A) | Édulcorant | 0.3kg | E960 |
@@ -136,6 +146,8 @@
 | Colorants naturels | Couleur | Variable | - |
 | Sorbate de potassium | Conservateur | 0.15kg | E202 |
 | Acide ascorbique | Antioxydant | 0.2kg | E300 |
+
+*Calcul caféine : 100mg × 2000 bouteilles = 200g = 0.2kg*
 
 ---
 

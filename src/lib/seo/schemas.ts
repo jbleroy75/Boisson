@@ -28,7 +28,7 @@ export function generateOrganizationSchema() {
       width: 600,
       height: 60,
     },
-    description: 'Boissons protéinées texture ice tea - 20g de protéines, 100% naturel',
+    description: 'Boissons protéinées texture légère et rafraîchissante - 20g de protéines, 100% naturel',
     foundingDate: '2024',
     sameAs: [
       'https://instagram.com/tamarque',

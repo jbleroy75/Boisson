@@ -80,6 +80,7 @@ export interface NutritionFacts {
   sugar: number;
   fat: number;
   sodium: number;
+  caffeine: number; // mg per serving
 }
 
 // Cart types

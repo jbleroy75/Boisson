@@ -40,8 +40,9 @@ function transformShopifyProduct(shopifyProduct: {
       sugar: 4,
       fat: 0,
       sodium: 150,
+      caffeine: 100,
     },
-    ingredients: ['Eau', 'Isolat de Whey', 'Arômes naturels', 'Acide citrique', 'Stévia'],
+    ingredients: ['Eau', 'Isolat de Whey', 'Caféine', 'Arômes naturels', 'Acide citrique', 'Stévia'],
     inStock: true,
   };
 }
@@ -348,10 +349,10 @@ function ProductContent({ product }: { product: Product }) {
         </div>
       </section>
 
-      {/* Why Ice Tea Texture */}
+      {/* Why Light Texture */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Pourquoi la texture Ice Tea ?</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">Pourquoi une texture légère ?</h2>
           <div className="grid md:grid-cols-4 gap-8">
             {[
               {

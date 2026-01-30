@@ -15,9 +15,16 @@
 | Ingrédient | Où acheter | Prix estimé |
 |------------|------------|-------------|
 | Isolat Whey Clear/Hydrolysé | MyProtein, Nutrimuscle | 35-50€/kg |
+| **Caféine anhydre** | MyProtein, Amazon, Bulk | 10-15€/100g |
 | Acide citrique | Amazon, magasin bio | 5€/500g |
 | Stévia poudre ou liquide | Supermarché | 5€ |
 | Sel fin | Supermarché | 1€ |
+
+⚠️ **ATTENTION CAFÉINE** :
+- Dosage TRÈS précis requis (balance 0.01g ou capsules pré-dosées)
+- Alternative safe : acheter capsules 100mg et vider dans la boisson
+- Ne JAMAIS dépasser 200mg par portion
+- Stocker hors de portée des enfants
 
 ### Yuzu Pêche
 | Ingrédient | Où acheter | Prix estimé |
@@ -63,10 +70,13 @@
 ```
 420ml  Eau froide
 25g    Isolat Whey Clear
+100mg  Caféine anhydre (0.1g) ⚡
 1g     Acide citrique
 0.15g  Stévia (ou 4 gouttes liquide)
 0.3g   Sel
 ```
+
+💡 **Tip caféine** : Dissoudre d'abord la caféine dans un peu d'eau tiède avant d'ajouter au mélange froid
 
 ---
 
@@ -215,9 +225,10 @@ BASE +
 - Ajouter un peu plus d'eau
 - Peut nécessiter plus d'acide pour la clarté
 
-## Version Énergie (avec caféine)
-- Ajouter 50-100mg de caféine en poudre
-- OU remplacer une partie de l'eau par du thé vert infusé
+## Version Sans Caféine (pour le soir)
+- Retirer la caféine de la base
+- Idéal pour récupération post-training tardif
+- Peut ajouter 1g de glycine (relaxant)
 
 ## Version Électrolytes (sport intense)
 - Augmenter le sel à 0.5g

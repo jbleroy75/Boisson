@@ -7,455 +7,643 @@ import Footer from '@/components/layout/Footer';
 import Image from 'next/image';
 import { MOCK_PRODUCTS, MOCK_REVIEWS, FLAVOR_COLORS, PLACEHOLDER_IMAGES } from '@/lib/constants';
 
-// Premium UI Components
-import {
-  TextReveal,
-  GradientTextReveal,
-  NumberCounter,
-  AnimatedStats,
-  MagneticButton,
-  LiquidAnimation,
-  LiquidFill,
-  TiltCard,
-  TestimonialsCarousel,
-  StaggerContainer,
-  StaggerItem,
-  ScaleRevealSection,
-} from '@/components/ui/premium';
-
 export default function Home() {
   const shouldReduceMotion = useReducedMotion();
 
-  // Animation variants that respect reduced motion preference
-  const fadeInLeft = shouldReduceMotion
-    ? { initial: { opacity: 0 }, animate: { opacity: 1 } }
-    : { initial: { opacity: 0, x: -50 }, animate: { opacity: 1, x: 0 } };
-
   const fadeInUp = shouldReduceMotion
     ? { initial: { opacity: 0 }, animate: { opacity: 1 } }
-    : { initial: { opacity: 0, y: 30 }, animate: { opacity: 1, y: 0 } };
+    : { initial: { opacity: 0, y: 40 }, animate: { opacity: 1, y: 0 } };
+
+  const fadeInLeft = shouldReduceMotion
+    ? { initial: { opacity: 0 }, animate: { opacity: 1 } }
+    : { initial: { opacity: 0, x: -60 }, animate: { opacity: 1, x: 0 } };
+
+  const fadeInRight = shouldReduceMotion
+    ? { initial: { opacity: 0 }, animate: { opacity: 1 } }
+    : { initial: { opacity: 0, x: 60 }, animate: { opacity: 1, x: 0 } };
 
   const scaleIn = shouldReduceMotion
     ? { initial: { opacity: 0 }, animate: { opacity: 1 } }
     : { initial: { opacity: 0, scale: 0.9 }, animate: { opacity: 1, scale: 1 } };
 
-  const getDelay = (index: number) => (shouldReduceMotion ? 0 : index * 0.1);
-  const getTransition = (delay: number = 0) => ({
-    duration: shouldReduceMotion ? 0 : 0.6,
-    delay: shouldReduceMotion ? 0 : delay,
-  });
-
   return (
     <>
       <Header />
-      <main className="pt-16 md:pt-20">
-        {/* Hero Section */}
-        <section
-          className="relative min-h-[90vh] flex items-center bg-gradient-to-br from-gray-50 to-white overflow-hidden"
-          aria-labelledby="hero-heading"
-        >
-          {/* Animated liquid background */}
-          <div className="absolute inset-0 opacity-20" aria-hidden="true">
-            <LiquidAnimation
-              color="#FF6B35"
-              secondaryColor="#00D9A5"
-              className="absolute top-0 left-0 w-full h-full"
-              intensity={20}
-              speed={4}
-            />
+      <main className="pt-16 md:pt-20 overflow-hidden">
+        {/* Hero Section - Bold & Dramatic */}
+        <section className="relative min-h-[100vh] flex items-center bg-[#0A0A0A] overflow-hidden">
+          {/* Animated gradient background */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B35]/20 via-[#FF1493]/10 to-transparent" />
+            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#FF6B35]/10 rounded-full blur-[150px] animate-pulse-subtle" />
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#00D9A5]/10 rounded-full blur-[120px] animate-pulse-subtle delay-500" />
           </div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Geometric decorations */}
+          <div className="absolute top-20 left-10 w-32 h-32 border border-[#FF6B35]/20 rounded-full animate-rotate-slow" />
+          <div className="absolute bottom-40 right-20 w-48 h-48 border-2 border-[#00D9A5]/15 rounded-full animate-rotate-slow" style={{ animationDirection: 'reverse' }} />
+          <div className="absolute top-1/3 right-1/4 w-4 h-4 bg-[#FF6B35] rounded-full animate-float" />
+          <div className="absolute bottom-1/3 left-1/4 w-3 h-3 bg-[#00D9A5] rounded-full animate-float delay-300" />
+
+          {/* Stripe pattern overlay */}
+          <div className="absolute inset-0 stripe-pattern opacity-30" />
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+              {/* Left content */}
               <motion.div
                 {...fadeInLeft}
-                transition={getTransition()}
+                transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
               >
-                <span className="inline-block px-4 py-1.5 bg-[#FF6B35]/10 text-[#FF6B35] rounded-full text-sm font-medium mb-6">
-                  Nouveau : La texture ice tea révolutionnaire
-                </span>
-                <h1
-                  id="hero-heading"
-                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
+                {/* Badge */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full mb-8"
                 >
-                  <TextReveal
-                    type="words"
-                    animation="slide"
-                    staggerChildren={0.08}
-                    className="block"
-                  >
-                    La protéine qui
-                  </TextReveal>
-                  <GradientTextReveal className="block">
-                    rafraîchit
-                  </GradientTextReveal>
+                  <span className="w-2 h-2 bg-[#00D9A5] rounded-full animate-pulse" />
+                  <span className="text-white/70 text-sm font-medium tracking-wide">
+                    Boisson prête à boire
+                  </span>
+                </motion.div>
+
+                {/* Main headline */}
+                <h1 className="text-white mb-6">
+                  <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-none">
+                    L&apos;ENERGIE
+                  </span>
+                  <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-none text-gradient bg-gradient-to-r from-[#FF6B35] via-[#FF1493] to-[#FF6B35] bg-clip-text text-transparent">
+                    QUI PULSE
+                  </span>
                 </h1>
-                <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-lg">
-                  La première boisson protéinée texture ice tea. 20g de protéines, 100% naturelle,
-                  zéro ballonnement. Enfin une protéine que tu as envie de boire.
+
+                {/* Subheadline */}
+                <p className="text-lg md:text-xl text-white/60 mb-10 max-w-lg leading-relaxed font-light">
+                  La boisson qui combine{' '}
+                  <span className="text-white">protéines</span> et{' '}
+                  <span className="text-[#00D9A5]">caféine naturelle</span>.{' '}
+                  Rafraîchissante comme un soda, puissante comme un pré-workout.
+                  Ouvre, bois, performe.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <MagneticButton strength={0.3}>
-                    <Link
-                      href="/shop"
-                      className="btn-primary text-center text-base md:text-lg px-6 md:px-8 py-3 md:py-4 touch-target inline-block"
+
+                {/* Stats row */}
+                <div className="flex flex-wrap gap-8 mb-10">
+                  {[
+                    { value: '20g', label: 'Protéines', color: '#FF6B35' },
+                    { value: '80mg', label: 'Caféine', color: '#00D9A5' },
+                    { value: '0%', label: 'Sucres ajoutés', color: '#FF1493' },
+                  ].map((stat, i) => (
+                    <motion.div
+                      key={stat.label}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 + i * 0.1 }}
+                      className="text-center"
                     >
-                      Découvrir
-                    </Link>
-                  </MagneticButton>
-                  <MagneticButton strength={0.2}>
-                    <Link
-                      href="/fournisseurs"
-                      className="btn-secondary text-center text-base md:text-lg px-6 md:px-8 py-3 md:py-4 touch-target inline-block"
-                    >
-                      Devenir distributeur
-                    </Link>
-                  </MagneticButton>
+                      <div className="text-3xl md:text-4xl font-bold" style={{ color: stat.color }}>
+                        {stat.value}
+                      </div>
+                      <div className="text-white/40 text-sm uppercase tracking-wider mt-1">
+                        {stat.label}
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
 
-                {/* Stats with animated counters */}
-                <div className="mt-10 md:mt-12">
-                  <AnimatedStats
-                    stats={[
-                      { value: 20, suffix: 'g', label: 'Protéines', color: '#FF6B35' },
-                      { value: 0, suffix: '%', label: 'Ballonnement', color: '#00D9A5' },
-                      { value: 100, suffix: '%', label: 'Naturel', color: '#FF1493' },
-                    ]}
-                    className="flex flex-wrap gap-6 md:gap-8"
-                  />
+                {/* CTA buttons */}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                  >
+                    <Link
+                      href="/shop"
+                      className="group relative inline-flex items-center justify-center px-8 py-4 bg-[#FF6B35] text-white font-semibold text-lg overflow-hidden transition-all hover:shadow-glow-orange"
+                    >
+                      <span className="relative z-10 uppercase tracking-widest text-sm">
+                        Decouvrir
+                      </span>
+                      <div className="absolute inset-0 bg-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                      <span className="absolute inset-0 flex items-center justify-center text-[#FF6B35] uppercase tracking-widest text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                        Decouvrir
+                      </span>
+                    </Link>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                  >
+                    <Link
+                      href="/subscribe"
+                      className="inline-flex items-center justify-center px-8 py-4 border-2 border-white/20 text-white font-semibold hover:border-white/40 hover:bg-white/5 transition-all uppercase tracking-widest text-sm"
+                    >
+                      S&apos;abonner -25%
+                    </Link>
+                  </motion.div>
                 </div>
               </motion.div>
 
+              {/* Right - Hero Image */}
               <motion.div
-                {...scaleIn}
-                transition={getTransition(0.2)}
+                {...fadeInRight}
+                transition={{ duration: 0.8, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
                 className="relative"
               >
-                <div className="relative h-[350px] sm:h-[400px] md:h-[500px] w-full rounded-3xl overflow-hidden">
-                  <Image
-                    src={PLACEHOLDER_IMAGES.lifestyle}
-                    alt="Athlete buvant Tamarque"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                  <div className="absolute bottom-6 left-6 right-6 flex gap-3">
-                    {MOCK_PRODUCTS.slice(0, 3).map((product) => (
-                      <div
-                        key={product.id}
-                        className="w-16 h-24 rounded-xl overflow-hidden shadow-lg border-2 border-white/50"
-                      >
-                        <Image
-                          src={product.images[0]}
-                          alt={product.name}
-                          width={64}
-                          height={96}
-                          className="object-cover w-full h-full"
-                        />
-                      </div>
-                    ))}
+                <div className="relative aspect-[4/5] max-w-md mx-auto lg:max-w-none">
+                  {/* Glow effect behind image */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B35]/30 to-[#FF1493]/30 blur-3xl scale-90" />
+
+                  {/* Main image container */}
+                  <div className="relative h-full rounded-[2rem] overflow-hidden border border-white/10">
+                    <Image
+                      src={PLACEHOLDER_IMAGES.athlete}
+                      alt="Athlete avec Tamarque"
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+                    {/* Floating product cards */}
+                    <div className="absolute bottom-6 left-4 right-4 flex gap-3">
+                      {MOCK_PRODUCTS.slice(0, 3).map((product, i) => (
+                        <motion.div
+                          key={product.id}
+                          initial={{ opacity: 0, y: 30 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.8 + i * 0.1 }}
+                          className="flex-1 bg-white/10 backdrop-blur-md rounded-xl p-2 border border-white/20"
+                        >
+                          <div className="aspect-square rounded-lg overflow-hidden mb-2">
+                            <Image
+                              src={product.images[0]}
+                              alt={product.name}
+                              width={80}
+                              height={80}
+                              className="object-cover w-full h-full"
+                            />
+                          </div>
+                          <p className="text-white text-xs font-medium truncate">{product.name}</p>
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </motion.div>
             </div>
           </div>
+
+          {/* Scroll indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2 }}
+            className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          >
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-white/40 text-xs uppercase tracking-widest">Scroll</span>
+              <div className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent" />
+            </div>
+          </motion.div>
         </section>
 
-        {/* Ice Tea Texture Comparison Section */}
-        <section className="py-16 md:py-20 bg-white" aria-labelledby="comparison-heading">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              {...fadeInUp}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={getTransition()}
-              className="text-center mb-12 md:mb-16"
-            >
-              <h2 id="comparison-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                Texture Ice Tea
-              </h2>
-              <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-                On a réinventé la protéine. Légère, claire, rafraîchissante. Fini les shakes épais et lourds.
-              </p>
-            </motion.div>
-
-            <motion.div
-              {...fadeInUp}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={getTransition(0.2)}
-              className="bg-gray-50 rounded-3xl p-6 md:p-8 lg:p-12"
-            >
-              <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-                {/* Traditional Protein */}
-                <article className="bg-white rounded-2xl p-6 border-2 border-gray-200">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div
-                      className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center"
-                      aria-hidden="true"
-                    >
-                      <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-500">Protéines classiques</h3>
-                  </div>
-                  <ul className="space-y-4" aria-label="Inconvénients des protéines traditionnelles">
-                    {['Texture épaisse et crémeuse', 'Lourdeur à l\'estomac', 'Provoque des ballonnements', 'Goût artificiel', 'Difficile à digérer'].map((item, i) => (
-                      <li key={i} className="flex items-center gap-3 text-gray-500">
-                        <svg className="w-5 h-5 text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                        </svg>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </article>
-
-                {/* Tamarque */}
-                <article className="bg-gradient-to-br from-[#FF6B35]/10 to-[#00D9A5]/10 rounded-2xl p-6 border-2 border-[#FF6B35]">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div
-                      className="w-12 h-12 bg-[#FF6B35] rounded-full flex items-center justify-center"
-                      aria-hidden="true"
-                    >
-                      <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold">Tamarque</h3>
-                  </div>
-                  <ul className="space-y-4" aria-label="Avantages de Tamarque">
-                    {['Texture légère ice tea', 'Rafraîchissante et légère', 'Zéro ballonnement', 'Goût 100% naturel', 'Digestion facile'].map((item, i) => (
-                      <li key={i} className="flex items-center gap-3">
-                        <svg className="w-5 h-5 text-[#00D9A5] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </article>
+        {/* Benefits Strip */}
+        <section className="bg-[#FF6B35] py-4 overflow-hidden">
+          <div className="flex animate-marquee whitespace-nowrap">
+            {[...Array(3)].map((_, idx) => (
+              <div key={idx} className="flex items-center gap-8 mx-8">
+                {['20G PROTÉINES', 'CAFÉINE NATURELLE', 'PRÊT À BOIRE', 'ZÉRO SUCRES AJOUTÉS', '100% NATUREL'].map((text, i) => (
+                  <span key={i} className="text-white font-bold text-sm md:text-base uppercase tracking-wider flex items-center gap-3">
+                    <span className="w-2 h-2 bg-white rounded-full" />
+                    {text}
+                  </span>
+                ))}
               </div>
-            </motion.div>
+            ))}
           </div>
         </section>
 
-        {/* Flavors Grid Section */}
-        <section className="py-16 md:py-20 bg-gray-50" aria-labelledby="flavors-heading">
+        {/* Why Tamarque Section */}
+        <section className="py-20 md:py-32 bg-[#FDF8F3] relative overflow-hidden">
+          {/* Decorative elements */}
+          <div className="absolute top-20 right-20 w-64 h-64 border border-[#FF6B35]/10 rounded-full" />
+          <div className="absolute bottom-20 left-20 w-48 h-48 border border-[#00D9A5]/10 rounded-full" />
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               {...fadeInUp}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={getTransition()}
-              className="text-center mb-12 md:mb-16"
+              className="text-center mb-16"
             >
-              <h2 id="flavors-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                5 Saveurs Exotiques
+              <span className="inline-block px-4 py-2 bg-[#FF6B35]/10 text-[#FF6B35] text-sm font-semibold uppercase tracking-wider mb-6">
+                Pourquoi Tamarque
+              </span>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl mb-6">
+                FINI LES SHAKES
+                <span className="block text-gradient">EN POUDRE</span>
               </h2>
-              <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-                Élaborées avec de vrais extraits de fruits. Chaque saveur raconte une histoire.
+              <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto font-light">
+                Une boisson prête à boire qui se consomme comme un Red Bull ou une Evian.
+                Tu ouvres, tu bois, tu performes.
               </p>
             </motion.div>
 
-            <StaggerContainer
-              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6"
-              staggerChildren={0.1}
+            <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+              {/* Traditional Protein - Red card */}
+              <motion.div
+                {...fadeInLeft}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="bg-white rounded-3xl p-8 md:p-10 border-2 border-gray-200 relative overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 rounded-full blur-3xl" />
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-16 h-16 bg-gray-200 rounded-2xl flex items-center justify-center">
+                    <svg className="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl text-gray-400">PROTEINES</h3>
+                    <p className="text-gray-400">En poudre</p>
+                  </div>
+                </div>
+                <ul className="space-y-4">
+                  {[
+                    'Besoin d\'un shaker et d\'eau',
+                    'Texture épaisse et écœurante',
+                    'Provoque des ballonnements',
+                    'Goût artificiel',
+                    'Pas pratique en déplacement',
+                    'Aucun boost d\'énergie'
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-center gap-3 text-gray-500">
+                      <div className="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                        <svg className="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Tamarque - Orange card */}
+              <motion.div
+                {...fadeInRight}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="bg-gradient-to-br from-[#FF6B35] to-[#FF1493] rounded-3xl p-8 md:p-10 text-white relative overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl" />
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-black/10 rounded-full blur-2xl" />
+
+                <div className="flex items-center gap-4 mb-8 relative">
+                  <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                    <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl">TAMARQUE</h3>
+                    <p className="text-white/70">Boisson prête à boire</p>
+                  </div>
+                </div>
+                <ul className="space-y-4 relative">
+                  {[
+                    'Prêt à boire, comme un soda',
+                    'Rafraîchissant et léger',
+                    'Zéro ballonnement',
+                    'Goût 100% naturel',
+                    'Parfait en salle, au bureau, partout',
+                    'Boost d\'énergie avec 80mg de caféine'
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-center gap-3">
+                      <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Flavors Section */}
+        <section className="py-20 md:py-32 bg-white relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              {...fadeInUp}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16"
             >
-              {MOCK_PRODUCTS.map((product) => (
-                <StaggerItem key={product.id}>
-                  <TiltCard className="h-full">
-                    <Link
-                      href={`/shop/${product.slug}`}
-                      className="block product-card bg-white rounded-2xl overflow-hidden focus:ring-2 focus:ring-[#FF6B35] focus:ring-offset-2 h-full"
+              <div>
+                <span className="inline-block px-4 py-2 bg-[#00D9A5]/10 text-[#00D9A5] text-sm font-semibold uppercase tracking-wider mb-6">
+                  5 saveurs exotiques
+                </span>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl">
+                  TROUVE TA
+                  <span className="block text-gradient-tropical">SAVEUR</span>
+                </h2>
+              </div>
+              <p className="text-lg text-gray-600 max-w-md mt-6 lg:mt-0 font-light">
+                Élaborées avec de vrais extraits de fruits.
+                20g de protéines, 80mg de caféine, zéro compromis.
+              </p>
+            </motion.div>
+
+            {/* Product Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+              {MOCK_PRODUCTS.map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Link
+                    href={`/shop/${product.slug}`}
+                    className="group block product-card rounded-2xl overflow-hidden"
+                  >
+                    <div
+                      className="aspect-[3/4] relative overflow-hidden"
+                      style={{ backgroundColor: FLAVOR_COLORS[product.flavor] + '15' }}
                     >
+                      <Image
+                        src={product.images[0]}
+                        alt={product.name}
+                        fill
+                        className="object-cover product-image"
+                      />
                       <div
-                        className="h-40 md:h-48 relative overflow-hidden"
-                        style={{ backgroundColor: FLAVOR_COLORS[product.flavor] + '20' }}
-                      >
-                        <Image
-                          src={product.images[0]}
-                          alt={product.name}
-                          fill
-                          className="object-cover transition-transform duration-300 hover:scale-110"
-                        />
-                        <div
-                          className="absolute inset-0 opacity-20"
-                          style={{ backgroundColor: FLAVOR_COLORS[product.flavor] }}
-                        />
+                        className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300"
+                        style={{ backgroundColor: FLAVOR_COLORS[product.flavor] }}
+                      />
+
+                      {/* Quick add button */}
+                      <div className="absolute inset-x-4 bottom-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                        <button className="w-full py-3 bg-[#0A0A0A] text-white text-sm font-semibold uppercase tracking-wider hover:bg-[#FF6B35] transition-colors">
+                          Ajouter
+                        </button>
                       </div>
-                      <div className="p-3 md:p-4">
-                        <h3 className="font-bold text-base md:text-lg mb-1">{product.name}</h3>
-                        <p className="text-[#FF6B35] font-semibold">{product.price.toFixed(2)}€</p>
+
+                      {/* Tags */}
+                      <div className="absolute top-3 left-3 flex flex-wrap gap-1">
+                        {product.sportType.slice(0, 1).map((type) => (
+                          <span
+                            key={type}
+                            className="px-2 py-1 bg-white/90 backdrop-blur-sm rounded text-[10px] font-semibold uppercase tracking-wider"
+                          >
+                            {type}
+                          </span>
+                        ))}
                       </div>
-                    </Link>
-                  </TiltCard>
-                </StaggerItem>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-semibold text-base mb-1 group-hover:text-[#FF6B35] transition-colors">
+                        {product.name}
+                      </h3>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-[#FF6B35] font-bold">{product.price.toFixed(2)}€</span>
+                        {product.compareAtPrice && (
+                          <span className="text-gray-400 line-through text-sm">
+                            {product.compareAtPrice.toFixed(2)}€
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
               ))}
-            </StaggerContainer>
+            </div>
 
             <motion.div
               {...fadeInUp}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={getTransition(0.5)}
-              className="text-center mt-10 md:mt-12"
+              className="text-center mt-12"
             >
               <Link
                 href="/shop"
-                className="btn-primary inline-block text-base md:text-lg px-6 md:px-8 py-3 md:py-4 touch-target"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-[#0A0A0A] text-white font-semibold hover:bg-[#FF6B35] transition-colors uppercase tracking-wider text-sm"
               >
                 Voir toutes les saveurs
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
               </Link>
             </motion.div>
           </div>
         </section>
 
         {/* USP Section */}
-        <section className="py-16 md:py-20 bg-white" aria-labelledby="usp-heading">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-20 md:py-32 bg-[#0A0A0A] text-white relative overflow-hidden">
+          {/* Background decoration */}
+          <div className="absolute inset-0">
+            <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#FF6B35]/5 rounded-full blur-[150px]" />
+            <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-[#00D9A5]/5 rounded-full blur-[120px]" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <motion.div
               {...fadeInUp}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={getTransition()}
-              className="text-center mb-12 md:mb-16"
+              className="text-center mb-16"
             >
-              <h2 id="usp-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                Pourquoi les athlètes nous adorent
+              <h2 className="text-4xl md:text-5xl lg:text-6xl mb-6">
+                POURQUOI LES ATHLÈTES
+                <span className="block text-[#FF6B35]">NOUS ADORENT</span>
               </h2>
-              <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+              <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto font-light">
                 Conçue pour la performance, pensée pour le plaisir.
               </p>
             </motion.div>
 
-            <StaggerContainer
-              className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
-              staggerChildren={0.15}
-              delayChildren={0.2}
-            >
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
               {[
                 {
                   icon: '💪',
-                  iconLabel: 'Force',
-                  title: '20g Protéines',
+                  title: '20G PROTÉINES',
                   description: 'Whey isolate premium pour une absorption maximale et une récupération optimale.',
                   color: '#FF6B35',
                 },
                 {
-                  icon: '🌿',
-                  iconLabel: 'Naturel',
-                  title: '100% Naturel',
-                  description: 'Sans édulcorants artificiels, sans colorants, sans conservateurs. Que du vrai.',
+                  icon: '⚡',
+                  title: '80MG CAFÉINE',
+                  description: 'Caféine naturelle pour un boost d\'énergie clean, sans nervosité ni crash.',
                   color: '#00D9A5',
                 },
                 {
-                  icon: '⚡',
-                  iconLabel: 'Énergie',
-                  title: 'Énergie Clean',
-                  description: 'Caféine naturelle du matcha et thé vert. Sans nervosité, sans coup de barre.',
+                  icon: '🥤',
+                  title: 'PRÊT À BOIRE',
+                  description: 'Tu ouvres, tu bois. Pas de shaker, pas de poudre, pas de prise de tête.',
                   color: '#FF1493',
                 },
                 {
-                  icon: '🪶',
-                  iconLabel: 'Légèreté',
-                  title: 'Zéro Ballonnement',
-                  description: 'Texture ice tea légère qui passe facilement, même pendant l\'effort.',
+                  icon: '🌿',
+                  title: '100% NATUREL',
+                  description: 'Sans édulcorants artificiels, sans colorants, sans conservateurs. Que du vrai.',
                   color: '#FFD700',
                 },
               ].map((usp, index) => (
-                <StaggerItem key={index} className="text-center p-4 md:p-6">
-                  <TiltCard>
-                    <div
-                      className="w-16 md:w-20 h-16 md:h-20 rounded-2xl flex items-center justify-center text-3xl md:text-4xl mx-auto mb-4 md:mb-6 transition-transform hover:scale-110"
-                      style={{ backgroundColor: usp.color + '20' }}
-                      role="img"
-                      aria-label={usp.iconLabel}
-                    >
-                      {usp.icon}
-                    </div>
-                    <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3">{usp.title}</h3>
-                    <p className="text-gray-600 text-sm md:text-base">{usp.description}</p>
-                  </TiltCard>
-                </StaggerItem>
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="group p-6 md:p-8 border border-white/10 rounded-2xl hover:border-white/20 transition-colors relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div
+                    className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-6 relative"
+                    style={{ backgroundColor: usp.color + '20' }}
+                  >
+                    {usp.icon}
+                  </div>
+                  <h3 className="text-xl mb-3 relative" style={{ color: usp.color }}>{usp.title}</h3>
+                  <p className="text-white/60 font-light relative">{usp.description}</p>
+                </motion.div>
               ))}
-            </StaggerContainer>
+            </div>
           </div>
         </section>
 
-        {/* Testimonials Section with Premium Carousel */}
-        <section className="py-16 md:py-20 bg-[#1A1A1A] text-white" aria-labelledby="testimonials-heading">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Testimonials Section */}
+        <section className="py-20 md:py-32 bg-[#FDF8F3] relative overflow-hidden">
+          <div className="absolute inset-0 dot-pattern" />
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <motion.div
               {...fadeInUp}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={getTransition()}
-              className="text-center mb-12 md:mb-16"
+              className="text-center mb-16"
             >
-              <h2 id="testimonials-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                <TextReveal type="words" animation="fade" staggerChildren={0.05}>
-                  Les athlètes nous font confiance
-                </TextReveal>
+              <span className="inline-block px-4 py-2 bg-[#FF1493]/10 text-[#FF1493] text-sm font-semibold uppercase tracking-wider mb-6">
+                Témoignages
+              </span>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl">
+                ILS ONT ADOPTÉ
+                <span className="block text-gradient">TAMARQUE</span>
               </h2>
-              <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
-                Rejoins des milliers d&apos;athlètes qui ont découvert une nouvelle façon de consommer des protéines.
-              </p>
             </motion.div>
 
-            {/* Interactive Testimonials Carousel */}
-            <TestimonialsCarousel
-              testimonials={MOCK_REVIEWS.map((review) => ({
-                id: review.id,
-                author: review.author,
-                role: review.verified ? 'Achat vérifié' : undefined,
-                content: review.comment,
-                rating: review.rating,
-              }))}
-              autoPlay={true}
-              autoPlayInterval={5000}
-              className="bg-white/5 backdrop-blur-sm rounded-3xl border border-white/10"
-            />
+            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+              {MOCK_REVIEWS.slice(0, 3).map((review, index) => (
+                <motion.div
+                  key={review.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-white rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-xl transition-shadow"
+                >
+                  {/* Stars */}
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(review.rating)].map((_, i) => (
+                      <svg key={i} className="w-5 h-5 text-[#FFD700]" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+
+                  <p className="text-gray-700 mb-6 font-light leading-relaxed">
+                    &ldquo;{review.comment}&rdquo;
+                  </p>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#FF6B35] to-[#FF1493] flex items-center justify-center text-white font-semibold">
+                      {review.author[0]}
+                    </div>
+                    <div>
+                      <p className="font-semibold">{review.author}</p>
+                      {review.verified && (
+                        <p className="text-sm text-[#00D9A5] flex items-center gap-1">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          Achat vérifié
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* CTA Section with Scale Reveal */}
-        <ScaleRevealSection className="py-16 md:py-20 bg-gradient-to-br from-[#FF6B35] to-[#FF1493] text-white">
-          <section aria-labelledby="cta-heading">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <h2 id="cta-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                <TextReveal type="words" animation="scale" staggerChildren={0.06}>
-                  Prêt à changer ta routine ?
-                </TextReveal>
+        {/* CTA Section */}
+        <section className="py-20 md:py-32 bg-gradient-to-br from-[#FF6B35] via-[#FF1493] to-[#00D9A5] text-white relative overflow-hidden">
+          {/* Animated background elements */}
+          <div className="absolute inset-0">
+            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-float" />
+            <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-white/10 rounded-full blur-2xl animate-float delay-500" />
+          </div>
+
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+            <motion.div
+              {...scaleIn}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl md:text-5xl lg:text-7xl mb-6">
+                PRET A CHANGER
+                <span className="block">TA ROUTINE ?</span>
               </h2>
-              <p className="text-lg md:text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-                Rejoins des milliers d&apos;athlètes qui ont découvert qu&apos;une protéine peut être efficace ET agréable.
+              <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto font-light">
+                Rejoins des milliers d&apos;athlètes qui ont adopté la boisson
+                qui combine protéines et énergie. Ouvre, bois, performe.
               </p>
+
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <MagneticButton strength={0.4}>
-                  <Link
-                    href="/shop"
-                    className="bg-white text-[#FF6B35] px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-base md:text-lg hover:bg-gray-100 transition-colors touch-target inline-block"
-                  >
-                    Commander
-                  </Link>
-                </MagneticButton>
-                <MagneticButton strength={0.3}>
-                  <Link
-                    href="/subscribe"
-                    className="bg-transparent border-2 border-white text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-base md:text-lg hover:bg-white/10 transition-colors touch-target inline-block"
-                  >
-                    S&apos;abonner et économiser 25%
-                  </Link>
-                </MagneticButton>
+                <Link
+                  href="/shop"
+                  className="inline-flex items-center justify-center px-10 py-5 bg-white text-[#FF6B35] font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors uppercase tracking-wider"
+                >
+                  Commander maintenant
+                </Link>
+                <Link
+                  href="/subscribe"
+                  className="inline-flex items-center justify-center px-10 py-5 border-2 border-white text-white font-bold hover:bg-white/10 transition-colors uppercase tracking-wider"
+                >
+                  S&apos;abonner -25%
+                </Link>
               </div>
-            </div>
-          </section>
-        </ScaleRevealSection>
+            </motion.div>
+          </div>
+        </section>
       </main>
       <Footer />
+
+      {/* Marquee animation styles */}
+      <style jsx>{`
+        @keyframes marquee {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-33.33%);
+          }
+        }
+        .animate-marquee {
+          animation: marquee 20s linear infinite;
+        }
+      `}</style>
     </>
   );
 }

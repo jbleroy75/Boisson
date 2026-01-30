@@ -41,7 +41,7 @@ const VALUES = [
   {
     icon: '💡',
     title: 'L\'innovation d\'abord',
-    description: 'On a passé 3 ans à développer notre texture ice tea unique. Le "suffisamment bien" n\'existe pas chez nous.',
+    description: 'On a passé 3 ans à développer notre formule unique. Le "suffisamment bien" n\'existe pas chez nous.',
   },
   {
     icon: '🏆',
@@ -64,7 +64,7 @@ const TIMELINE = [
   {
     year: '2022',
     title: 'La R&D commence',
-    description: 'Partenariat avec des ingénieurs agroalimentaires pour développer la première formule protéinée texture ice tea.',
+    description: 'Partenariat avec des ingénieurs agroalimentaires pour développer notre formule protéinée légère et rafraîchissante.',
   },
   {
     year: '2023',
@@ -74,7 +74,7 @@ const TIMELINE = [
   {
     year: '2024',
     title: 'Lancement',
-    description: 'Tamarque se lance officiellement avec 5 saveurs exotiques. La révolution de la protéine ice tea commence.',
+    description: 'Tamarque se lance officiellement avec 5 saveurs exotiques. La révolution de la protéine légère commence.',
   },
 ];
 
@@ -105,8 +105,8 @@ export default function AboutPage() {
               </h1>
               <p className="text-xl text-gray-300">
                 On pense qu'une boisson protéinée devrait être un plaisir, pas une corvée.
-                C'est pour ça qu'on a créé Tamarque &mdash; la première boisson protéinée
-                texture ice tea.
+                C'est pour ça qu'on a créé Tamarque &mdash; la boisson protéinée
+                nouvelle génération.
               </p>
             </motion.div>
           </div>
@@ -130,7 +130,7 @@ export default function AboutPage() {
               </p>
               <p className="text-xl text-gray-600 leading-relaxed mt-4">
                 Trois ans, d'innombrables expérimentations et une percée plus tard, Tamarque est née.
-                Une boisson protéinée qui a la texture d'un ice tea mais qui délivre 20g de whey isolate premium.
+                Une boisson protéinée légère et rafraîchissante qui délivre 20g de whey isolate premium.
                 Légère, rafraîchissante, et vraiment délicieuse.
               </p>
             </motion.div>
@@ -181,7 +181,7 @@ export default function AboutPage() {
               className="text-center mb-16"
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Notre parcours</h2>
-              <p className="text-gray-600">De l'expérimentation en cuisine à la révolution ice tea.</p>
+              <p className="text-gray-600">De l'expérimentation en cuisine à la révolution protéine légère.</p>
             </motion.div>
 
             <div className="relative">
@@ -309,7 +309,7 @@ export default function AboutPage() {
               </h2>
               <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
                 Rejoins des milliers d'athlètes qui ont fait le switch vers une protéine rafraîchissante.
-                20g de protéines, texture ice tea, 100% naturelle.
+                20g de protéines, texture légère, 100% naturelle.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link

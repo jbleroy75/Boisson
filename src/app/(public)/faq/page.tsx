@@ -16,7 +16,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: 'Quelle est la texture des boissons Tamarque ?',
-        a: 'C\'est notre innovation majeure ! Contrairement aux shakes protéinés traditionnels épais et laiteux, nos boissons ont une texture légère type ice tea. Rafraîchissantes et faciles à boire, elles sont idéales avant, pendant ou après l\'effort.',
+        a: 'C\'est notre innovation majeure ! Contrairement aux shakes protéinés traditionnels épais et laiteux, nos boissons ont une texture légère et rafraîchissante. Faciles à boire et faciles à boire, elles sont idéales avant, pendant ou après l\'effort.',
       },
       {
         q: 'Combien de calories par bouteille ?',

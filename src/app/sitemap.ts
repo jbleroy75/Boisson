@@ -5,11 +5,14 @@ const baseUrl = 'https://tamarque.com';
 
 // Mock blog posts - in production, fetch from Sanity
 const BLOG_POSTS = [
-  { slug: 'top-5-post-workout-recipes', publishedAt: '2024-01-20' },
-  { slug: 'protein-needs-for-runners', publishedAt: '2024-01-15' },
-  { slug: 'ice-tea-texture-revolution', publishedAt: '2024-01-10' },
-  { slug: 'natural-ingredients-matter', publishedAt: '2024-01-05' },
-  { slug: 'summer-hydration-guide', publishedAt: '2024-01-01' },
+  { slug: 'top-5-recettes-post-entrainement', publishedAt: '2024-01-20' },
+  { slug: 'besoins-proteines-coureurs', publishedAt: '2024-01-15' },
+  { slug: 'proteine-legere-revolution', publishedAt: '2024-01-10' },
+  { slug: 'ingredients-naturels-performance', publishedAt: '2024-01-05' },
+  { slug: 'guide-hydratation-ete', publishedAt: '2024-01-01' },
+  { slug: 'mythes-proteines-demystifies', publishedAt: '2023-12-28' },
+  { slug: 'routine-matinale-athlete', publishedAt: '2023-12-20' },
+  { slug: 'crossfit-nutrition-guide', publishedAt: '2023-12-15' },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

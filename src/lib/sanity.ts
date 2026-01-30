@@ -1,5 +1,5 @@
 import { createClient } from '@sanity/client';
-import imageUrlBuilder from '@sanity/image-url';
+import { createImageUrlBuilder } from '@sanity/image-url';
 import type { BlogPost } from '@/types';
 
 // Sanity client configuration
@@ -7,8 +7,13 @@ const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
 const apiVersion = process.env.SANITY_API_VERSION || '2024-01-01';
 
-// Check if Sanity is configured
-export const isSanityConfigured = !!(projectId && dataset);
+// Check if Sanity is configured (not a placeholder value)
+const isPlaceholder = !projectId ||
+  projectId === 'your-sanity-project-id' ||
+  projectId.includes('your-') ||
+  projectId.length < 8;
+
+export const isSanityConfigured = !isPlaceholder && !!dataset;
 
 // Create the Sanity client
 export const sanityClient = isSanityConfigured
@@ -22,7 +27,7 @@ export const sanityClient = isSanityConfigured
   : null;
 
 // Image URL builder
-const builder = sanityClient ? imageUrlBuilder(sanityClient) : null;
+const builder = sanityClient ? createImageUrlBuilder(sanityClient) : null;
 
 export function urlFor(source: { asset: { _ref: string } } | string) {
   if (!builder) {
