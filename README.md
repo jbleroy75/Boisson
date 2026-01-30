@@ -1,231 +1,311 @@
-# Tamarque - Protein Drinks with Ice Tea Texture
+# Tamarque
 
-A Next.js 15 e-commerce platform for Tamarque protein drinks, featuring both B2C and B2B functionality.
+Plateforme e-commerce Next.js pour Tamarque, marque de boissons proteinees avec texture ice tea.
 
-## Tech Stack
+## Stack Technique
 
-- **Framework**: Next.js 15 (App Router) + React 18 + TypeScript
-- **Styling**: Tailwind CSS + Framer Motion
-- **E-commerce**: Shopify Storefront API
-- **Auth**: NextAuth.js (Credentials + Google OAuth)
-- **Database**: Supabase (PostgreSQL)
-- **CMS**: Sanity.io (Blog & Recipes)
-- **Payments**: Stripe + Shopify Payments
-- **Deployment**: Vercel
+| Categorie | Technologie |
+|-----------|-------------|
+| Framework | Next.js 16 + React 19 + TypeScript |
+| Styling | Tailwind CSS 4 + Framer Motion |
+| E-commerce | Shopify Storefront API |
+| Auth | NextAuth.js (Credentials + Google OAuth + 2FA) |
+| Database | Supabase (PostgreSQL) |
+| CMS | Sanity.io |
+| Emails | Resend |
+| Payments | Stripe + Shopify Payments |
+| Analytics | Hotjar + Microsoft Clarity |
+| Deployment | Vercel |
 
-## Getting Started
+## Fonctionnalites
 
-### Prerequisites
+### Site B2C (www.tamarque.com)
 
-- Node.js 18+
-- npm or yarn
-- Supabase account
-- Shopify store with Storefront API access
-- (Optional) Sanity.io project
-- (Optional) Stripe account
+| Page | Route | Description |
+|------|-------|-------------|
+| Accueil | `/` | Hero, produits, USP, temoignages |
+| Boutique | `/shop` | Grille produits, filtres, tri |
+| Produit | `/shop/[slug]` | Detail, nutrition, avis |
+| Panier | `/cart` | Gestion panier, codes promo |
+| Abonnement | `/subscribe` | 3 formules avec reduction |
+| Fidelite | `/loyalty` | Programme points, recompenses |
+| Pack Builder | `/pack` | Configurateur de pack personnalise |
+| Blog | `/blog` | Articles nutrition/fitness |
+| Compte | `/account` | Dashboard, commandes, adresses |
+| Parametres | `/account/settings` | Profil, notifications, securite |
+| Wishlist | `/wishlist` | Produits favoris |
+| FAQ | `/faq` | Questions frequentes |
+| Contact | `/contact` | Formulaire de contact |
 
-### Installation
+### Portail B2B (fournisseurs.tamarque.com)
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/tamarque.git
-cd tamarque
-```
+| Page | Route | Description |
+|------|-------|-------------|
+| Accueil B2B | `/fournisseurs` | Landing page partenaires |
+| Connexion | `/fournisseurs/login` | Auth separee B2B |
+| Inscription | `/fournisseurs/inscription` | Formulaire partenariat |
+| Dashboard | `/fournisseurs/dashboard` | KPIs, commandes recentes |
+| Commandes | `/fournisseurs/orders` | Liste commandes, export CSV |
+| Detail commande | `/fournisseurs/orders/[id]` | Timeline, tracking, articles |
+| Factures | `/fournisseurs/invoices` | Liste factures, telechargement |
+| Detail facture | `/fournisseurs/invoices/[id]` | Apercu, PDF, envoi email |
+| Tarifs | `/fournisseurs/pricing` | Grille tarifaire par volume |
+| Ressources | `/fournisseurs/resources` | Assets marketing |
+| Contact B2B | `/fournisseurs/contact` | Formulaire dedie |
 
-2. Install dependencies:
-```bash
-npm install
-```
+### Authentification
 
-3. Set up environment variables:
-```bash
-cp .env.local.example .env.local
-```
+- Connexion email/mot de passe
+- OAuth Google
+- 2FA TOTP (Google Authenticator)
+- Reset mot de passe par email
+- Gestion sessions
+- Rate limiting anti-brute force
 
-4. Configure your `.env.local` with your API keys (see Environment Variables section below).
+### Emails (Resend)
 
-5. Set up Supabase database:
-   - Go to your Supabase project SQL Editor
-   - Run the SQL schema in `src/lib/supabase.ts` (see the commented section)
+| Email | Declencheur |
+|-------|-------------|
+| Bienvenue | Inscription |
+| Newsletter | Abonnement newsletter |
+| Reset password | Demande de reinitialisation |
+| Contact confirmation | Formulaire contact |
+| B2B inscription | Demande partenariat |
+| B2B notification admin | Nouvelle demande B2B |
+| B2B statut commande | Changement statut |
 
-6. Start the development server:
-```bash
-npm run dev
-```
+### Templates Shopify
 
-7. Open [http://localhost:3000](http://localhost:3000)
+Templates email personnalises dans `/shopify/email-templates/` :
 
-## Environment Variables
+- `order-confirmation.liquid` - Confirmation commande
+- `shipping-confirmation.liquid` - Expedition
+- `customer-account-welcome.liquid` - Bienvenue client
+- `abandoned-cart.liquid` - Panier abandonne
+- `customer-password-reset.liquid` - Reset mot de passe
+- `order-refund.liquid` - Remboursement
 
-Create a `.env.local` file with the following variables:
+### Securite
 
-```env
-# NextAuth.js
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your-secret-here
+- Headers HTTP securises (CSP, HSTS, X-Frame-Options)
+- Protection CSRF
+- Rate limiting par IP
+- Validation Zod sur toutes les entrees
+- Sanitization XSS
+- Audit logs
 
-# Google OAuth
-GOOGLE_CLIENT_ID=your-google-client-id
-GOOGLE_CLIENT_SECRET=your-google-client-secret
+### Performance
 
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+- Images lazy loading avec Intersection Observer
+- Optimisation bundle (tree shaking)
+- Fonts optimisees (next/font)
+- Cache headers
 
-# Shopify
-NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
-NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN=your-token
+### Accessibilite
 
-# Stripe
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxx
-STRIPE_SECRET_KEY=sk_test_xxx
-STRIPE_WEBHOOK_SECRET=whsec_xxx
+- WCAG 2.1 AA
+- Navigation clavier
+- Labels ARIA
+- Contraste couleurs
+- Reduced motion support
 
-# Sanity.io
-NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
-NEXT_PUBLIC_SANITY_DATASET=production
-SANITY_API_TOKEN=your-api-token
+### Analytics
 
-# HubSpot (B2B CRM)
-HUBSPOT_API_KEY=your-hubspot-key
+- Hotjar (heatmaps, recordings)
+- Microsoft Clarity (alternative)
+- Respect du consentement cookies
 
-# Mailchimp (Newsletter)
-MAILCHIMP_API_KEY=your-mailchimp-key
-MAILCHIMP_AUDIENCE_ID=your-audience-id
-```
-
-## Project Structure
+## Structure Projet
 
 ```
 tamarque/
 ├── src/
 │   ├── app/
-│   │   ├── (public)/           # Main consumer-facing routes
-│   │   │   ├── shop/           # Product listing
-│   │   │   ├── shop/[slug]/    # Product detail
-│   │   │   ├── subscribe/      # Subscription tiers
-│   │   │   ├── account/        # Customer dashboard
-│   │   │   └── blog/           # Blog listing & articles
-│   │   ├── fournisseurs/       # B2B subdomain routes
-│   │   │   ├── dashboard/      # Distributor dashboard
-│   │   │   ├── order/          # B2B ordering
-│   │   │   ├── resources/      # Marketing assets
-│   │   │   └── contact/        # B2B contact form
-│   │   ├── api/
-│   │   │   ├── auth/           # NextAuth.js endpoints
-│   │   │   └── webhooks/       # Shopify/Stripe webhooks
-│   │   ├── layout.tsx
-│   │   ├── page.tsx            # Homepage
-│   │   └── globals.css
+│   │   ├── (public)/           # Routes B2C
+│   │   ├── fournisseurs/       # Routes B2B
+│   │   ├── api/                # API routes
+│   │   └── login/              # Auth pages
 │   ├── components/
-│   │   ├── layout/             # Header, Footer, Navigation
-│   │   ├── ui/                 # Reusable UI components
-│   │   ├── shop/               # Shop-specific components
-│   │   └── b2b/                # B2B-specific components
+│   │   ├── layout/             # Header, Footer
+│   │   ├── ui/                 # Composants UI reutilisables
+│   │   ├── shop/               # Composants shop
+│   │   ├── b2b/                # Composants B2B
+│   │   ├── auth/               # Composants auth (2FA)
+│   │   ├── analytics/          # Hotjar, Clarity
+│   │   └── newsletter/         # Newsletter signup
+│   ├── contexts/
+│   │   ├── CartContext.tsx     # Panier
+│   │   └── ThemeContext.tsx    # Dark mode
+│   ├── hooks/
+│   │   └── useCart.ts          # Hook panier
 │   ├── lib/
-│   │   ├── auth.ts             # NextAuth configuration
-│   │   ├── supabase.ts         # Supabase client
-│   │   ├── shopify.ts          # Shopify client
-│   │   └── constants.ts        # App constants & mock data
+│   │   ├── auth.ts             # NextAuth config
+│   │   ├── supabase.ts         # Client Supabase
+│   │   ├── shopify.ts          # Client Shopify
+│   │   ├── stripe.ts           # Client Stripe
+│   │   ├── sanity.ts           # Client Sanity
+│   │   ├── email.ts            # Emails Resend
+│   │   ├── pdf.ts              # Generation PDF
+│   │   ├── csv.ts              # Export CSV
+│   │   └── security/           # Utils securite
 │   └── types/
-│       └── index.ts            # TypeScript definitions
-├── public/
-│   └── images/                 # Static assets
-├── .env.local                  # Environment variables
-├── tailwind.config.ts
-├── next.config.ts
-└── package.json
+│       └── index.ts            # Types TypeScript
+├── shopify/
+│   └── email-templates/        # Templates Liquid
+├── e2e/                        # Tests Playwright
+├── public/                     # Assets statiques
+└── ...config files
 ```
 
-## Features
+## Installation
 
-### Main Site (www.tamarque.com)
-- Homepage with hero, product showcase, USP sections
-- Shop page with product grid, filters, sorting
-- Product detail pages with nutrition info, reviews
-- Subscription tiers with Shopify Subscriptions
-- Customer authentication (email + Google)
-- Customer dashboard (orders, subscriptions, profile)
-- Blog with Sanity.io CMS
+### Prerequis
 
-### B2B Portal (fournisseurs.tamarque.com)
-- Distributor landing page
-- Contact form with HubSpot integration
-- Resources page (catalogs, marketing assets)
-- Distributor dashboard
-- Volume-based B2B ordering
-- Invoice generation (PDF)
+- Node.js 18+
+- npm ou yarn
 
-## Database Schema (Supabase)
+### Setup
 
-### Tables
-- `users` - User accounts (customers + distributors)
-- `distributors` - B2B distributor profiles
-- `b2b_orders` - B2B order records
+```bash
+# Cloner le repo
+git clone https://github.com/jbleroy75/Boisson.git
+cd Boisson/tamarque
 
-See `src/lib/supabase.ts` for the complete SQL schema with RLS policies.
+# Installer les dependances
+npm install
 
-## Deployment
+# Configurer les variables d'environnement
+cp .env.local.example .env.local
+# Editer .env.local avec vos cles API
 
-### Vercel
+# Lancer en developpement
+npm run dev
+```
 
-1. Push to GitHub
-2. Import project in Vercel
-3. Configure environment variables
-4. Deploy
+### Variables d'environnement
 
-### Subdomain Configuration
+```env
+# NextAuth
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret
 
-Configure both domains in Vercel:
-- `www.tamarque.com` → Main site
-- `fournisseurs.tamarque.com` → B2B portal (same deployment, conditional routing)
+# Google OAuth (optionnel)
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+# Supabase (optionnel sans B2B)
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+
+# Shopify
+NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
+NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN=
+
+# Stripe (optionnel)
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+
+# Resend (emails)
+RESEND_API_KEY=
+
+# Sanity (blog, optionnel)
+NEXT_PUBLIC_SANITY_PROJECT_ID=
+NEXT_PUBLIC_SANITY_DATASET=production
+
+# Analytics (optionnel)
+NEXT_PUBLIC_HOTJAR_ID=
+NEXT_PUBLIC_CLARITY_ID=
+```
 
 ## Scripts
 
 ```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Run ESLint
-npm run test         # Run tests
-npm run test:e2e     # Run Playwright E2E tests
+npm run dev          # Serveur developpement
+npm run build        # Build production (avec --webpack flag)
+npm run start        # Serveur production
+npm run lint         # ESLint
+npm run test         # Tests unitaires Vitest
+npm run test:e2e     # Tests E2E Playwright
+```
+
+Note : Le build necessite le flag `--webpack` a cause d'un bug Turbopack :
+```bash
+npm run build -- --webpack
 ```
 
 ## Design System
 
-### Colors
-- Orange (Energy): `#FF6B35`
-- Green (Nature): `#00D9A5`
-- Pink (Dragon Fruit): `#FF1493`
-- Black: `#1A1A1A`
+### Couleurs
 
-### Typography
-- Headings: Montserrat Bold
-- Body: Inter Regular
+| Nom | Hex | Usage |
+|-----|-----|-------|
+| Orange | `#FF6B35` | Primaire, CTA |
+| Rose | `#FF1493` | Accent, gradients |
+| Vert | `#00D9A5` | Succes, nature |
+| Noir | `#1A1A1A` | Texte, footer |
+| Or | `#FFD700` | Premium, fidelite |
 
-### Spacing
-- Base unit: 8px (0.5rem increments)
+### Typographie
 
-## Testing
+- Titres : Montserrat Bold
+- Corps : Inter Regular
 
-### Unit Tests (Jest + React Testing Library)
-```bash
-npm run test
-```
+### Dark Mode
 
-### E2E Tests (Playwright)
-```bash
-npm run test:e2e
-```
+Toggle dans le header. Persiste dans localStorage.
 
-## Contributing
+## Produits
 
-1. Create a feature branch
-2. Make your changes
-3. Run tests
-4. Create a pull request
+5 saveurs disponibles :
 
-## License
+1. Mango Sunrise
+2. Dragon Fruit Rush
+3. Citrus Energy
+4. Tropical Storm
+5. Berry Boost
+
+Caracteristiques :
+- 20g de proteines par bouteille
+- Texture ice tea (pas de shake epais)
+- Zero sucres ajoutes
+- 100% naturel
+
+## Cible
+
+- Sportifs (crossfit, musculation)
+- Fitness casual (salle 2-3x/semaine)
+- Jeunes actifs urbains (25-35 ans)
+
+## Deploiement
+
+### Vercel
+
+1. Connecter le repo GitHub a Vercel
+2. Configurer les variables d'environnement
+3. Deployer
+
+### Domaines
+
+- `tamarque.com` - Site principal B2C
+- `fournisseurs.tamarque.com` - Portail B2B (meme deployment, routing conditionnel via middleware)
+
+## TODO avant lancement
+
+- [ ] Ajouter images produits et logo
+- [ ] Creer les produits dans Shopify
+- [ ] Configurer Shopify Payments
+- [ ] Deployer sur Vercel
+- [ ] Configurer domaines
+
+## TODO optionnel
+
+- [ ] Setup Supabase (pour B2B et fidelite)
+- [ ] Setup Sanity.io (pour blog)
+- [ ] Configurer Stripe webhooks (pour abonnements)
+- [ ] Tests E2E complets
+
+## Licence
 
 Proprietary - Tamarque SAS
