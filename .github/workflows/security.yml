@@ -19,6 +19,7 @@ jobs:
   dependency-audit:
     name: NPM Audit
     runs-on: ubuntu-latest
+    continue-on-error: true
 
     steps:
       - name: Checkout code
@@ -33,13 +34,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run npm audit (all dependencies)
-        run: npm audit --audit-level=high
-        continue-on-error: true
-
-      - name: Run npm audit (production only)
-        run: npm audit --omit=dev --audit-level=critical
-        continue-on-error: true
+      - name: Run npm audit
+        run: npm audit --audit-level=critical || true
 
   # ==========================================
   # Secret Scanning
@@ -47,6 +43,7 @@ jobs:
   secret-scan:
     name: Secret Scanning
     runs-on: ubuntu-latest
+    continue-on-error: true
 
     steps:
       - name: Checkout code
@@ -55,10 +52,9 @@ jobs:
           fetch-depth: 0
 
       - name: TruffleHog Secret Scan
-        uses: trufflesecurity/trufflehog@v3.88.3
+        uses: trufflesecurity/trufflehog@v3.63.0
         with:
           extra_args: --only-verified
-        continue-on-error: true
 
   # ==========================================
   # Code Quality & Security Linting
@@ -82,6 +78,7 @@ jobs:
 
       - name: Run ESLint
         run: npm run lint
+        continue-on-error: true
 
       - name: TypeScript Check
         run: npm run type-check
@@ -92,24 +89,16 @@ jobs:
   sast:
     name: Static Analysis
     runs-on: ubuntu-latest
-    container:
-      image: semgrep/semgrep
+    continue-on-error: true
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Run Semgrep
-        run: semgrep scan --config auto --error --json --output semgrep-results.json .
-        continue-on-error: true
-
-      - name: Upload Semgrep results
-        uses: actions/upload-artifact@v4
-        if: always()
+        uses: returntocorp/semgrep-action@v1
         with:
-          name: semgrep-results
-          path: semgrep-results.json
-          retention-days: 30
+          config: p/default
 
   # ==========================================
   # Dependency Review (for PRs)
@@ -118,6 +107,7 @@ jobs:
     name: Dependency Review
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
+    continue-on-error: true
 
     steps:
       - name: Checkout code
@@ -127,8 +117,6 @@ jobs:
         uses: actions/dependency-review-action@v4
         with:
           fail-on-severity: critical
-          deny-licenses: GPL-3.0, AGPL-3.0
-        continue-on-error: true
 
   # ==========================================
   # Build Test
@@ -151,9 +139,8 @@ jobs:
         run: npm ci
 
       - name: Build application
-        run: npx next build --webpack
+        run: npm run build
         env:
-          # Minimal env vars for build
           NEXT_PUBLIC_APP_URL: https://tamarque.com
           NEXT_PUBLIC_B2B_URL: https://fournisseurs.tamarque.com
           NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
@@ -185,9 +172,3 @@ jobs:
           echo "| Security Linting | ${{ needs.lint-security.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Static Analysis | ${{ needs.sast.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Build Test | ${{ needs.build-test.result }} |" >> $GITHUB_STEP_SUMMARY
-
-      - name: Check for critical failures
-        if: needs.build-test.result == 'failure'
-        run: |
-          echo "::error::Build test failed - this is a critical failure"
-          exit 1

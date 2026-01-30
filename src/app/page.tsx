@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { MOCK_PRODUCTS, MOCK_REVIEWS, FLAVOR_COLORS } from '@/lib/constants';
+import Image from 'next/image';
+import { MOCK_PRODUCTS, MOCK_REVIEWS, FLAVOR_COLORS, PLACEHOLDER_IMAGES } from '@/lib/constants';
 
 // Premium UI Components
 import {
@@ -130,15 +131,30 @@ export default function Home() {
                 transition={getTransition(0.2)}
                 className="relative"
               >
-                <div className="relative h-[350px] sm:h-[400px] md:h-[500px] w-full bg-gradient-to-br from-[#FF6B35]/20 to-[#FF1493]/20 rounded-3xl flex items-center justify-center">
-                  {/* Placeholder for hero image/video */}
-                  <div className="text-center">
-                    <div
-                      className="w-24 sm:w-32 h-48 sm:h-64 bg-gradient-to-b from-[#FFD700] to-[#FF6B35] rounded-2xl mx-auto shadow-2xl transform -rotate-6"
-                      role="img"
-                      aria-label="Bouteille Tamarque"
-                    />
-                    <p className="mt-6 text-gray-500 text-sm">Vidéo à venir</p>
+                <div className="relative h-[350px] sm:h-[400px] md:h-[500px] w-full rounded-3xl overflow-hidden">
+                  <Image
+                    src={PLACEHOLDER_IMAGES.lifestyle}
+                    alt="Athlete buvant Tamarque"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                  <div className="absolute bottom-6 left-6 right-6 flex gap-3">
+                    {MOCK_PRODUCTS.slice(0, 3).map((product) => (
+                      <div
+                        key={product.id}
+                        className="w-16 h-24 rounded-xl overflow-hidden shadow-lg border-2 border-white/50"
+                      >
+                        <Image
+                          src={product.images[0]}
+                          alt={product.name}
+                          width={64}
+                          height={96}
+                          className="object-cover w-full h-full"
+                        />
+                      </div>
+                    ))}
                   </div>
                 </div>
               </motion.div>
@@ -257,22 +273,18 @@ export default function Home() {
                     >
                       <div
                         className="h-40 md:h-48 relative overflow-hidden"
-                        style={{ backgroundColor: FLAVOR_COLORS[product.flavor] + '40' }}
+                        style={{ backgroundColor: FLAVOR_COLORS[product.flavor] + '20' }}
                       >
-                        {/* Liquid fill effect on hover */}
-                        <LiquidFill
-                          fillPercent={75}
-                          color={FLAVOR_COLORS[product.flavor]}
-                          className="absolute bottom-0 left-0 right-0 h-full opacity-30"
+                        <Image
+                          src={product.images[0]}
+                          alt={product.name}
+                          fill
+                          className="object-cover transition-transform duration-300 hover:scale-110"
                         />
-                        <div className="absolute inset-0 flex items-center justify-center z-10">
-                          <div
-                            className="w-12 md:w-16 h-24 md:h-32 rounded-xl shadow-lg transform -rotate-6 transition-transform hover:rotate-0"
-                            style={{ backgroundColor: FLAVOR_COLORS[product.flavor] }}
-                            role="img"
-                            aria-label={`Bouteille ${product.name}`}
-                          />
-                        </div>
+                        <div
+                          className="absolute inset-0 opacity-20"
+                          style={{ backgroundColor: FLAVOR_COLORS[product.flavor] }}
+                        />
                       </div>
                       <div className="p-3 md:p-4">
                         <h3 className="font-bold text-base md:text-lg mb-1">{product.name}</h3>

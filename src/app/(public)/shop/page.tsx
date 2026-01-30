@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -252,16 +253,18 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         {/* Product Image */}
         <div
           className="h-64 relative overflow-hidden"
-          style={{ backgroundColor: flavorColor + '30' }}
+          style={{ backgroundColor: flavorColor + '20' }}
         >
           <motion.div
-            animate={{ scale: isHovered ? 1.05 : 1, rotate: isHovered ? -3 : -6 }}
+            animate={{ scale: isHovered ? 1.1 : 1 }}
             transition={{ duration: 0.3 }}
-            className="absolute inset-0 flex items-center justify-center"
+            className="absolute inset-0"
           >
-            <div
-              className="w-20 h-40 rounded-2xl shadow-lg"
-              style={{ backgroundColor: flavorColor }}
+            <Image
+              src={product.images[0]}
+              alt={product.name}
+              fill
+              className="object-cover"
             />
           </motion.div>
 

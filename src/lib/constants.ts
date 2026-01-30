@@ -30,6 +30,23 @@ export const FLAVOR_COLORS: Record<string, string> = {
   'dragon-fruit-mango-passion': '#FF1493',
 };
 
+// Placeholder images (Unsplash - style boissons/drinks)
+export const PLACEHOLDER_IMAGES = {
+  hero: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&h=800&fit=crop',
+  heroBottles: 'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=800&h=1000&fit=crop',
+  lifestyle: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&h=800&fit=crop',
+  gym: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&h=800&fit=crop',
+  athlete: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=800&h=800&fit=crop',
+  // Products - colorful drinks
+  products: {
+    'yuzu-peach': 'https://images.unsplash.com/photo-1546173159-315724a31696?w=400&h=600&fit=crop',
+    'hibiscus-raspberry': 'https://images.unsplash.com/photo-1497534446932-c925b458314e?w=400&h=600&fit=crop',
+    'matcha-vanilla': 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=400&h=600&fit=crop',
+    'coco-pineapple': 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400&h=600&fit=crop',
+    'dragon-fruit-mango-passion': 'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=400&h=600&fit=crop',
+  },
+};
+
 // Données produits mock (en attendant la connexion Shopify)
 export const MOCK_PRODUCTS: Product[] = [
   {
@@ -39,7 +56,7 @@ export const MOCK_PRODUCTS: Product[] = [
     description: 'Un mélange rafraîchissant de yuzu japonais et de pêche douce. Léger, acidulé, parfait pour la récupération post-entraînement.',
     price: 3.99,
     compareAtPrice: 4.99,
-    images: ['/images/products/yuzu-peach-1.jpg', '/images/products/yuzu-peach-2.jpg'],
+    images: ['https://images.unsplash.com/photo-1546173159-315724a31696?w=400&h=600&fit=crop', 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400&h=600&fit=crop'],
     flavor: 'yuzu-peach',
     sportType: ['endurance', 'recovery'],
     nutrition: {
@@ -61,7 +78,7 @@ export const MOCK_PRODUCTS: Product[] = [
     description: 'L\'hibiscus floral rencontre la framboise acidulée dans ce mélange riche en antioxydants. Goût intense, zéro ballonnement.',
     price: 3.99,
     compareAtPrice: 4.99,
-    images: ['/images/products/hibiscus-raspberry-1.jpg', '/images/products/hibiscus-raspberry-2.jpg'],
+    images: ['https://images.unsplash.com/photo-1497534446932-c925b458314e?w=400&h=600&fit=crop', 'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=400&h=600&fit=crop'],
     flavor: 'hibiscus-raspberry',
     sportType: ['recovery'],
     nutrition: {
@@ -83,7 +100,7 @@ export const MOCK_PRODUCTS: Product[] = [
     description: 'Matcha japonais premium avec une vanille onctueuse. Boost naturel de caféine avec une libération d\'énergie progressive.',
     price: 4.49,
     compareAtPrice: 5.49,
-    images: ['/images/products/matcha-vanilla-1.jpg', '/images/products/matcha-vanilla-2.jpg'],
+    images: ['https://images.unsplash.com/photo-1556881286-fc6915169721?w=400&h=600&fit=crop', 'https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=400&h=600&fit=crop'],
     flavor: 'matcha-vanilla',
     sportType: ['endurance', 'strength'],
     nutrition: {
@@ -105,7 +122,7 @@ export const MOCK_PRODUCTS: Product[] = [
     description: 'Un paradis tropical en bouteille. Base d\'eau de coco avec ananas frais pour une hydratation optimale.',
     price: 3.99,
     compareAtPrice: 4.99,
-    images: ['/images/products/coco-pineapple-1.jpg', '/images/products/coco-pineapple-2.jpg'],
+    images: ['https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400&h=600&fit=crop', 'https://images.unsplash.com/photo-1490885578174-acda8905c2c6?w=400&h=600&fit=crop'],
     flavor: 'coco-pineapple',
     sportType: ['endurance', 'recovery'],
     nutrition: {
@@ -127,7 +144,7 @@ export const MOCK_PRODUCTS: Product[] = [
     description: 'Trio exotique de fruit du dragon, mangue et passion. Couleur rose vibrante, explosion de saveurs tropicales.',
     price: 4.49,
     compareAtPrice: 5.49,
-    images: ['/images/products/dragon-fruit-1.jpg', '/images/products/dragon-fruit-2.jpg'],
+    images: ['https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=400&h=600&fit=crop', 'https://images.unsplash.com/photo-1494597564530-871f2b93ac55?w=400&h=600&fit=crop'],
     flavor: 'dragon-fruit-mango-passion',
     sportType: ['strength', 'recovery'],
     nutrition: {

@@ -34,7 +34,7 @@ const mockProduct: Product = {
   description: 'A test product',
   images: ['/test.png'],
   inStock: true,
-  flavor: 'mango-sunrise',
+  flavor: 'yuzu-peach',
   sportType: ['endurance'],
   nutrition: {
     servingSize: '330ml',
