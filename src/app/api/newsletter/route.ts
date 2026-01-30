@@ -62,7 +62,7 @@ export async function POST(request: Request) {
     // Send welcome email
     try {
       await sendWelcomeEmail({
-        to: email,
+        email: email,
         name: email.split('@')[0],
       });
     } catch (emailError) {
