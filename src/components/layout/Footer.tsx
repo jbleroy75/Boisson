@@ -231,6 +231,9 @@ export default function Footer({ isB2B = false }: FooterProps) {
               <Link href="/shipping" className="text-gray-500 hover:text-gray-400 text-xs">
                 Livraison
               </Link>
+              <Link href="/retours" className="text-gray-500 hover:text-gray-400 text-xs">
+                Retours
+              </Link>
             </nav>
 
             {/* Payment methods */}
