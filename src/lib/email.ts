@@ -1,0 +1,408 @@
+import { Resend } from 'resend';
+
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
+
+const FROM_EMAIL = 'Tamarque <noreply@tamarque.com>';
+
+export interface OrderConfirmationData {
+  customerName: string;
+  customerEmail: string;
+  orderId: string;
+  items: Array<{ name: string; quantity: number; price: number }>;
+  subtotal: number;
+  shipping: number;
+  total: number;
+  shippingAddress: {
+    street: string;
+    city: string;
+    postalCode: string;
+    country: string;
+  };
+}
+
+export interface ShipmentNotificationData {
+  customerName: string;
+  customerEmail: string;
+  orderId: string;
+  trackingNumber: string;
+  trackingUrl: string;
+  carrier: string;
+  estimatedDelivery: string;
+}
+
+export interface WelcomeEmailData {
+  name: string;
+  email: string;
+}
+
+export interface B2BOrderNotificationData {
+  distributorName: string;
+  distributorEmail: string;
+  orderId: string;
+  items: Array<{ name: string; quantity: number; unitPrice: number }>;
+  total: number;
+  discount: number;
+}
+
+// Template functions
+function orderConfirmationTemplate(data: OrderConfirmationData): string {
+  const itemsHtml = data.items
+    .map(
+      (item) => `
+      <tr>
+        <td style="padding: 12px; border-bottom: 1px solid #eee;">${item.name}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">${item.quantity}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: right;">€${item.price.toFixed(2)}</td>
+      </tr>
+    `
+    )
+    .join('');
+
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="font-family: 'Inter', Arial, sans-serif; margin: 0; padding: 0; background-color: #f5f5f5;">
+      <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+        <!-- Header -->
+        <div style="background: linear-gradient(135deg, #FF6B35, #FF1493); padding: 40px 20px; text-align: center;">
+          <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Merci pour votre commande !</h1>
+        </div>
+
+        <!-- Content -->
+        <div style="padding: 40px 20px;">
+          <p style="font-size: 16px; color: #333;">Bonjour ${data.customerName},</p>
+          <p style="font-size: 16px; color: #666; line-height: 1.6;">
+            Nous avons bien reçu votre commande <strong>#${data.orderId}</strong>.
+            Vous recevrez un email de confirmation dès l'expédition.
+          </p>
+
+          <!-- Order Details -->
+          <div style="margin: 30px 0; background-color: #f9f9f9; border-radius: 8px; padding: 20px;">
+            <h2 style="font-size: 18px; margin: 0 0 20px;">Récapitulatif de commande</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="background-color: #1A1A1A; color: #fff;">
+                  <th style="padding: 12px; text-align: left;">Produit</th>
+                  <th style="padding: 12px; text-align: center;">Qté</th>
+                  <th style="padding: 12px; text-align: right;">Prix</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${itemsHtml}
+              </tbody>
+            </table>
+
+            <div style="margin-top: 20px; border-top: 2px solid #eee; padding-top: 20px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span style="color: #666;">Sous-total</span>
+                <span>€${data.subtotal.toFixed(2)}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span style="color: #666;">Livraison</span>
+                <span>${data.shipping === 0 ? 'Gratuit' : `€${data.shipping.toFixed(2)}`}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; margin-top: 12px;">
+                <span>Total</span>
+                <span style="color: #FF6B35;">€${data.total.toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shipping Address -->
+          <div style="margin: 30px 0;">
+            <h3 style="font-size: 16px; margin: 0 0 10px;">Adresse de livraison</h3>
+            <p style="color: #666; margin: 0; line-height: 1.6;">
+              ${data.shippingAddress.street}<br>
+              ${data.shippingAddress.postalCode} ${data.shippingAddress.city}<br>
+              ${data.shippingAddress.country}
+            </p>
+          </div>
+
+          <a href="https://tamarque.com/account" style="display: inline-block; background-color: #FF6B35; color: #fff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; margin-top: 20px;">
+            Suivre ma commande
+          </a>
+        </div>
+
+        <!-- Footer -->
+        <div style="background-color: #1A1A1A; padding: 30px 20px; text-align: center;">
+          <p style="color: #888; margin: 0 0 10px; font-size: 14px;">
+            Des questions ? Répondez à cet email ou contactez-nous à contact@tamarque.com
+          </p>
+          <p style="color: #666; margin: 0; font-size: 12px;">
+            © 2024 Tamarque. Tous droits réservés.
+          </p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+}
+
+function shipmentNotificationTemplate(data: ShipmentNotificationData): string {
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+    </head>
+    <body style="font-family: 'Inter', Arial, sans-serif; margin: 0; padding: 0; background-color: #f5f5f5;">
+      <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+        <div style="background: linear-gradient(135deg, #00D9A5, #00B589); padding: 40px 20px; text-align: center;">
+          <h1 style="color: #ffffff; margin: 0; font-size: 28px;">📦 Votre commande est en route !</h1>
+        </div>
+
+        <div style="padding: 40px 20px;">
+          <p style="font-size: 16px; color: #333;">Bonjour ${data.customerName},</p>
+          <p style="font-size: 16px; color: #666; line-height: 1.6;">
+            Votre commande <strong>#${data.orderId}</strong> a été expédiée !
+          </p>
+
+          <div style="margin: 30px 0; background-color: #f9f9f9; border-radius: 8px; padding: 20px;">
+            <h3 style="margin: 0 0 15px;">Informations de suivi</h3>
+            <p style="margin: 0 0 8px;"><strong>Transporteur :</strong> ${data.carrier}</p>
+            <p style="margin: 0 0 8px;"><strong>N° de suivi :</strong> ${data.trackingNumber}</p>
+            <p style="margin: 0;"><strong>Livraison estimée :</strong> ${data.estimatedDelivery}</p>
+          </div>
+
+          <a href="${data.trackingUrl}" style="display: inline-block; background-color: #FF6B35; color: #fff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600;">
+            Suivre mon colis
+          </a>
+        </div>
+
+        <div style="background-color: #1A1A1A; padding: 30px 20px; text-align: center;">
+          <p style="color: #888; margin: 0; font-size: 14px;">
+            © 2024 Tamarque. Tous droits réservés.
+          </p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+}
+
+function welcomeEmailTemplate(data: WelcomeEmailData): string {
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+    </head>
+    <body style="font-family: 'Inter', Arial, sans-serif; margin: 0; padding: 0; background-color: #f5f5f5;">
+      <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+        <div style="background: linear-gradient(135deg, #FF6B35, #FF1493); padding: 40px 20px; text-align: center;">
+          <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Bienvenue chez Tamarque ! 🎉</h1>
+        </div>
+
+        <div style="padding: 40px 20px;">
+          <p style="font-size: 16px; color: #333;">Bonjour ${data.name},</p>
+          <p style="font-size: 16px; color: #666; line-height: 1.6;">
+            Merci de rejoindre la famille Tamarque ! Vous êtes maintenant prêt(e) à découvrir
+            nos boissons protéinées texture ice tea.
+          </p>
+
+          <div style="margin: 30px 0; background-color: #fff3e0; border-radius: 8px; padding: 20px; border-left: 4px solid #FF6B35;">
+            <h3 style="margin: 0 0 10px; color: #FF6B35;">🎁 Offre de bienvenue</h3>
+            <p style="margin: 0; color: #666;">
+              Utilisez le code <strong>WELCOME15</strong> pour bénéficier de 15% de réduction
+              sur votre première commande !
+            </p>
+          </div>
+
+          <h3 style="margin: 30px 0 15px;">Pourquoi Tamarque ?</h3>
+          <ul style="color: #666; line-height: 1.8; padding-left: 20px;">
+            <li><strong>20g de protéines</strong> par bouteille</li>
+            <li>Texture <strong>ice tea</strong> unique et rafraîchissante</li>
+            <li>Ingrédients <strong>100% naturels</strong></li>
+            <li><strong>Zéro ballonnement</strong></li>
+          </ul>
+
+          <a href="https://tamarque.com/shop" style="display: inline-block; background-color: #FF6B35; color: #fff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; margin-top: 20px;">
+            Découvrir nos produits
+          </a>
+        </div>
+
+        <div style="background-color: #1A1A1A; padding: 30px 20px; text-align: center;">
+          <p style="color: #888; margin: 0; font-size: 14px;">
+            © 2024 Tamarque. Tous droits réservés.
+          </p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+}
+
+// Email sending functions
+export async function sendOrderConfirmation(data: OrderConfirmationData) {
+  if (!resend) {
+    console.log('Email (dev mode):', 'Order confirmation', data);
+    return { success: true, id: 'dev-mode' };
+  }
+
+  try {
+    const result = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: data.customerEmail,
+      subject: `Confirmation de commande #${data.orderId} - Tamarque`,
+      html: orderConfirmationTemplate(data),
+    });
+
+    return { success: true, id: result.data?.id };
+  } catch (error) {
+    console.error('Failed to send order confirmation:', error);
+    return { success: false, error };
+  }
+}
+
+export async function sendShipmentNotification(data: ShipmentNotificationData) {
+  if (!resend) {
+    console.log('Email (dev mode):', 'Shipment notification', data);
+    return { success: true, id: 'dev-mode' };
+  }
+
+  try {
+    const result = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: data.customerEmail,
+      subject: `Votre commande #${data.orderId} est en route ! - Tamarque`,
+      html: shipmentNotificationTemplate(data),
+    });
+
+    return { success: true, id: result.data?.id };
+  } catch (error) {
+    console.error('Failed to send shipment notification:', error);
+    return { success: false, error };
+  }
+}
+
+export async function sendWelcomeEmail(data: WelcomeEmailData) {
+  if (!resend) {
+    console.log('Email (dev mode):', 'Welcome email', data);
+    return { success: true, id: 'dev-mode' };
+  }
+
+  try {
+    const result = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: data.email,
+      subject: 'Bienvenue chez Tamarque ! 🎉',
+      html: welcomeEmailTemplate(data),
+    });
+
+    return { success: true, id: result.data?.id };
+  } catch (error) {
+    console.error('Failed to send welcome email:', error);
+    return { success: false, error };
+  }
+}
+
+export async function sendB2BOrderNotification(data: B2BOrderNotificationData) {
+  if (!resend) {
+    console.log('Email (dev mode):', 'B2B order notification', data);
+    return { success: true, id: 'dev-mode' };
+  }
+
+  const itemsHtml = data.items
+    .map(
+      (item) =>
+        `<tr>
+          <td style="padding: 8px; border-bottom: 1px solid #eee;">${item.name}</td>
+          <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: center;">${item.quantity}</td>
+          <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: right;">€${item.unitPrice.toFixed(2)}</td>
+          <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: right;">€${(item.quantity * item.unitPrice).toFixed(2)}</td>
+        </tr>`
+    )
+    .join('');
+
+  try {
+    // Send to distributor
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: data.distributorEmail,
+      subject: `Confirmation commande B2B #${data.orderId} - Tamarque`,
+      html: `
+        <h2>Confirmation de commande B2B</h2>
+        <p>Bonjour ${data.distributorName},</p>
+        <p>Votre commande #${data.orderId} a bien été reçue.</p>
+        <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+          <thead>
+            <tr style="background: #1A1A1A; color: #fff;">
+              <th style="padding: 10px; text-align: left;">Produit</th>
+              <th style="padding: 10px; text-align: center;">Qté</th>
+              <th style="padding: 10px; text-align: right;">Prix unit.</th>
+              <th style="padding: 10px; text-align: right;">Total</th>
+            </tr>
+          </thead>
+          <tbody>${itemsHtml}</tbody>
+        </table>
+        <p><strong>Remise appliquée :</strong> ${data.discount}%</p>
+        <p><strong>Total :</strong> €${data.total.toFixed(2)}</p>
+        <p>Votre commande sera traitée sous 24h.</p>
+        <p>L'équipe Tamarque B2B</p>
+      `,
+    });
+
+    // Send notification to admin
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: 'b2b@tamarque.com',
+      subject: `[B2B] Nouvelle commande #${data.orderId} de ${data.distributorName}`,
+      html: `
+        <h2>Nouvelle commande B2B</h2>
+        <p><strong>Distributeur :</strong> ${data.distributorName}</p>
+        <p><strong>Commande :</strong> #${data.orderId}</p>
+        <p><strong>Total :</strong> €${data.total.toFixed(2)}</p>
+        <p><strong>Remise :</strong> ${data.discount}%</p>
+        <a href="https://tamarque.com/admin/orders/${data.orderId}">Voir la commande</a>
+      `,
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to send B2B order notification:', error);
+    return { success: false, error };
+  }
+}
+
+export async function sendNewsletterWelcome(email: string) {
+  if (!resend) {
+    console.log('Email (dev mode):', 'Newsletter welcome', email);
+    return { success: true, id: 'dev-mode' };
+  }
+
+  try {
+    const result = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: email,
+      subject: 'Bienvenue dans la newsletter Tamarque ! 💪',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background: linear-gradient(135deg, #FF6B35, #FF1493); padding: 30px; text-align: center;">
+            <h1 style="color: #fff; margin: 0;">Merci de vous être inscrit(e) !</h1>
+          </div>
+          <div style="padding: 30px;">
+            <p>Vous recevrez désormais :</p>
+            <ul>
+              <li>Nos offres exclusives</li>
+              <li>Les nouveaux produits en avant-première</li>
+              <li>Des conseils nutrition & fitness</li>
+            </ul>
+            <p>À très vite !</p>
+            <p>L'équipe Tamarque</p>
+          </div>
+        </div>
+      `,
+    });
+
+    return { success: true, id: result.data?.id };
+  } catch (error) {
+    console.error('Failed to send newsletter welcome:', error);
+    return { success: false, error };
+  }
+}
