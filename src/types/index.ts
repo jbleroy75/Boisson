@@ -130,6 +130,9 @@ export interface Review {
   comment: string;
   date: string;
   verified: boolean;
+  productId?: string;
+  avatar?: string;
+  role?: string;
 }
 
 // B2B Contact form
