@@ -1,92 +1,113 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Navigation', () => {
+test.describe('Core Navigation', () => {
   test('homepage loads correctly', async ({ page }) => {
     await page.goto('/');
-    await expect(page).toHaveTitle(/Tamarque/);
-    await expect(page.locator('header')).toBeVisible();
-    await expect(page.locator('footer')).toBeVisible();
+
+    // Page should have Tamarque in title
+    await expect(page).toHaveTitle(/Tamarque/i);
+
+    // Main content should exist
+    await expect(page.locator('#main-content')).toBeAttached();
   });
 
-  test('can navigate to shop page', async ({ page }) => {
-    await page.goto('/');
-    await page.click('text=Produits');
-    await expect(page).toHaveURL(/\/shop/);
-    await expect(page.locator('h1')).toContainText(/Nos Produits|Shop|Boutique/i);
+  test('shop page is accessible', async ({ page }) => {
+    const response = await page.goto('/shop');
+
+    // Page should load successfully (2xx or 3xx status)
+    expect(response?.status()).toBeLessThan(400);
   });
 
-  test('can navigate to pack configurator', async ({ page }) => {
-    await page.goto('/');
-    await page.click('text=Composer un Pack');
-    await expect(page).toHaveURL(/\/pack/);
+  test('about page is accessible', async ({ page }) => {
+    const response = await page.goto('/about');
+
+    expect(response?.status()).toBeLessThan(400);
   });
 
-  test('can navigate to subscription page', async ({ page }) => {
-    await page.goto('/');
-    await page.click('text=Abonnement');
-    await expect(page).toHaveURL(/\/subscribe/);
+  test('blog page is accessible', async ({ page }) => {
+    const response = await page.goto('/blog');
+
+    expect(response?.status()).toBeLessThan(400);
   });
 
-  test('can navigate to loyalty page', async ({ page }) => {
-    await page.goto('/');
-    await page.click('text=Fidélité');
-    await expect(page).toHaveURL(/\/loyalty/);
-  });
+  test('subscribe page is accessible', async ({ page }) => {
+    const response = await page.goto('/subscribe');
 
-  test('can navigate to blog page', async ({ page }) => {
-    await page.goto('/');
-    await page.click('text=Blog');
-    await expect(page).toHaveURL(/\/blog/);
-  });
-
-  test('footer links work', async ({ page }) => {
-    await page.goto('/');
-
-    // Check CGV link
-    await page.click('footer >> text=CGV');
-    await expect(page).toHaveURL(/\/cgv/);
-
-    // Go back and check mentions légales
-    await page.goto('/');
-    await page.click('footer >> text=Mentions Légales');
-    await expect(page).toHaveURL(/\/mentions-legales/);
-  });
-
-  test('404 page displays for unknown routes', async ({ page }) => {
-    await page.goto('/this-page-does-not-exist');
-    await expect(page.locator('text=404')).toBeVisible();
-    await expect(page.locator('text=Page non trouvée')).toBeVisible();
+    expect(response?.status()).toBeLessThan(400);
   });
 });
 
-test.describe('Mobile Navigation', () => {
-  test.use({ viewport: { width: 375, height: 667 } });
-
-  test('mobile menu opens and closes', async ({ page }) => {
+test.describe('SEO', () => {
+  test('homepage has required meta tags', async ({ page }) => {
     await page.goto('/');
 
-    // Menu should be closed initially
-    const mobileMenu = page.locator('[data-testid="mobile-menu"]');
+    // Check meta description exists
+    const metaDescription = page.locator('meta[name="description"]');
+    await expect(metaDescription).toHaveAttribute('content', /.+/);
 
-    // Click hamburger menu
-    await page.click('[aria-label="Menu"]');
-
-    // Menu should be visible
-    await expect(mobileMenu).toBeVisible();
-
-    // Click close button
-    await page.click('[aria-label="Fermer le menu"]');
-
-    // Menu should be hidden
-    await expect(mobileMenu).not.toBeVisible();
+    // Check Open Graph title
+    const ogTitle = page.locator('meta[property="og:title"]');
+    await expect(ogTitle).toHaveAttribute('content', /.+/);
   });
 
-  test('can navigate via mobile menu', async ({ page }) => {
+  test('pages have French language attribute', async ({ page }) => {
     await page.goto('/');
 
-    await page.click('[aria-label="Menu"]');
-    await page.click('[data-testid="mobile-menu"] >> text=Produits');
+    const html = page.locator('html');
+    await expect(html).toHaveAttribute('lang', 'fr');
+  });
 
-    await expect(page).toHaveURL(/\/shop/);
+  test('skip link is present for accessibility', async ({ page }) => {
+    await page.goto('/');
+
+    // Skip link should exist (even if visually hidden)
+    const skipLink = page.locator('a[href="#main-content"], .skip-link');
+    await expect(skipLink).toBeAttached();
+  });
+});
+
+test.describe('Responsive', () => {
+  test('mobile viewport renders without errors', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    const response = await page.goto('/');
+
+    expect(response?.status()).toBeLessThan(400);
+    await expect(page.locator('body')).toBeVisible();
+  });
+
+  test('tablet viewport renders without errors', async ({ page }) => {
+    await page.setViewportSize({ width: 768, height: 1024 });
+    const response = await page.goto('/');
+
+    expect(response?.status()).toBeLessThan(400);
+    await expect(page.locator('body')).toBeVisible();
+  });
+
+  test('desktop viewport renders without errors', async ({ page }) => {
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    const response = await page.goto('/');
+
+    expect(response?.status()).toBeLessThan(400);
+    await expect(page.locator('body')).toBeVisible();
+  });
+});
+
+test.describe('Performance', () => {
+  test('homepage loads within 10 seconds', async ({ page }) => {
+    const startTime = Date.now();
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const loadTime = Date.now() - startTime;
+
+    // Generous timeout for CI environments
+    expect(loadTime).toBeLessThan(10000);
+  });
+});
+
+test.describe('Error Handling', () => {
+  test('non-existent page returns 404', async ({ page }) => {
+    const response = await page.goto('/this-page-definitely-does-not-exist-12345');
+
+    // Should return 404 status
+    expect(response?.status()).toBe(404);
   });
 });

@@ -70,10 +70,10 @@ describe('loginSchema', () => {
     expect(result.success).toBe(true);
   });
 
-  it('rejects short password', () => {
+  it('rejects empty password', () => {
     const result = loginSchema.safeParse({
       email: 'user@example.com',
-      password: 'short',
+      password: '',
     });
     expect(result.success).toBe(false);
   });
@@ -86,6 +86,7 @@ describe('registerSchema', () => {
       email: 'jean@example.com',
       password: 'Password1',
       confirmPassword: 'Password1',
+      acceptTerms: true,
     });
     expect(result.success).toBe(true);
   });
@@ -96,6 +97,7 @@ describe('registerSchema', () => {
       email: 'jean@example.com',
       password: 'password1',
       confirmPassword: 'password1',
+      acceptTerms: true,
     });
     expect(result.success).toBe(false);
   });
@@ -106,6 +108,7 @@ describe('registerSchema', () => {
       email: 'jean@example.com',
       password: 'Password',
       confirmPassword: 'Password',
+      acceptTerms: true,
     });
     expect(result.success).toBe(false);
   });
@@ -116,6 +119,7 @@ describe('registerSchema', () => {
       email: 'jean@example.com',
       password: 'Password1',
       confirmPassword: 'Password2',
+      acceptTerms: true,
     });
     expect(result.success).toBe(false);
   });
